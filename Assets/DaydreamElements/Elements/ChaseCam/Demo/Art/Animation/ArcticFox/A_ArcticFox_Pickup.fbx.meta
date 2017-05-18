@@ -1,0 +1,293 @@
+fileFormatVersion: 2
+guid: 19a0f269111cb4c53963b9b9418cc932
+timeCreated: 1493326013
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ArcticFox_CTRL
+    100002: Eyes_CTRL
+    100004: //RootNode
+    100006: Head
+    100008: Head 1
+    100010: Head_CTRL
+    100012: Hips
+    100014: Hips 1
+    100016: Hips_CTRL
+    100018: Jaw
+    100020: Jaw 1
+    100022: Jaw_CTRL
+    100024: LeftAnkle
+    100026: LeftAnkle 1
+    100028: LeftAnkle_CTRL
+    100030: LeftEar
+    100032: LeftEar 1
+    100034: LeftEar_CTRL
+    100036: LeftElbow
+    100038: LeftElbow 1
+    100040: LeftEye
+    100042: LeftEye 1
+    100044: LeftEyelidLower
+    100046: LeftEyelidLower 1
+    100048: LeftEyelidUpper
+    100050: LeftEyelidUpper 1
+    100052: LeftFoot
+    100054: LeftFoot 1
+    100056: LeftFoot_CTRL
+    100058: LeftHand
+    100060: LeftHand 1
+    100062: LeftHand_CTRL
+    100064: LeftKnee
+    100066: LeftKnee 1
+    100068: LeftLeg
+    100070: LeftLeg 1
+    100072: LeftShoulder
+    100074: LeftShoulder 1
+    100076: LeftWrist
+    100078: LeftWrist 1
+    100080: LeftWrist_CTRL
+    100082: Neck
+    100084: Neck 1
+    100086: Neck1
+    100088: Neck1 1
+    100090: Neck1_CTRL
+    100092: Neck_CTRL
+    100094: Nose
+    100096: Nose 1
+    100098: Nose_CTRL
+    100100: RightAnkle
+    100102: RightAnkle 1
+    100104: RightAnkle_CTRL
+    100106: RightEar
+    100108: RightEar 1
+    100110: RightEar_CTRL
+    100112: RightElbow
+    100114: RightElbow 1
+    100116: RightEye
+    100118: RightEye 1
+    100120: RightEyelidLower
+    100122: RightEyelidLower 1
+    100124: RightEyelidUpper
+    100126: RightEyelidUpper 1
+    100128: RightFoot
+    100130: RightFoot 1
+    100132: RightFoot_CTRL
+    100134: RightHand
+    100136: RightHand 1
+    100138: RightHand_CTRL
+    100140: RightKnee
+    100142: RightKnee 1
+    100144: RightLeg
+    100146: RightLeg 1
+    100148: RightShoulder
+    100150: RightShoulder 1
+    100152: RightWrist
+    100154: RightWrist 1
+    100156: RightWrist_CTRL
+    100158: Root
+    100160: Root 1
+    100162: Root_CTRL
+    100164: RootOffset_CTRL
+    100166: Spine1
+    100168: Spine1 1
+    100170: Spine1_CTRL
+    100172: Spine2
+    100174: Spine2 1
+    100176: Spine2_CTRL
+    100178: Spine3
+    100180: Spine3 1
+    100182: Spine3_CTRL
+    100184: Tail1
+    100186: Tail1 1
+    100188: Tail1_CTRL
+    100190: Tail2
+    100192: Tail2 1
+    100194: Tail2_CTRL
+    100196: Tail3
+    100198: Tail3 1
+    100200: Tail3_CTRL
+    100202: Tail4
+    100204: Tail4 1
+    100206: Tail4_CTRL
+    100208: Tail5
+    100210: Tail5 1
+    100212: Tail_CTRL
+    400000: ArcticFox_CTRL
+    400002: Eyes_CTRL
+    400004: //RootNode
+    400006: Head
+    400008: Head 1
+    400010: Head_CTRL
+    400012: Hips
+    400014: Hips 1
+    400016: Hips_CTRL
+    400018: Jaw
+    400020: Jaw 1
+    400022: Jaw_CTRL
+    400024: LeftAnkle
+    400026: LeftAnkle 1
+    400028: LeftAnkle_CTRL
+    400030: LeftEar
+    400032: LeftEar 1
+    400034: LeftEar_CTRL
+    400036: LeftElbow
+    400038: LeftElbow 1
+    400040: LeftEye
+    400042: LeftEye 1
+    400044: LeftEyelidLower
+    400046: LeftEyelidLower 1
+    400048: LeftEyelidUpper
+    400050: LeftEyelidUpper 1
+    400052: LeftFoot
+    400054: LeftFoot 1
+    400056: LeftFoot_CTRL
+    400058: LeftHand
+    400060: LeftHand 1
+    400062: LeftHand_CTRL
+    400064: LeftKnee
+    400066: LeftKnee 1
+    400068: LeftLeg
+    400070: LeftLeg 1
+    400072: LeftShoulder
+    400074: LeftShoulder 1
+    400076: LeftWrist
+    400078: LeftWrist 1
+    400080: LeftWrist_CTRL
+    400082: Neck
+    400084: Neck 1
+    400086: Neck1
+    400088: Neck1 1
+    400090: Neck1_CTRL
+    400092: Neck_CTRL
+    400094: Nose
+    400096: Nose 1
+    400098: Nose_CTRL
+    400100: RightAnkle
+    400102: RightAnkle 1
+    400104: RightAnkle_CTRL
+    400106: RightEar
+    400108: RightEar 1
+    400110: RightEar_CTRL
+    400112: RightElbow
+    400114: RightElbow 1
+    400116: RightEye
+    400118: RightEye 1
+    400120: RightEyelidLower
+    400122: RightEyelidLower 1
+    400124: RightEyelidUpper
+    400126: RightEyelidUpper 1
+    400128: RightFoot
+    400130: RightFoot 1
+    400132: RightFoot_CTRL
+    400134: RightHand
+    400136: RightHand 1
+    400138: RightHand_CTRL
+    400140: RightKnee
+    400142: RightKnee 1
+    400144: RightLeg
+    400146: RightLeg 1
+    400148: RightShoulder
+    400150: RightShoulder 1
+    400152: RightWrist
+    400154: RightWrist 1
+    400156: RightWrist_CTRL
+    400158: Root
+    400160: Root 1
+    400162: Root_CTRL
+    400164: RootOffset_CTRL
+    400166: Spine1
+    400168: Spine1 1
+    400170: Spine1_CTRL
+    400172: Spine2
+    400174: Spine2 1
+    400176: Spine2_CTRL
+    400178: Spine3
+    400180: Spine3 1
+    400182: Spine3_CTRL
+    400184: Tail1
+    400186: Tail1 1
+    400188: Tail1_CTRL
+    400190: Tail2
+    400192: Tail2 1
+    400194: Tail2_CTRL
+    400196: Tail3
+    400198: Tail3 1
+    400200: Tail3_CTRL
+    400202: Tail4
+    400204: Tail4 1
+    400206: Tail4_CTRL
+    400208: Tail5
+    400210: Tail5 1
+    400212: Tail_CTRL
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

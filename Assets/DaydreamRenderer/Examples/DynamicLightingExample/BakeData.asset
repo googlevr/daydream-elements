@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa3532fb2c85914e9e7d8917bd62431, type: 3}
+  m_Name: BakeData
+  m_EditorClassIdentifier: 
+  m_bakeSets: {fileID: 114000011390916404}
+  m_bakeSettings: {fileID: 114000011698423892}
+  m_meshContainerList: []
+  m_debugState: {fileID: 0}
+--- !u!114 &114000011294382842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1a487117d412440aeb20adae71b859, type: 3}
+  m_Name: ImportSettings
+  m_EditorClassIdentifier: 
+  m_firstRun: 0
+  m_enableLightingComponentsAutoAdd: 1
+  m_daydreamLightinSystemEnabled: 1
+--- !u!114 &114000011390916404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468d3cd7ba35cb34eabc1a24de31c9ca, type: 3}
+  m_Name: BakeSets
+  m_EditorClassIdentifier: 
+  m_containers: []
+  m_curBakeSetId: 
+--- !u!114 &114000011698423892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d706bc2ddd293304eaf36ac9bf4b420f, type: 3}
+  m_Name: BakeSettings
+  m_EditorClassIdentifier: 
+  m_selectedSettings: 0
+  m_settingsList:
+  - m_settingsId: default
+    m_lightList: []
+    m_activeSet: 1
+    m_forceAllLights: 1
+    m_version: 1
+    m_bakeAllLightSets: 0
+    m_shadowsEnabled: 1
+    m_ambientOcclusion: 1
+    m_colorMode: 1
+    m_colorCube:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    m_colorGradient:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    m_colorSolid:
+    - 0.5
+    - 0.5
+    - 0.5
+    - 1
+    m_rayStartOffset: 0.1
+    m_occluderSearchSamples: 64
+    m_aoForceDoubleSidedGeo: 1
+    m_occluderStartOffset: 0.1
+    m_lightSamples: 64
+    m_normalBend: 0.165
+    m_occlusionRayLength: 0.5
+    m_ambientMin: 0.1
+    m_ambientMax: 0.5
+    m_diffuseEnergyConservation: 0
+    m_debugSlider: 0
