@@ -31,7 +31,7 @@ namespace DaydreamElements.SwipeMenu {
     }
 
     void Update() {
-      gameObject.GetComponent<SpriteRenderer>().color = color;
+      spriteRenderer.color = color;
       color = color * 0.9f + Color.white * 0.1f;
     }
 
