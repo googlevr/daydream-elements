@@ -63,7 +63,7 @@ namespace DaydreamElements.Chase {
     }
 
     void OnTriggerEnter(Collider c) {
-      if (c.CompareTag("Character") == false) {
+      if (c.GetComponent<FoxPositionedCharacter>() == null) {
         return;
       }
 

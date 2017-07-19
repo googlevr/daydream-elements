@@ -12,6 +12,14 @@
 // See the License for the specific language governing permissioßns and
 // limitations under the License.
 
+// This class is only used in the Editor, so make sure to only compile it on that platform.
+// Additionally, If this class is compiled on Android then Unity will insert the INTERNET permission
+// into the manifest because of the reference to the type TCPClient. Excluding this class in the android
+// build ensures that it is only included if the developer using the SDK actually uses INTERNET related services.
+// This MonoBehaviour is only ever instantiated dynamically, so it is fine that it is only compiled in the Editor,
+// Otherwise it would cause serialization issues.
+#if UNITY_EDITOR
+
 using UnityEngine;
 using System;
 using System.Collections;
@@ -241,3 +249,6 @@ namespace Gvr.Internal {
   }
 }
 /// @endcond
+
+
+#endif  // UNITY_EDITOR

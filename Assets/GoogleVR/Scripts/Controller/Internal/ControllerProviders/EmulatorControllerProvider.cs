@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissioßns and
 // limitations under the License.
 
+// This class is only used in the Editor, so make sure to only compile it on that platform.
+// Additionally, it depends on EmulatorManager which is only compiled in the editor.
+#if UNITY_EDITOR
+
 // The controller is not available for versions of Unity without the
 // // GVR native integration.
 #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
@@ -174,3 +178,5 @@ namespace Gvr.Internal {
 /// @endcond
 
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+
+#endif  // UNITY_EDITOR

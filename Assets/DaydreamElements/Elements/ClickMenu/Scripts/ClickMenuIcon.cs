@@ -19,7 +19,9 @@ using DaydreamElements.Common;
 
 namespace DaydreamElements.ClickMenu {
 
-  /// On-screen game object associated with a menu item.
+  /// A circular section of a menu.
+  /// Contains a tooltip, a foreground icon, a background icon and
+  /// shares an auto-generated mesh background.
   [RequireComponent(typeof(SpriteRenderer))]
   [RequireComponent(typeof(MeshCollider))]
   public class ClickMenuIcon : MonoBehaviour,
@@ -27,17 +29,19 @@ namespace DaydreamElements.ClickMenu {
                              IPointerExitHandler {
     private const int NUM_SIDES_CIRCLE_MESH = 48;
 
-    /// Distance to pop out icon when hovered in meters.
-    private const float HOVER_PUSH = 0.04f;
+    /// Distance to push the icon when hovered in meters.
+    private const float HOVERING_Z_OFFSET = 0.04f;
 
-    /// Distance to push the menu in depth during fades.
-    private const float FADE_DEPTH = 0.2f;
+    /// Distance to push the menu in depth during fades in meters.
+    private const float CLOSING_Z_OFFSET = 0.0f;
+
+    /// Distance to push the menu out while it is being hidden in meters.
+    private const float HIDING_Z_OFFSET = 0.02f;
+    /// Default pop out distance in meters.
+    private const float SHOWING_Z_OFFSET = 0.0f;
 
     /// Distance the background is pushed when idle in meters.
     private const float BACKGROUND_PUSH = 0.01f;
-
-    /// Rate at which to push the icon during hover.
-    private const float PUSH_RATE = 0.006f;
 
     /// Radius from center to menu item in units of scale.
     private const float ITEM_SPACING = 0.15f;
@@ -46,7 +50,10 @@ namespace DaydreamElements.ClickMenu {
     private const int MIN_ITEM_SPACE = 5;
 
     /// Time for the fading animation in seconds.
-    private const float ANIMATION_TIME = 0.24f;
+    private const float CLOSE_ANIMATION_SECONDS = 0.12f;
+    private const float HIDE_ANIMATION_SECONDS  = 0.12f;
+    private const float HOVER_ANIMATION_SECONDS = 0.06f;
+    private const float SHOW_ANIMATION_SECONDS  = 0.24f;
 
     /// Scaling factor for the tooltip text.
     private const float TOOLTIP_SCALE = 0.1f;
@@ -64,6 +71,7 @@ namespace DaydreamElements.ClickMenu {
     private GameObject background;
     private ClickMenuItem menuItem;
     private AssetTree.Node menuNode;
+    /// Manages events for all icons in the menu.
     public ClickMenuRoot menuRoot { private get; set; }
     private GameObject tooltip;
     private Vector3 localOffset;
@@ -83,20 +91,83 @@ namespace DaydreamElements.ClickMenu {
     private float startAngle;
     private float endAngle;
 
-    enum FadeType {
-      NoFade,
-      FadeInPush,
-      FadeInPull,
-      FadeOutPush,
-      FadeOutPull
+    public enum FadeState {
+      Shown,   // icon is shown
+      Hidden,  // icon not shown, but will be kept around.
+      Closed,  // icon not shown. It was just created or about to be destroyed.
+      Hovering // icon is open and is highlighted
     }
-    private FadeType fadeType;
+
+    /// The time when the fade started. Used to interpolate fade parameters
+    private float timeAtFadeStart;
+    private float alphaAtFadeStart;
+    private float scaleAtFadeStart;
+    private float zOffsetAtFadeStart;
+    private float highlightAtFadeStart;
+
     private bool selected;
-    private float fadeStartTime;
-    private bool destroyOnClose;
-    private float pushDepth;
-    private bool active;
+    private bool buttonActive;
     private bool isBackButton;
+
+    /// The most recent fade is at the front of the list.
+    // Old fades are removed after they finish.
+    List<FadeParameters> fades = new List<FadeParameters>(){
+      new FadeParameters(FadeState.Closed, FadeState.Closed)
+    };
+
+    /// Describes how a button should behave in a particular state.
+    //  Provides functionality to interpolate to the new draw style.
+    private class FadeParameters {
+      public FadeParameters(FadeState nextState, FadeState prevState) {
+        state = nextState;
+        switch(state) {
+        case FadeState.Shown:
+          alpha = 1.0f;
+          if (prevState == FadeState.Hovering) {
+            duration = HOVER_ANIMATION_SECONDS;
+          } else {
+            duration = SHOW_ANIMATION_SECONDS;
+          }
+          buttonActive = true;
+          highlight = 0.0f;
+          scale = 1.0f;
+          zOffset = SHOWING_Z_OFFSET;
+          break;
+        case FadeState.Hovering:
+          alpha = 1.0f;
+          duration = HOVER_ANIMATION_SECONDS;
+          buttonActive = true;
+          highlight = 1.0f;
+          scale = 1.0f;
+          zOffset = HOVERING_Z_OFFSET;
+          break;
+        case FadeState.Hidden:
+          alpha = 0.0f;
+          duration = HIDE_ANIMATION_SECONDS;
+          buttonActive = false;
+          highlight = 0.0f;
+          scale = 1.5f;
+          zOffset = HIDING_Z_OFFSET;
+          break;
+        case FadeState.Closed:
+          alpha = 0.0f;
+          duration = CLOSE_ANIMATION_SECONDS;
+          buttonActive = false;
+          highlight = 0.0f;
+          scale = 0.1f;
+          zOffset = CLOSING_Z_OFFSET;
+          break;
+        }
+      }
+
+      public FadeState state;
+      public float duration;
+      public float scale;
+      public float alpha;
+      public float zOffset;
+      public float highlight;
+      public bool buttonActive = false;
+    };
 
     public GameObject tooltipPrefab;
 
@@ -107,17 +178,18 @@ namespace DaydreamElements.ClickMenu {
       propertyBlock = new MaterialPropertyBlock();
       spriteRenderer = GetComponent<SpriteRenderer>();
       childMenus = new List<ClickMenuIcon>();
-      active = false;
+      buttonActive = false;
       selected = false;
-      destroyOnClose = false;
       isBackButton = false;
-      fadeType = FadeType.NoFade;
     }
 
+    /// A "dummy" icon will be invisible and non-interactable
+    /// The top icon in the hierarchy will be a dummy icon
     public void SetDummy() {
-      active = false;
+      buttonActive = false;
     }
 
+    /// Called to make this icon visible and interactable
     public void Initialize(ClickMenuRoot root, ClickMenuIcon _parentMenu, AssetTree.Node node,
                            Vector3 _menuCenter, float scale, Vector3 offset) {
       string name = (node == null ? "Back " : ((ClickMenuItem)node.value).toolTip);
@@ -132,7 +204,6 @@ namespace DaydreamElements.ClickMenu {
       menuScale = scale;
       localOffset = offset;
       background = null;
-      active = true;
       if (node != null) {
         // Set foreground icon
         menuItem = (ClickMenuItem)node.value;
@@ -180,7 +251,9 @@ namespace DaydreamElements.ClickMenu {
       }
 
       parentMenu.childMenus.Add(this);
-      StartFade(FadeType.FadeInPush);
+      StartFade(FadeState.Shown);
+      SetButtonTransparency(0.0f);
+      SetPieMeshTransparency(0.0f, 0.0f);
     }
 
     private void MakeMeshColliderCircle() {
@@ -188,7 +261,9 @@ namespace DaydreamElements.ClickMenu {
       int[] triangles = new int[NUM_SIDES_CIRCLE_MESH * 9];
 
       vertices[0] = new Vector3(0.0f, 0.0f, ICON_Z_OFFSET);
-      float pushScaled = pushDepth / transform.localScale[0];
+
+      float pushScaled = GetCurrentZOffset() / transform.localScale[0];
+
       for (int i = 0; i < NUM_SIDES_CIRCLE_MESH; i++) {
         float angle = i * 2.0f * Mathf.PI / NUM_SIDES_CIRCLE_MESH;
         float x = Mathf.Sin(angle) * INNER_RADIUS;
@@ -222,7 +297,7 @@ namespace DaydreamElements.ClickMenu {
       int[] triangles = new int[numSides * 18 + 12];
 
       float outerRadius = localOffset.magnitude + Mathf.Min(localOffset.magnitude - INNER_RADIUS, OUTER_RADIUS - 1.0f);
-      float pushScaled = pushDepth / transform.localScale[0];
+      float pushScaled = GetCurrentZOffset() / transform.localScale[0];
       float x = Mathf.Sin(startAngle);
       float y = Mathf.Cos(startAngle);
       vertices[0] = new Vector3(x * INNER_RADIUS, y * INNER_RADIUS, pushScaled + ICON_Z_OFFSET) - localOffset;
@@ -281,9 +356,9 @@ namespace DaydreamElements.ClickMenu {
       sharedMesh.triangles = triangles;
     }
 
-    /// Opens a new menu, returns true if a menu transition needs to occur.
-    public static bool OpenMenu(ClickMenuRoot root, AssetTree.Node treeNode, ClickMenuIcon parent,
-                                Vector3 center, Quaternion orientation, float scale) {
+    /// Shows a new menu, returns true if a fade needs to occur.
+    public static bool ShowMenu(ClickMenuRoot root, AssetTree.Node treeNode, ClickMenuIcon parent,
+                            Vector3 center, Quaternion orientation, float scale) {
       // Determine how many children are in the sub-menu
       List<AssetTree.Node> childItems = treeNode.children;
 
@@ -322,108 +397,73 @@ namespace DaydreamElements.ClickMenu {
       return true;
     }
 
-    private bool OpenSubMenu() {
-      return OpenMenu(menuRoot, menuNode, this, menuCenter, menuOrientation, menuScale);
+    /// Returns true if a fade starts.
+    private bool ShowChildMenu() {
+      return ShowMenu(menuRoot, menuNode, this, menuCenter, menuOrientation, menuScale);
     }
 
-    public void CloseSubMenu() {
+    /// Closes this menu and shows the parent level
+    public void ShowParentMenu() {
       if (!parentMenu) {
         menuRoot.CloseAll();
       } else {
-        FadeChildren(FadeType.FadeOutPull, true);
-        parentMenu.FadeChildren(FadeType.FadeInPull);
+        FadeChildren(FadeState.Closed);
+        parentMenu.FadeChildren(FadeState.Shown);
         childMenus.Clear();
       }
     }
 
     void Update() {
-      // Update the push animation
-      float pushRate = (selected ? PUSH_RATE : -PUSH_RATE);
-      pushDepth = Mathf.Clamp(pushDepth + pushRate, 0.0f, HOVER_PUSH);
-      SetTooltipAlpha(pushDepth / HOVER_PUSH);
+      ContinueFade();
 
-      // Update back button transparency
+      var highlight = GetCurrentHighlight();
+      SetTooltipAlpha(highlight);
+
+      // The back button needs special handling because the tooltips draw over it.
+      // Make it fade out unless it is highlighted.
       if (isBackButton) {
-        SetButtonTransparency(pushDepth / HOVER_PUSH);
+        SetButtonTransparency(highlight);
       }
 
-      if (active) {
-        // Draw the pie background with highlight
-        if (pieMeshRenderer) {
-          Color newColor = pieStartColor;
-          newColor.a += (pushDepth / HOVER_PUSH) * (1.0f - newColor.a);
-          pieMeshRenderer.GetPropertyBlock(propertyBlock);
-          propertyBlock.SetColor("_Color", newColor);
-          pieMeshRenderer.SetPropertyBlock(propertyBlock);
-        }
-
+      if (buttonActive) {
         // Make button interactive and process clicks
-        SetScaleT(0.0f);
         MakeMeshCollider();
         if (selected && (GvrController.ClickButtonDown)) {
-          menuRoot.MakeSelection(menuItem ? menuItem.id : -1);
+          menuRoot.MakeSelection(menuItem);
           if (isBackButton) {
-            parentMenu.CloseSubMenu();
+            parentMenu.ShowParentMenu();
           } else {
-            if (OpenSubMenu()) {
-              parentMenu.FadeChildren(FadeType.FadeOutPush);
+            if (ShowChildMenu()) {
+              parentMenu.FadeChildren(FadeState.Hidden);
             }
-          }
-        }
-      } else if (fadeType != FadeType.NoFade) {
-        // Apply fading animations
-        float t = Mathf.Min((Time.time - fadeStartTime) / ANIMATION_TIME, 1.0f);
-        if (fadeType == FadeType.FadeInPush) {
-          SetScaleT(1.0f - t);
-          SetTransparency(t);
-          MakeMeshCollider();
-          if (t >= 1.0f) {
-            FinishFadeIn();
-          }
-        } else if (fadeType == FadeType.FadeInPull) {
-          SetScaleT(t - 1.0f);
-          SetTransparency(t);
-          MakeMeshCollider();
-          if (t >= 1.0f) {
-            FinishFadeIn();
-          }
-        } else if (fadeType == FadeType.FadeOutPush) {
-          selected = false;
-          SetScaleT(-t);
-          SetTransparency(1.0f - t);
-          if (t >= 1.0f) {
-            FinishFadeOut();
-          }
-        } else if (fadeType == FadeType.FadeOutPull) {
-          selected = false;
-          SetScaleT(t);
-          SetTransparency(1.0f - t);
-          if (t >= 1.0f) {
-            FinishFadeOut();
           }
         }
       }
     }
 
-    private void SetScaleT(float t) {
-      float scaleMult = Mathf.Max(1.0f - Mathf.Abs(t), 0.01f);
-      Vector3 delta = (startPosition - menuCenter) * (1.0f - t);
-      transform.position = menuCenter + delta - transform.forward * pushDepth;
+    /// Shrink / Grow button
+    // t is the scale of the button.
+    // depth adjusts the buttons z position to move a button toward or away from viewer
+    private void SetButtonScale(float t, float depth) {
+      float scaleMult = Mathf.Max(t, 0.01f);
+
+      Vector3 delta = (startPosition - menuCenter) * t;
+      transform.position = menuCenter + delta - transform.forward * depth;
       transform.localScale = startScale * scaleMult;
       if (background) {
         background.transform.position = menuCenter + transform.forward * BACKGROUND_PUSH + delta;
         background.transform.localScale = startScale * scaleMult;
       }
       if (pieBackground) {
-        pieBackground.transform.position = startPosition - pieBackground.transform.forward * pushDepth;
-        pieBackground.transform.localScale = startScale;
+        pieBackground.transform.position = menuCenter + delta  - pieBackground.transform.forward * depth;
+        pieBackground.transform.localScale = startScale * scaleMult;
       }
     }
 
     private void SetButtonTransparency(float alpha) {
       Color alphaColor = new Color(1.0f, 1.0f, 1.0f, alpha);
       if (isBackButton) {
-        alphaColor.a = Mathf.Min(pushDepth / HOVER_PUSH, alpha);
+        alphaColor.a = Mathf.Min(zOffsetAtFadeStart / HOVERING_Z_OFFSET, alpha);
       }
       spriteRenderer.GetPropertyBlock(propertyBlock);
       propertyBlock.SetColor("_Color", alphaColor);
@@ -435,11 +475,11 @@ namespace DaydreamElements.ClickMenu {
       }
     }
 
-    private void SetTransparency(float alpha) {
-      SetButtonTransparency(alpha);
+    // Draw the pie background with highlight
+    private void SetPieMeshTransparency(float alpha, float highlight) {
       if (pieMeshRenderer) {
         Color pieColor = pieStartColor;
-        pieColor.a *= alpha;
+        pieColor.a = pieColor.a * alpha * (1.0f - highlight) + highlight;
         pieMeshRenderer.GetPropertyBlock(propertyBlock);
         propertyBlock.SetColor("_Color", pieColor);
         pieMeshRenderer.SetPropertyBlock(propertyBlock);
@@ -466,49 +506,171 @@ namespace DaydreamElements.ClickMenu {
       if (tooltip) {
         Destroy(tooltip);
       }
+      if (parentMenu) {
+        parentMenu.childMenus.Remove (this);
+      }
     }
 
-    private void FadeChildren(FadeType fade, bool destroy = false) {
+    private void FadeChildren(FadeState nextState) {
       foreach (ClickMenuIcon child in childMenus) {
-        child.destroyOnClose = destroy;
-        child.StartFade(fade);
+        child.StartFade(nextState);
       }
     }
 
-    private void StartFade(FadeType fade) {
-      fadeType = fade;
-      fadeStartTime = Time.time;
-      active = false;
-      if (fadeType == FadeType.FadeOutPush || fadeType == FadeType.FadeOutPull) {
+    private void StartFade(FadeState nextState) {
+      FadeParameters prev = fades[0];
+      if (prev.state == nextState) {
+        return;
+      }
+
+      if (fades.Count > 1) {
+
+        // A fade is currently in progress. Save off any values where they are now.
+        float t = GetCurrentProgress();
+        alphaAtFadeStart = GetCurrentAlpha();
+        scaleAtFadeStart = Mathf.Lerp(scaleAtFadeStart, prev.scale, t);
+        zOffsetAtFadeStart = GetCurrentZOffset();
+        highlightAtFadeStart = GetCurrentHighlight();
+
+        // Delete any old fades
+        fades.RemoveRange(1, fades.Count - 1);
+      }
+
+      FadeParameters nextFade = new FadeParameters(nextState, prev.state);
+      fades.Insert(0, nextFade);
+
+      timeAtFadeStart = Time.time;
+      buttonActive = nextFade.buttonActive;
+
+      if (!buttonActive) {
+        // Collisions are only allowed on active buttons.
         meshCollider.sharedMesh = null;
-      } else if (fadeType == FadeType.FadeInPush || fadeType == FadeType.FadeInPull) {
-        fadeStartTime = Time.time;
-        pushDepth = 0.0f;
-        SetTransparency(0.0f);
       }
     }
 
-    private void FinishFadeOut() {
-      fadeType = FadeType.NoFade;
-      if (destroyOnClose) {
+    private void FinishFade() {
+
+      // Save values from the completed fade.
+      FadeParameters finishedFade = fades[0];
+      alphaAtFadeStart = GetCurrentAlpha();
+      scaleAtFadeStart = finishedFade.scale;
+      zOffsetAtFadeStart = GetCurrentZOffset();
+      highlightAtFadeStart = GetCurrentHighlight();
+
+      // remove any old fades
+      if (fades.Count > 1) {
+        fades.RemoveRange(1, fades.Count - 1);
+      }
+
+      if (finishedFade.buttonActive) {
+        MakeMeshCollider();
+        meshCollider.sharedMesh = sharedMesh;
+        buttonActive = true;
+      }
+      if (finishedFade.state == FadeState.Closed) {
         Destroy(gameObject);
       }
     }
 
-    private void FinishFadeIn() {
-      meshCollider.sharedMesh = sharedMesh;
-      fadeType = FadeType.NoFade;
-      active = true;
+    /// Updates icon with interpolated fade values.
+    private void ContinueFade() {
+      if (fades.Count < 2) {
+        // no fade in progress. Do nothing.
+        return;
+      }
+
+
+      float t = GetCurrentProgress();
+      float scale = Mathf.Lerp(scaleAtFadeStart, fades[0].scale, t);
+      float alpha = GetCurrentAlpha();
+
+      SetButtonScale(scale, GetCurrentZOffset());
+      SetButtonTransparency(alpha);
+      SetPieMeshTransparency(alpha, GetCurrentHighlight());
+      if (fades[0].state == FadeState.Closed) {
+        selected = false;
+      } else if (fades[0].state == FadeState.Hidden) {
+        MakeMeshCollider();
+        selected = false;
+      } else {
+        // Fade in.
+        MakeMeshCollider();
+      }
+
+      if (!(GetCurrentProgress() < 1.0f)) {
+        FinishFade();
+        return;
+      }
     }
 
+    /// Starts a fade if the there is a match for fromState
+    private void FadeIfNeeded(FadeState fromState,
+                      FadeState toState)
+    {
+      if (fades[0].state != fromState) {
+        return;
+      }
+      StartFade(toState);
+    }
+
+    /// returns 1 if completed, 0 if just started or values in between depending on time
+    private float GetCurrentProgress() {
+      if (fades.Count < 2) {
+        return 1.0f;
+      }
+      return Mathf.Clamp01((Time.time - timeAtFadeStart) / fades[0].duration);
+    }
+
+    /// The width in z of the button mesh we create.
+    /// Also used to move button forward in z.
+    private float GetCurrentZOffset() {
+      float zOffset = zOffsetAtFadeStart;
+      if (fades.Count > 1) {
+        if (fades[0].state == FadeState.Closed &&
+           fades[1].state == FadeState.Hovering) {
+          // Special Behavior: One button is hovering above the others.
+          // Force it to close with the same height as other buttons.
+          zOffset = SHOWING_Z_OFFSET;
+        }
+        zOffset = Mathf.Lerp(zOffset, fades[0].zOffset, GetCurrentProgress());
+      }
+      return zOffset;
+    }
+
+    private float GetCurrentHighlight() {
+      if (buttonActive==false) {
+        //  Special Behavior: disabled buttons can not be highlighted.
+        return 0.0f;
+      }
+      float highlight = highlightAtFadeStart;
+      if (fades.Count > 1) {
+        highlight = Mathf.Lerp(highlightAtFadeStart, fades[0].highlight, GetCurrentProgress());
+      }
+      return highlight;
+    }
+
+    private float GetCurrentAlpha() {
+      float alpha = alphaAtFadeStart;
+      if (fades.Count > 1) {
+        float t = GetCurrentProgress();
+        if(fades[0].alpha < alphaAtFadeStart) {
+          // Special Behavior: fade out 50% faster.
+          t = Mathf.Clamp01(t * 1.5f);
+        }
+        alpha = Mathf.Lerp(alphaAtFadeStart, fades[0].alpha, t);
+      }
+      return alpha;
+    }
+
+    /// Recursively closes this menu and its children
     public void CloseAll() {
       foreach (ClickMenuIcon child in childMenus) {
         child.CloseAll();
       }
-      if (active) {
-        destroyOnClose = true;
-        StartFade(FadeType.FadeOutPull);
+      if (buttonActive) {
+        StartFade(FadeState.Closed);
       } else {
+        // If the button is already disabled, destroy it instantly
         Destroy(gameObject);
       }
     }
@@ -524,13 +686,20 @@ namespace DaydreamElements.ClickMenu {
 
     public void OnPointerEnter(PointerEventData eventData) {
       if (!selected) {
-        menuRoot.MakeHover(menuItem ? menuItem.id : -1);
+        menuRoot.MakeHover(menuItem);
       }
       selected = true;
+      FadeIfNeeded(FadeState.Shown, FadeState.Hovering);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
       selected = false;
+      FadeIfNeeded(FadeState.Hovering, FadeState.Shown);
     }
+
+
   }
+
+
 }
+

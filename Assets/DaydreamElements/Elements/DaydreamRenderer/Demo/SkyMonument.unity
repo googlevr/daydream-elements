@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 54347253}
   - component: {fileID: 54347256}
   - component: {fileID: 54347255}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LampPost_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 79518691}
   - component: {fileID: 79518693}
   - component: {fileID: 79518692}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Brazier_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,763 +503,45 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1195638256534334, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+    - target: {fileID: 1025620200911766, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
       propertyPath: m_Layer
-      value: 14
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1711753521652418, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+    - target: {fileID: 1084926506764238, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
       propertyPath: m_Layer
-      value: 14
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1768728503393880, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+    - target: {fileID: 1393930392179590, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
       propertyPath: m_Layer
-      value: 14
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1238284962201948, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+    - target: {fileID: 1871263038314116, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
       propertyPath: m_Layer
-      value: 14
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1549050479075586, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+    - target: {fileID: 1020246052656374, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
       propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 114669438853036774, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1149434700
-      objectReference: {fileID: 0}
-    - target: {fileID: 114669438853036774, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1149434700
-      objectReference: {fileID: 0}
-    - target: {fileID: 114577988663814062, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1296524814
-      objectReference: {fileID: 0}
-    - target: {fileID: 114577988663814062, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1296524814
-      objectReference: {fileID: 0}
-    - target: {fileID: 114881386423461698, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-433845518
-      objectReference: {fileID: 0}
-    - target: {fileID: 114881386423461698, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -433845518
-      objectReference: {fileID: 0}
-    - target: {fileID: 114788858316097192, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1302677236
-      objectReference: {fileID: 0}
-    - target: {fileID: 114788858316097192, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1302677236
-      objectReference: {fileID: 0}
-    - target: {fileID: 114945185204872288, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-342434662
-      objectReference: {fileID: 0}
-    - target: {fileID: 114945185204872288, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -342434662
-      objectReference: {fileID: 0}
-    - target: {fileID: 114154988241705274, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1691188156
-      objectReference: {fileID: 0}
-    - target: {fileID: 114154988241705274, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1691188156
-      objectReference: {fileID: 0}
-    - target: {fileID: 114429784946872172, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-96542077
-      objectReference: {fileID: 0}
-    - target: {fileID: 114429784946872172, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -96542077
-      objectReference: {fileID: 0}
-    - target: {fileID: 114922096135267592, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1687132408
-      objectReference: {fileID: 0}
-    - target: {fileID: 114922096135267592, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1687132408
-      objectReference: {fileID: 0}
-    - target: {fileID: 114780959899322502, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1956906936
-      objectReference: {fileID: 0}
-    - target: {fileID: 114780959899322502, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1956906936
-      objectReference: {fileID: 0}
-    - target: {fileID: 114417058852643008, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_198401933
-      objectReference: {fileID: 0}
-    - target: {fileID: 114417058852643008, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 198401933
-      objectReference: {fileID: 0}
-    - target: {fileID: 114553536177691128, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1317476278
-      objectReference: {fileID: 0}
-    - target: {fileID: 114553536177691128, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1317476278
-      objectReference: {fileID: 0}
-    - target: {fileID: 114852524334787450, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-2010339078
-      objectReference: {fileID: 0}
-    - target: {fileID: 114852524334787450, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -2010339078
-      objectReference: {fileID: 0}
-    - target: {fileID: 114370901668655756, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_617772641
-      objectReference: {fileID: 0}
-    - target: {fileID: 114370901668655756, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 617772641
-      objectReference: {fileID: 0}
-    - target: {fileID: 114399937378878284, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_491993621
-      objectReference: {fileID: 0}
-    - target: {fileID: 114399937378878284, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 491993621
-      objectReference: {fileID: 0}
-    - target: {fileID: 114447097676574546, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-303904911
-      objectReference: {fileID: 0}
-    - target: {fileID: 114447097676574546, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -303904911
-      objectReference: {fileID: 0}
-    - target: {fileID: 114489788874886120, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_906108267
-      objectReference: {fileID: 0}
-    - target: {fileID: 114489788874886120, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 906108267
-      objectReference: {fileID: 0}
-    - target: {fileID: 114818922860295874, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_731546518
-      objectReference: {fileID: 0}
-    - target: {fileID: 114818922860295874, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 731546518
-      objectReference: {fileID: 0}
-    - target: {fileID: 114186850863749668, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_726325199
-      objectReference: {fileID: 0}
-    - target: {fileID: 114186850863749668, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 726325199
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727427251610580, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_519127555
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727427251610580, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 519127555
-      objectReference: {fileID: 0}
-    - target: {fileID: 114060240381989962, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-244282355
-      objectReference: {fileID: 0}
-    - target: {fileID: 114060240381989962, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -244282355
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398431488180298, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1492203736
-      objectReference: {fileID: 0}
-    - target: {fileID: 114398431488180298, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1492203736
-      objectReference: {fileID: 0}
-    - target: {fileID: 114780879248055618, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_832954954
-      objectReference: {fileID: 0}
-    - target: {fileID: 114780879248055618, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 832954954
-      objectReference: {fileID: 0}
-    - target: {fileID: 114107087962690954, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_878483665
-      objectReference: {fileID: 0}
-    - target: {fileID: 114107087962690954, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 878483665
-      objectReference: {fileID: 0}
-    - target: {fileID: 114314377652935496, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1539979293
-      objectReference: {fileID: 0}
-    - target: {fileID: 114314377652935496, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1539979293
-      objectReference: {fileID: 0}
-    - target: {fileID: 114160185553465418, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_952150930
-      objectReference: {fileID: 0}
-    - target: {fileID: 114160185553465418, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 952150930
-      objectReference: {fileID: 0}
-    - target: {fileID: 114401815678839242, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_722919091
-      objectReference: {fileID: 0}
-    - target: {fileID: 114401815678839242, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 722919091
-      objectReference: {fileID: 0}
-    - target: {fileID: 114040610348427508, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-2066703230
-      objectReference: {fileID: 0}
-    - target: {fileID: 114040610348427508, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -2066703230
-      objectReference: {fileID: 0}
-    - target: {fileID: 114874641232135162, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_103238141
-      objectReference: {fileID: 0}
-    - target: {fileID: 114874641232135162, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 103238141
-      objectReference: {fileID: 0}
-    - target: {fileID: 114429044198991818, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-52890913
-      objectReference: {fileID: 0}
-    - target: {fileID: 114429044198991818, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -52890913
-      objectReference: {fileID: 0}
-    - target: {fileID: 114583877293261810, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-538488999
-      objectReference: {fileID: 0}
-    - target: {fileID: 114583877293261810, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -538488999
-      objectReference: {fileID: 0}
-    - target: {fileID: 114560496658960012, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-937960035
-      objectReference: {fileID: 0}
-    - target: {fileID: 114560496658960012, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -937960035
-      objectReference: {fileID: 0}
-    - target: {fileID: 114542131401658288, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1666051151
-      objectReference: {fileID: 0}
-    - target: {fileID: 114542131401658288, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1666051151
-      objectReference: {fileID: 0}
-    - target: {fileID: 114890832545774018, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-171702191
-      objectReference: {fileID: 0}
-    - target: {fileID: 114890832545774018, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -171702191
-      objectReference: {fileID: 0}
-    - target: {fileID: 114381023326627898, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-942923580
-      objectReference: {fileID: 0}
-    - target: {fileID: 114381023326627898, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -942923580
-      objectReference: {fileID: 0}
-    - target: {fileID: 114131193707382094, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1263746297
-      objectReference: {fileID: 0}
-    - target: {fileID: 114131193707382094, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1263746297
-      objectReference: {fileID: 0}
-    - target: {fileID: 114260001012061832, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1624392817
-      objectReference: {fileID: 0}
-    - target: {fileID: 114260001012061832, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1624392817
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253779057410352, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_898094535
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253779057410352, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 898094535
-      objectReference: {fileID: 0}
-    - target: {fileID: 114744264755901496, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1698119692
-      objectReference: {fileID: 0}
-    - target: {fileID: 114744264755901496, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1698119692
-      objectReference: {fileID: 0}
-    - target: {fileID: 114540384586308826, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_796484693
-      objectReference: {fileID: 0}
-    - target: {fileID: 114540384586308826, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 796484693
-      objectReference: {fileID: 0}
-    - target: {fileID: 114009836382182818, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1867856416
-      objectReference: {fileID: 0}
-    - target: {fileID: 114009836382182818, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1867856416
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008508576811166, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_312693802
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008508576811166, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 312693802
-      objectReference: {fileID: 0}
-    - target: {fileID: 114062946862758276, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-2138912591
-      objectReference: {fileID: 0}
-    - target: {fileID: 114062946862758276, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -2138912591
-      objectReference: {fileID: 0}
-    - target: {fileID: 114762907377593972, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-542547815
-      objectReference: {fileID: 0}
-    - target: {fileID: 114762907377593972, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -542547815
-      objectReference: {fileID: 0}
-    - target: {fileID: 114708576672908218, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_556012613
-      objectReference: {fileID: 0}
-    - target: {fileID: 114708576672908218, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 556012613
-      objectReference: {fileID: 0}
-    - target: {fileID: 114825899257454254, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-390725690
-      objectReference: {fileID: 0}
-    - target: {fileID: 114825899257454254, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -390725690
-      objectReference: {fileID: 0}
-    - target: {fileID: 114050946099540192, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1597782247
-      objectReference: {fileID: 0}
-    - target: {fileID: 114050946099540192, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1597782247
-      objectReference: {fileID: 0}
-    - target: {fileID: 114606151285015652, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_312554765
-      objectReference: {fileID: 0}
-    - target: {fileID: 114606151285015652, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 312554765
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253856264618674, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1673673072
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253856264618674, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1673673072
-      objectReference: {fileID: 0}
-    - target: {fileID: 114340395308654940, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_2115279171
-      objectReference: {fileID: 0}
-    - target: {fileID: 114340395308654940, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 2115279171
-      objectReference: {fileID: 0}
-    - target: {fileID: 114598742356468482, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1078029326
-      objectReference: {fileID: 0}
-    - target: {fileID: 114598742356468482, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1078029326
-      objectReference: {fileID: 0}
-    - target: {fileID: 114682046905492402, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_573899108
-      objectReference: {fileID: 0}
-    - target: {fileID: 114682046905492402, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 573899108
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826318738373770, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_789126930
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826318738373770, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 789126930
-      objectReference: {fileID: 0}
-    - target: {fileID: 114955316900288512, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1452091492
-      objectReference: {fileID: 0}
-    - target: {fileID: 114955316900288512, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1452091492
-      objectReference: {fileID: 0}
-    - target: {fileID: 114796302207229828, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_1329847370
-      objectReference: {fileID: 0}
-    - target: {fileID: 114796302207229828, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 1329847370
-      objectReference: {fileID: 0}
-    - target: {fileID: 114669136307004606, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1035898214
-      objectReference: {fileID: 0}
-    - target: {fileID: 114669136307004606, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1035898214
-      objectReference: {fileID: 0}
-    - target: {fileID: 114480606640151116, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_508872771
-      objectReference: {fileID: 0}
-    - target: {fileID: 114480606640151116, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 508872771
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826107287060162, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1391120731
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826107287060162, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1391120731
-      objectReference: {fileID: 0}
-    - target: {fileID: 114652301427952730, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_781245433
-      objectReference: {fileID: 0}
-    - target: {fileID: 114652301427952730, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: 781245433
-      objectReference: {fileID: 0}
-    - target: {fileID: 114418034961884822, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_lightingMeshName
-      value: default_-1447830730
-      objectReference: {fileID: 0}
-    - target: {fileID: 114418034961884822, guid: 7153c06638e864e148d878b0deea15d3,
-        type: 2}
-      propertyPath: m_bakeId
-      value: -1447830730
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1633372811078998, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1328578329041696, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1614792021140834, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031247870925768, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7153c06638e864e148d878b0deea15d3, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &121299348 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1999462993641034, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!1 &121299349 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1193507757149614, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!1 &121299350 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1503159923045142, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!1 &121299351 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1037626431903784, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!1 &121299352 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1607575595815384, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!1 &121299353 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1163868216178198, guid: 7153c06638e864e148d878b0deea15d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 121299347}
---- !u!114 &121299354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1216845380
-  m_bakeId: -1216845380
---- !u!114 &121299355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-552552947
-  m_bakeId: -552552947
---- !u!114 &121299356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1866966129
-  m_bakeId: -1866966129
---- !u!114 &121299357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-985195072
-  m_bakeId: -985195072
---- !u!114 &121299358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_447455502
-  m_bakeId: 447455502
---- !u!114 &121299359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 121299353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
-    type: 2}
-  m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-825972963
-  m_bakeId: -825972963
 --- !u!1 &222415644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,7 +550,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 222415645}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LightSet_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1663,7 +945,7 @@ GameObject:
   - component: {fileID: 432857292}
   - component: {fileID: 432857295}
   - component: {fileID: 432857294}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LampPost_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1839,7 +1121,7 @@ GameObject:
   - component: {fileID: 504681217}
   - component: {fileID: 504681219}
   - component: {fileID: 504681218}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Brazier_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2030,7 +1312,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 644395242}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LightSet_Realtime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2299,7 +1581,7 @@ GameObject:
   - component: {fileID: 862004864}
   - component: {fileID: 862004867}
   - component: {fileID: 862004866}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LampPost_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2377,7 +1659,7 @@ GameObject:
   - component: {fileID: 864876352}
   - component: {fileID: 864876354}
   - component: {fileID: 864876353}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Brazier_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2931,7 +2213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
-  m_activeLightCount: 8
+  m_activeLightCount: 4
 --- !u!114 &1067642050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2944,7 +2226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
-  m_activeLightCount: 8
+  m_activeLightCount: 4
 --- !u!1001 &1080519640
 Prefab:
   m_ObjectHideFlags: 0
@@ -3259,7 +2541,7 @@ GameObject:
   - component: {fileID: 1211878515}
   - component: {fileID: 1211878517}
   - component: {fileID: 1211878516}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Spot_Moon_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3544,7 +2826,7 @@ GameObject:
   - component: {fileID: 1365081079}
   - component: {fileID: 1365081081}
   - component: {fileID: 1365081080}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Tree_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3622,7 +2904,7 @@ GameObject:
   - component: {fileID: 1380844861}
   - component: {fileID: 1380844863}
   - component: {fileID: 1380844862}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Spot_Moon_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3773,7 +3055,7 @@ GameObject:
   - component: {fileID: 1395902648}
   - component: {fileID: 1395902650}
   - component: {fileID: 1395902649}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Brazier_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4391,7 +3673,7 @@ GameObject:
   - component: {fileID: 1710043249}
   - component: {fileID: 1710043251}
   - component: {fileID: 1710043250}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LightVessel_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4660,7 +3942,7 @@ GameObject:
   - component: {fileID: 1751931065}
   - component: {fileID: 1751931067}
   - component: {fileID: 1751931066}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LightVessel_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5058,7 +4340,7 @@ GameObject:
   - component: {fileID: 1863442946}
   - component: {fileID: 1863442949}
   - component: {fileID: 1863442948}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_LampPost_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5250,7 +4532,7 @@ Prefab:
     - target: {fileID: 114064608072274174, guid: 12df8e28906cf439e881f226e6cb25b8,
         type: 2}
       propertyPath: validTeleportLayers.m_Bits
-      value: 16384
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114064608072274174, guid: 12df8e28906cf439e881f226e6cb25b8,
         type: 2}
@@ -5292,7 +4574,7 @@ GameObject:
   - component: {fileID: 1914080827}
   m_Layer: 0
   m_Name: Music
-  m_TagString: Music
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5366,7 +4648,7 @@ GameObject:
   - component: {fileID: 1917811085}
   - component: {fileID: 1917811087}
   - component: {fileID: 1917811086}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Tree_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5768,7 +5050,7 @@ GameObject:
   - component: {fileID: 2096944956}
   - component: {fileID: 2096944958}
   - component: {fileID: 2096944957}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Moon_Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5910,6 +5192,50 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2114681413}
+--- !u!1 &2115852936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2115852938}
+  - component: {fileID: 2115852937}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2115852937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2115852936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a00605732ed24fceadef881dd96b06b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerNames:
+  - Ignore DDRenderer
+  - DDRenderer
+  - Dynamic
+--- !u!4 &2115852938
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2115852936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116382199
 GameObject:
   m_ObjectHideFlags: 0
@@ -6018,7 +5344,7 @@ GameObject:
   - component: {fileID: 2116936797}
   - component: {fileID: 2116936798}
   - component: {fileID: 2116936799}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Point_Moon_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}

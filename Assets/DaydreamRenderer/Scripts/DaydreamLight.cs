@@ -59,7 +59,7 @@ namespace daydreamrenderer
 
         // dist from light to object
         [System.NonSerialized]
-        public float m_dist;
+        public float m_dist = 0f;
         // light data wraps a light
         [System.NonSerialized]
         public Light m_light;
@@ -325,7 +325,7 @@ namespace daydreamrenderer
         {
             for (int i = 0, k = s_masterLightArray.Length; i < k; ++i)
             {
-                if (s_masterLightArray[i].m_propertiesChanged || s_masterLightList[i].m_transformChanged)
+                if (s_masterLightArray[i].m_propertiesChanged || s_masterLightList[i].m_transformChanged || !s_masterLightArray[i].m_didInit)
                 {
                     return true;
                 }
@@ -362,27 +362,15 @@ namespace daydreamrenderer
 
                 if (dl.m_type != LightType.Directional)
                 {
-                    // distance to the i'th lighta
-#if UNITY_EDITOR
-                    if (!Application.isPlaying)
-                    {
-                        dl.m_dist = 0f;
-                    }
-#endif
+                    // from cam to light
+                    objPosition = bounds.center;
 
-                    if (dl.m_transformChanged || dl.m_propertiesChanged || dl.m_dist == 0f)
-                    {
-
-                        // from cam to light
-                        objPosition = bounds.center;//ClosestPoint(dl.m_worlPos);
-
-                        // only update if needed
-                        float range2 = dl.m_lastRange * dl.m_lastRange;
-                        float x = (dl.m_worlPos.x - objPosition.x)*(dl.m_worlPos.x - objPosition.x);
-                        float y = (dl.m_worlPos.y - objPosition.y)*(dl.m_worlPos.y - objPosition.y);
-                        float z = (dl.m_worlPos.z - objPosition.z)*(dl.m_worlPos.z - objPosition.z);
-                        dl.m_dist = (x + y + z) - range2;
-                    }
+                    // only update if needed
+                    float range2 = dl.m_lastRange * dl.m_lastRange;
+                    float x = (dl.m_worlPos.x - objPosition.x)*(dl.m_worlPos.x - objPosition.x);
+                    float y = (dl.m_worlPos.y - objPosition.y)*(dl.m_worlPos.y - objPosition.y);
+                    float z = (dl.m_worlPos.z - objPosition.z)*(dl.m_worlPos.z - objPosition.z);
+                    dl.m_dist = (x + y + z) - range2;
 
                     dist2 = dl.m_dist;
 

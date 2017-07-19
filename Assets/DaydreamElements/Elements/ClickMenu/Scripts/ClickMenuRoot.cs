@@ -38,16 +38,26 @@ namespace DaydreamElements.ClickMenu {
     public delegate void MenuClosedEvent();
     public event MenuClosedEvent OnMenuClosed;
 
-    public delegate void ItemSelectedEvent(int id);
+    public delegate void ItemSelectedEvent(ClickMenuItem id);
     public event ItemSelectedEvent OnItemSelected;
 
-    public delegate void ItemHoveredEvent(int id);
+    public delegate void ItemHoveredEvent(ClickMenuItem id);
     public event ItemHoveredEvent OnItemHovered;
 
+    [Tooltip("The tree of menu items")]
     public ClickMenuTree menuTree;
+
+    [Tooltip("(Optional) The center icon")]
     public Sprite backIcon;
+
+    [Tooltip("(Optional) Moves reticle closer on hover")]
     public GvrLaserPointer laserPointer;
+
+    [Tooltip("(Optional) Background material for the menu")]
     public Material pieMaterial;
+
+    [Tooltip("Scale applied to all the icons")]
+    public float iconScale = .1f;
 
     public enum GvrMenuActivationButton {
       ClickButtonDown,
@@ -55,8 +65,10 @@ namespace DaydreamElements.ClickMenu {
       AppButtonDown,
       AppButtonUp
     }
+    [Tooltip("Input event to trigger the menu")]
     public GvrMenuActivationButton menuActivationButton = GvrMenuActivationButton.ClickButtonDown;
 
+    [Tooltip("Prefab used for each item in the menu")]
     public ClickMenuIcon menuIconPrefab;
 
     [Tooltip("Maximum number of meters the reticle can move per frame.")]
@@ -80,6 +92,7 @@ namespace DaydreamElements.ClickMenu {
     /// the max distance will fall short of the menu by an increasing amount as the
     /// pointer moves away from the center of the menu.
     private const float POINTER_DISTANCE_SCALE = 1.15f;
+
 
     void Awake() {
       selected = false;
@@ -158,7 +171,6 @@ namespace DaydreamElements.ClickMenu {
         }
       }
     }
-
     void Update() {
       // Shorten laser when menus are open
       if (dummyParent) {
@@ -173,8 +185,8 @@ namespace DaydreamElements.ClickMenu {
           reticleDistance = laserPointer.maxReticleDistance;
           dummyParent = (ClickMenuIcon)Instantiate(menuIconPrefab, transform);
           dummyParent.menuRoot = this;
-          ClickMenuIcon.OpenMenu(this, menuTree.tree.Root, dummyParent,
-                                 menuCenter, menuOrientation, 0.1f);
+          ClickMenuIcon.ShowMenu(this, menuTree.tree.Root, dummyParent,
+                                 menuCenter, menuOrientation, iconScale);
           dummyParent.SetDummy();
           if (OnMenuOpened != null) {
             OnMenuOpened.Invoke();
@@ -184,8 +196,8 @@ namespace DaydreamElements.ClickMenu {
                  IsPointingAway()) {
         CloseAll();
       } else if (dummyParent && GvrController.AppButtonUp) {
-        MakeSelection(-1);
-        dummyParent.DeepestMenu().CloseSubMenu();
+        MakeSelection(null);
+        dummyParent.DeepestMenu().ShowParentMenu();
       }
     }
 
@@ -197,15 +209,15 @@ namespace DaydreamElements.ClickMenu {
       selected = false;
     }
 
-    public void MakeSelection(int id) {
+    public void MakeSelection(ClickMenuItem item) {
       if (OnItemSelected != null) {
-        OnItemSelected.Invoke(id);
+        OnItemSelected.Invoke(item);
       }
     }
 
-    public void MakeHover(int id) {
+    public void MakeHover(ClickMenuItem item) {
       if (OnItemHovered != null) {
-        OnItemHovered.Invoke(id);
+        OnItemHovered.Invoke(item);
       }
     }
   }

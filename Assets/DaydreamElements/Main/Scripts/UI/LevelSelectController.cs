@@ -79,7 +79,7 @@ namespace DaydreamElements.Main {
     private GameObject pointer;
     private bool isTransitioningLevel;
 
-    private const string LEVEL_SELECT_LAYER_NAME = "LevelSelect";
+    private const string LEVEL_SELECT_LAYER_NAME = "UI";
 
     public MenuState CurrentState {
       get {

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 225000012001351408}
   - component: {fileID: 114000010376186052}
   - component: {fileID: 114000011272324594}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: LevelSelectPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224000013302225162}
   - component: {fileID: 114000013978039662}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}

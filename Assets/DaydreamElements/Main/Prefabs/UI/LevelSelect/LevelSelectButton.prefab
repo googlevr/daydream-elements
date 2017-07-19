@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114000011153899336}
   - component: {fileID: 114000011818894786}
   - component: {fileID: 114000013735682446}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 224000011393684418}
   - component: {fileID: 222000011209895996}
   - component: {fileID: 114000011992806886}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010010539086}
   - component: {fileID: 114000012815368534}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: TileHoverSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224000013456162912}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: LevelSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013860424494}
   - component: {fileID: 114000011236028908}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: TileClickSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}

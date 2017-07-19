@@ -17,6 +17,7 @@
 using UnityEngine;
 using System.Collections;
 using daydreamrenderer;
+using System.Collections.Generic;
 
 public class ChangeLighting : MonoBehaviour {
 
@@ -27,6 +28,29 @@ public class ChangeLighting : MonoBehaviour {
     public float m_setIndex = 0;
 
     private int m_lastIndex = 0;
+
+    [ContextMenu("Setup Materials")]
+    void SetupMaterials()
+    {
+        List<Material> mats = new List<Material>();
+        List<GameObject> roots = daydreamrenderer.Utilities.GetAllRoots();
+        foreach(GameObject go in roots)
+        {
+            Renderer[] renderers = go.GetComponentsInChildren<Renderer>();
+            foreach(Renderer r in renderers)
+            {
+                foreach(Material m in r.sharedMaterials)
+                {
+                    if (m != null && m.shader.name.ToLower().Contains("daydream"))
+                    {
+                        mats.Add(m);
+                    }
+                }
+            }
+        }
+
+        m_sceneMaterials = mats.ToArray();
+    }
 
     void Start()
     {

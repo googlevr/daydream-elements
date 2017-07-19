@@ -189,7 +189,8 @@ namespace DaydreamElements.ClickMenu {
       menuRoot.OnItemSelected += OnItemSelected;
     }
 
-    private void OnItemSelected(int id) {
+    private void OnItemSelected(ClickMenuItem item) {
+      int id = (item ? item.id : -1);
       switch (id) {
       // Brushes
         case 1:

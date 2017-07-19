@@ -6070,6 +6070,7 @@ MonoBehaviour:
   m_fogSettings: 0
   m_showFPS: 0
   m_maxShadowCasters: 1
+  m_daydreamLighting: 1
   m_uiEnabled: 0
   m_globalAmbientUp: {r: 0.07439446, g: 0.07439446, b: 0.11764705, a: 1}
   m_globalAmbientDn: {r: 0.05, g: 0.05, b: 0.025, a: 1}
@@ -6081,6 +6082,8 @@ MonoBehaviour:
   m_heightFogEnable: 1
   m_fogMode: 1
   m_enableEnlighten: 0
+  m_enableManualLightingComponents: 0
+  m_enableStaticLightingForScene: 0
 --- !u!4 &1912202003
 Transform:
   m_ObjectHideFlags: 0

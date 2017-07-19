@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 346186771}
   m_Layer: 0
   m_Name: Music
-  m_TagString: Music
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2104,7 +2104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0.4}
+  m_AnchoredPosition: {x: -30, y: 0.39999998}
   m_SizeDelta: {x: 75, y: 3}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1530852272
@@ -3019,7 +3019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 112, y: -0}
+  m_AnchoredPosition: {x: 112, y: 0}
   m_SizeDelta: {x: 296, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1785025287

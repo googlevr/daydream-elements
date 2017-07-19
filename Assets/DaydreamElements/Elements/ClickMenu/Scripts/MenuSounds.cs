@@ -41,15 +41,15 @@ namespace DaydreamElements.ClickMenu {
       }
     }
 
-    private void OnItemSelected(int id) {
-      if (id == -1) {
+    private void OnItemSelected(ClickMenuItem item) {
+      if (item == null || item.id == -1) {
         audioBack.Play();
       } else {
         audioSelect.Play();
       }
     }
 
-    private void OnItemHovered(int id) {
+    private void OnItemHovered(ClickMenuItem item) {
       audioHover.Play();
     }
 

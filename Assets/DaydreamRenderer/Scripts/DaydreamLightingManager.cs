@@ -36,7 +36,7 @@ namespace daydreamrenderer
         public static bool m_frameStarted = true;
 
         private int m_lightCount = 0;
-        private bool daydreamLightingEnabled;
+        private int m_startupCount = 0;
         private bool m_callbacksEnabled = false;
 
 #if UNITY_EDITOR
@@ -62,6 +62,7 @@ namespace daydreamrenderer
         static DaydreamLightingManager()
         {
             Init();
+            DaydreamMeshRenderer.s_startup = true;
         }
 
         public void SetupCallbacks()
@@ -70,6 +71,7 @@ namespace daydreamrenderer
             Camera.onPreCull -= OnPreCull;
             Camera.onPreRender += ProcessLighting;
             Camera.onPreCull += OnPreCull;
+            Camera.onPostRender += OnPostRender;
 
             m_callbacksEnabled = true;
         }
@@ -78,6 +80,7 @@ namespace daydreamrenderer
         {
             Camera.onPreRender -= ProcessLighting;
             Camera.onPreCull -= OnPreCull;
+            Camera.onPostRender -= OnPostRender;
 
             m_callbacksEnabled = false;
         }
@@ -86,6 +89,16 @@ namespace daydreamrenderer
         {
             DaydreamLightingManager.s_objectList.Clear();
             DaydreamMeshRenderer.Clear();
+        }
+
+        public void OnPostRender(Camera camera)
+        {
+            if(m_startupCount++ >= Mathf.Max(3, Camera.allCamerasCount))
+            {
+                m_startupCount = 0;
+                DaydreamMeshRenderer.s_startup = false;
+                Camera.onPostRender -= OnPostRender;
+            }
         }
 
         public void ProcessLighting(Camera camera)
@@ -99,6 +112,7 @@ namespace daydreamrenderer
 
             #if UNITY_EDITOR
             for(int i = 0, k = s_inEditorUpdateList.Count; i < k; ++i){
+                if (i >= s_inEditorUpdateList.Count) break;
                 s_inEditorUpdateList[i].InEditorUpdate();
             }
             #endif

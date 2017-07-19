@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4220953569284334}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 64813962657264822}
   - component: {fileID: 114135072713692436}
   - component: {fileID: 114669136307004606}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: S_SkyMonumentArch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 64825010326198848}
   - component: {fileID: 114818922860295874}
   - component: {fileID: 114760658903987568}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BrazierBase_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 64796140788238664}
   - component: {fileID: 114656962095308428}
   - component: {fileID: 114253779057410352}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,6 +150,8 @@ GameObject:
   - component: {fileID: 33654151221069578}
   - component: {fileID: 23488145641200958}
   - component: {fileID: 114289742577354602}
+  - component: {fileID: 114747676285753306}
+  - component: {fileID: 114854393925675262}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -184,7 +186,7 @@ GameObject:
   - component: {fileID: 23656229232719624}
   - component: {fileID: 114429784946872172}
   - component: {fileID: 114059798268698324}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_03_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +205,7 @@ GameObject:
   - component: {fileID: 23941971528478278}
   - component: {fileID: 114260001012061832}
   - component: {fileID: 114424580226844226}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_02_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +224,7 @@ GameObject:
   - component: {fileID: 23246350433840740}
   - component: {fileID: 114240680892183706}
   - component: {fileID: 114050946099540192}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: metal_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +261,7 @@ GameObject:
   - component: {fileID: 23391481761316974}
   - component: {fileID: 114826107287060162}
   - component: {fileID: 114832025757930018}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_04_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +281,7 @@ GameObject:
   - component: {fileID: 64346207709951614}
   - component: {fileID: 114869954511220920}
   - component: {fileID: 114060240381989962}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +300,7 @@ GameObject:
   - component: {fileID: 23889562108393504}
   - component: {fileID: 114418034961884822}
   - component: {fileID: 114913547009442014}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_03_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +319,7 @@ GameObject:
   - component: {fileID: 23225865965641184}
   - component: {fileID: 114708576672908218}
   - component: {fileID: 114035049493701088}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_05_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +338,7 @@ GameObject:
   - component: {fileID: 23781330490289174}
   - component: {fileID: 114186850863749668}
   - component: {fileID: 114034060287040168}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_04_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,6 +392,8 @@ GameObject:
   - component: {fileID: 33101653056012754}
   - component: {fileID: 23457978516710096}
   - component: {fileID: 114431577776361992}
+  - component: {fileID: 114942419959253200}
+  - component: {fileID: 114755311945776090}
   m_Layer: 0
   m_Name: Stars
   m_TagString: Untagged
@@ -443,7 +447,7 @@ GameObject:
   - component: {fileID: 23675675066332778}
   - component: {fileID: 114009836382182818}
   - component: {fileID: 114474255986543266}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_02_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +466,7 @@ GameObject:
   - component: {fileID: 23917165302745638}
   - component: {fileID: 114160185553465418}
   - component: {fileID: 114523517893149968}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_01_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,6 +503,8 @@ GameObject:
   - component: {fileID: 33748999824671922}
   - component: {fileID: 23025253246274206}
   - component: {fileID: 114521428717846798}
+  - component: {fileID: 114832090696349510}
+  - component: {fileID: 114772634458319414}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -517,6 +523,8 @@ GameObject:
   - component: {fileID: 33516225044084978}
   - component: {fileID: 23560933073302234}
   - component: {fileID: 114849711713329516}
+  - component: {fileID: 114705989773116132}
+  - component: {fileID: 114369683975254914}
   m_Layer: 0
   m_Name: Sphere (4)
   m_TagString: Untagged
@@ -537,7 +545,7 @@ GameObject:
   - component: {fileID: 64031105813145026}
   - component: {fileID: 114170659360593262}
   - component: {fileID: 114131193707382094}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: S_SkyMonumentGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,7 +583,7 @@ GameObject:
   - component: {fileID: 23807719073760226}
   - component: {fileID: 114394878310892092}
   - component: {fileID: 114399937378878284}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: metal_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +675,7 @@ GameObject:
   - component: {fileID: 23691142702963954}
   - component: {fileID: 114401815678839242}
   - component: {fileID: 114570431152938306}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_01_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +690,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4810938975987272}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LampPost (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,7 +728,7 @@ GameObject:
   - component: {fileID: 23185170118233828}
   - component: {fileID: 114606151285015652}
   - component: {fileID: 114559766511233200}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_05_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +747,7 @@ GameObject:
   - component: {fileID: 23032035855661890}
   - component: {fileID: 114447097676574546}
   - component: {fileID: 114399531525808290}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_01_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +767,7 @@ GameObject:
   - component: {fileID: 64046944838830170}
   - component: {fileID: 114579680955511588}
   - component: {fileID: 114480606640151116}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +787,7 @@ GameObject:
   - component: {fileID: 64257733135800594}
   - component: {fileID: 114534820060709306}
   - component: {fileID: 114381023326627898}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +824,7 @@ GameObject:
   - component: {fileID: 23055126904346130}
   - component: {fileID: 114577988663814062}
   - component: {fileID: 114710916382292596}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_05_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +843,7 @@ GameObject:
   - component: {fileID: 23707179657096854}
   - component: {fileID: 114780879248055618}
   - component: {fileID: 114080940757453430}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: bulbs_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,6 +876,8 @@ GameObject:
   - component: {fileID: 33103984428072304}
   - component: {fileID: 23123372472820196}
   - component: {fileID: 114422181975442230}
+  - component: {fileID: 114661061153959778}
+  - component: {fileID: 114666904980276402}
   m_Layer: 0
   m_Name: Sphere (3)
   m_TagString: Untagged
@@ -883,7 +893,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4403986397138018}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LampPost (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +969,7 @@ GameObject:
   - component: {fileID: 23074149311931330}
   - component: {fileID: 114008508576811166}
   - component: {fileID: 114480211883971350}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: bulbs_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -978,7 +988,7 @@ GameObject:
   - component: {fileID: 23817943549687190}
   - component: {fileID: 114652301427952730}
   - component: {fileID: 114710965234405732}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: bulbs_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -993,7 +1003,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4524845171602520}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LampPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,6 +1021,8 @@ GameObject:
   - component: {fileID: 33678412012748556}
   - component: {fileID: 23984667634374490}
   - component: {fileID: 114557455718173444}
+  - component: {fileID: 114815304728114064}
+  - component: {fileID: 114446110953586214}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1031,7 +1043,7 @@ GameObject:
   - component: {fileID: 64786297402220210}
   - component: {fileID: 114489788874886120}
   - component: {fileID: 114558077097717552}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BrazierBase_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1070,7 +1082,7 @@ GameObject:
   - component: {fileID: 114253856264618674}
   - component: {fileID: 114062730104656522}
   - component: {fileID: 64964015653049582}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: WingRightPlaceholder_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1089,7 +1101,7 @@ GameObject:
   - component: {fileID: 23124145963205000}
   - component: {fileID: 114825899257454254}
   - component: {fileID: 114050403672106502}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_02_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1108,7 +1120,7 @@ GameObject:
   - component: {fileID: 23208006206623046}
   - component: {fileID: 114398431488180298}
   - component: {fileID: 114437000282117328}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_06_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,7 +1135,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4363183950535048}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: CorinthianColumnPlaceholder_GRP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1150,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4434149387696360}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: LampPost (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1153,7 +1165,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4275926280193870}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Decor_Architectural
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1171,7 +1183,7 @@ GameObject:
   - component: {fileID: 33049966155020424}
   - component: {fileID: 23324710295948066}
   - component: {fileID: 114578536939110732}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1190,7 +1202,7 @@ GameObject:
   - component: {fileID: 23724411482336522}
   - component: {fileID: 114417058852643008}
   - component: {fileID: 114908062003529862}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_06_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1241,7 @@ GameObject:
   - component: {fileID: 23047744378474736}
   - component: {fileID: 114955316900288512}
   - component: {fileID: 114785648395439722}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_03_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1248,7 +1260,7 @@ GameObject:
   - component: {fileID: 23309428937392074}
   - component: {fileID: 114313585108296342}
   - component: {fileID: 114796302207229828}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: metal_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1287,7 +1299,7 @@ GameObject:
   - component: {fileID: 23503599599402900}
   - component: {fileID: 114540384586308826}
   - component: {fileID: 114364261342934254}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_04_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1306,7 +1318,7 @@ GameObject:
   - component: {fileID: 23790794739731426}
   - component: {fileID: 114062946862758276}
   - component: {fileID: 114557752945023212}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Back_CorinthianColumn_03_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1325,7 +1337,7 @@ GameObject:
   - component: {fileID: 23630411088443938}
   - component: {fileID: 114366880924806792}
   - component: {fileID: 114874641232135162}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: metal_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1377,7 +1389,7 @@ GameObject:
   - component: {fileID: 23621032191594860}
   - component: {fileID: 114922096135267592}
   - component: {fileID: 114289797510252000}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_04_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,7 +1408,7 @@ GameObject:
   - component: {fileID: 23350259680468502}
   - component: {fileID: 114890832545774018}
   - component: {fileID: 114621306670043326}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_06_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1435,7 +1447,7 @@ GameObject:
   - component: {fileID: 114788858316097192}
   - component: {fileID: 114888527384895946}
   - component: {fileID: 64118742347661044}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: WingLeftPlaceholder_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1450,7 +1462,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4024260032885100}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Decor_Trees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1488,7 +1500,7 @@ GameObject:
   - component: {fileID: 23943832858368454}
   - component: {fileID: 114583877293261810}
   - component: {fileID: 114259666263994550}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Back_CorinthianColumn_01_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1507,7 +1519,7 @@ GameObject:
   - component: {fileID: 23873959294414660}
   - component: {fileID: 114945185204872288}
   - component: {fileID: 114429842603744598}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: bulbs_GEO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1522,7 +1534,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4056446275301918}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: PlaceholderLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1541,7 +1553,7 @@ GameObject:
   - component: {fileID: 23634850625947246}
   - component: {fileID: 114040610348427508}
   - component: {fileID: 114548367662072500}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_06_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1572,7 @@ GameObject:
   - component: {fileID: 23095068281273142}
   - component: {fileID: 114542131401658288}
   - component: {fileID: 114275856017579862}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Lf_Frnt_CorinthianColumn_02_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,7 +1591,7 @@ GameObject:
   - component: {fileID: 23447801496817444}
   - component: {fileID: 114560496658960012}
   - component: {fileID: 114762196079212564}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Rt_Frnt_CorinthianColumn_05_Geo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1612,6 +1624,8 @@ GameObject:
   - component: {fileID: 33057464501388722}
   - component: {fileID: 23903248236759052}
   - component: {fileID: 114327274343115888}
+  - component: {fileID: 114909332765456782}
+  - component: {fileID: 114655575551344018}
   m_Layer: 0
   m_Name: Sphere (5)
   m_TagString: Untagged
@@ -5832,8 +5846,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_106376892
-  m_bakeId: 106376892
+  m_lightingMeshName: default_312693802
+  m_bakeId: 312693802
 --- !u!114 &114009836382182818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5851,8 +5865,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1586136174
-  m_bakeId: -1586136174
+  m_lightingMeshName: default_-1867856416
+  m_bakeId: -1867856416
 --- !u!114 &114028872547921410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5909,8 +5923,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_135635877
-  m_bakeId: 135635877
+  m_lightingMeshName: default_-2066703230
+  m_bakeId: -2066703230
 --- !u!114 &114050403672106502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5941,8 +5955,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-2028691546
-  m_bakeId: -2028691546
+  m_lightingMeshName: default_1597782247
+  m_bakeId: 1597782247
 --- !u!114 &114057824593845140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5999,8 +6013,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-187026115
-  m_bakeId: -187026115
+  m_lightingMeshName: default_-244282355
+  m_bakeId: -244282355
 --- !u!114 &114062730104656522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6031,8 +6045,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1771371719
-  m_bakeId: 1771371719
+  m_lightingMeshName: default_-2138912591
+  m_bakeId: -2138912591
 --- !u!114 &114080940757453430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6063,8 +6077,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1446993153
-  m_bakeId: 1446993153
+  m_lightingMeshName: default_878483665
+  m_bakeId: 878483665
 --- !u!114 &114123837417743178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6095,8 +6109,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-361264176
-  m_bakeId: -361264176
+  m_lightingMeshName: default_1263746297
+  m_bakeId: 1263746297
 --- !u!114 &114135072713692436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6127,8 +6141,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_320145334
-  m_bakeId: 320145334
+  m_lightingMeshName: default_-1691188156
+  m_bakeId: -1691188156
 --- !u!114 &114160185553465418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6146,8 +6160,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_143937898
-  m_bakeId: 143937898
+  m_lightingMeshName: default_952150930
+  m_bakeId: 952150930
 --- !u!114 &114170659360593262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6178,8 +6192,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1769123879
-  m_bakeId: 1769123879
+  m_lightingMeshName: default_726325199
+  m_bakeId: 726325199
 --- !u!114 &114191902070465768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6236,8 +6250,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1353591615
-  m_bakeId: 1353591615
+  m_lightingMeshName: default_898094535
+  m_bakeId: 898094535
 --- !u!114 &114253856264618674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6255,8 +6269,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_2106276609
-  m_bakeId: 2106276609
+  m_lightingMeshName: default_-1673673072
+  m_bakeId: -1673673072
 --- !u!114 &114259666263994550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6287,8 +6301,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1369675960
-  m_bakeId: 1369675960
+  m_lightingMeshName: default_-1624392817
+  m_bakeId: -1624392817
 --- !u!114 &114275856017579862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6358,8 +6372,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1146096365
-  m_bakeId: 1146096365
+  m_lightingMeshName: default_1539979293
+  m_bakeId: 1539979293
 --- !u!114 &114327274343115888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6403,8 +6417,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1165707230
-  m_bakeId: -1165707230
+  m_lightingMeshName: default_2115279171
+  m_bakeId: 2115279171
 --- !u!114 &114364261342934254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6431,6 +6445,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 1
   m_activeLightCount: 8
+--- !u!114 &114369683975254914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193507757149614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-552552947
+  m_bakeId: -552552947
 --- !u!114 &114370901668655756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6448,8 +6481,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1803016615
-  m_bakeId: -1803016615
+  m_lightingMeshName: default_617772641
+  m_bakeId: 617772641
 --- !u!114 &114381023326627898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6467,8 +6500,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1833330707
-  m_bakeId: 1833330707
+  m_lightingMeshName: default_-942923580
+  m_bakeId: -942923580
 --- !u!114 &114394878310892092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6499,8 +6532,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1749999769
-  m_bakeId: 1749999769
+  m_lightingMeshName: default_-1492203736
+  m_bakeId: -1492203736
 --- !u!114 &114399531525808290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6531,8 +6564,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1135571830
-  m_bakeId: -1135571830
+  m_lightingMeshName: default_491993621
+  m_bakeId: 491993621
 --- !u!114 &114401815678839242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6550,8 +6583,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-119717951
-  m_bakeId: -119717951
+  m_lightingMeshName: default_722919091
+  m_bakeId: 722919091
 --- !u!114 &114417058852643008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6569,8 +6602,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1236395067
-  m_bakeId: -1236395067
+  m_lightingMeshName: default_198401933
+  m_bakeId: 198401933
 --- !u!114 &114418034961884822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6588,8 +6621,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1068044461
-  m_bakeId: -1068044461
+  m_lightingMeshName: default_-1447830730
+  m_bakeId: -1447830730
 --- !u!114 &114422181975442230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6633,8 +6666,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1579653788
-  m_bakeId: -1579653788
+  m_lightingMeshName: default_-52890913
+  m_bakeId: -52890913
 --- !u!114 &114429784946872172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6652,8 +6685,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-47147718
-  m_bakeId: -47147718
+  m_lightingMeshName: default_-96542077
+  m_bakeId: -96542077
 --- !u!114 &114429842603744598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6696,6 +6729,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 1
   m_activeLightCount: 8
+--- !u!114 &114446110953586214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607575595815384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_447455502
+  m_bakeId: 447455502
 --- !u!114 &114447097676574546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6713,8 +6765,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1083040009
-  m_bakeId: 1083040009
+  m_lightingMeshName: default_-303904911
+  m_bakeId: -303904911
 --- !u!114 &114474255986543266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6758,8 +6810,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_716599568
-  m_bakeId: 716599568
+  m_lightingMeshName: default_508872771
+  m_bakeId: 508872771
 --- !u!114 &114489788874886120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6777,8 +6829,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-418312196
-  m_bakeId: -418312196
+  m_lightingMeshName: default_906108267
+  m_bakeId: 906108267
 --- !u!114 &114503348058619212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6861,8 +6913,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1051846719
-  m_bakeId: 1051846719
+  m_lightingMeshName: default_796484693
+  m_bakeId: 796484693
 --- !u!114 &114542131401658288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6880,8 +6932,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1167715444
-  m_bakeId: 1167715444
+  m_lightingMeshName: default_1666051151
+  m_bakeId: 1666051151
 --- !u!114 &114548367662072500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6912,8 +6964,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1562153647
-  m_bakeId: 1562153647
+  m_lightingMeshName: default_1317476278
+  m_bakeId: 1317476278
 --- !u!114 &114557455718173444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6983,8 +7035,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1630329506
-  m_bakeId: -1630329506
+  m_lightingMeshName: default_-937960035
+  m_bakeId: -937960035
 --- !u!114 &114560559819712358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7028,8 +7080,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1018489120
-  m_bakeId: 1018489120
+  m_lightingMeshName: default_1296524814
+  m_bakeId: 1296524814
 --- !u!114 &114578536939110732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7073,8 +7125,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-832967347
-  m_bakeId: -832967347
+  m_lightingMeshName: default_-538488999
+  m_bakeId: -538488999
 --- !u!114 &114598742356468482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7092,8 +7144,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-675388175
-  m_bakeId: -675388175
+  m_lightingMeshName: default_-1078029326
+  m_bakeId: -1078029326
 --- !u!114 &114606151285015652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7111,8 +7163,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_2010897902
-  m_bakeId: 2010897902
+  m_lightingMeshName: default_312554765
+  m_bakeId: 312554765
 --- !u!114 &114620293098479806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7169,8 +7221,27 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1006489111
-  m_bakeId: -1006489111
+  m_lightingMeshName: default_781245433
+  m_bakeId: 781245433
+--- !u!114 &114655575551344018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1999462993641034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-1216845380
+  m_bakeId: -1216845380
 --- !u!114 &114656962095308428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7184,6 +7255,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 1
   m_activeLightCount: 8
+--- !u!114 &114661061153959778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1503159923045142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-1866966129
+  m_bakeId: -1866966129
+--- !u!114 &114666904980276402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1503159923045142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-1866966129
+  m_bakeId: -1866966129
 --- !u!114 &114669136307004606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7201,8 +7310,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-130973257
-  m_bakeId: -130973257
+  m_lightingMeshName: default_-1035898214
+  m_bakeId: -1035898214
 --- !u!114 &114669438853036774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7220,8 +7329,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1833631749
-  m_bakeId: 1833631749
+  m_lightingMeshName: default_-1149434700
+  m_bakeId: -1149434700
 --- !u!114 &114682046905492402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7239,8 +7348,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_869053814
-  m_bakeId: 869053814
+  m_lightingMeshName: default_573899108
+  m_bakeId: 573899108
 --- !u!114 &114705947017958290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7254,6 +7363,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 0
   m_activeLightCount: 8
+--- !u!114 &114705989773116132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193507757149614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-552552947
+  m_bakeId: -552552947
 --- !u!114 &114708576672908218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7271,8 +7399,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1149850231
-  m_bakeId: -1149850231
+  m_lightingMeshName: default_556012613
+  m_bakeId: 556012613
 --- !u!114 &114710916382292596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7329,8 +7457,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-561289162
-  m_bakeId: -561289162
+  m_lightingMeshName: default_519127555
+  m_bakeId: 519127555
 --- !u!114 &114744264755901496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7348,8 +7476,40 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_332663475
-  m_bakeId: 332663475
+  m_lightingMeshName: default_-1698119692
+  m_bakeId: -1698119692
+--- !u!114 &114747676285753306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037626431903784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-985195072
+  m_bakeId: -985195072
+--- !u!114 &114755311945776090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122289071177672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_static: 0
+  m_activeLightCount: 4
 --- !u!114 &114760658903987568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7393,8 +7553,27 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1960162419
-  m_bakeId: -1960162419
+  m_lightingMeshName: default_-542547815
+  m_bakeId: -542547815
+--- !u!114 &114772634458319414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163868216178198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-825972963
+  m_bakeId: -825972963
 --- !u!114 &114780879248055618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7412,8 +7591,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1010002575
-  m_bakeId: 1010002575
+  m_lightingMeshName: default_832954954
+  m_bakeId: 832954954
 --- !u!114 &114780959899322502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7431,8 +7610,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1676992233
-  m_bakeId: 1676992233
+  m_lightingMeshName: default_1956906936
+  m_bakeId: 1956906936
 --- !u!114 &114781615308776350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7476,8 +7655,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-190031063
-  m_bakeId: -190031063
+  m_lightingMeshName: default_-1302677236
+  m_bakeId: -1302677236
 --- !u!114 &114796302207229828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7495,8 +7674,27 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1303405582
-  m_bakeId: 1303405582
+  m_lightingMeshName: default_1329847370
+  m_bakeId: 1329847370
+--- !u!114 &114815304728114064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607575595815384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_447455502
+  m_bakeId: 447455502
 --- !u!114 &114818922860295874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7514,8 +7712,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-209471712
-  m_bakeId: -209471712
+  m_lightingMeshName: default_731546518
+  m_bakeId: 731546518
 --- !u!114 &114825899257454254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7533,8 +7731,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1124155514
-  m_bakeId: -1124155514
+  m_lightingMeshName: default_-390725690
+  m_bakeId: -390725690
 --- !u!114 &114826107287060162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7552,8 +7750,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1353467254
-  m_bakeId: -1353467254
+  m_lightingMeshName: default_-1391120731
+  m_bakeId: -1391120731
 --- !u!114 &114826318738373770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7571,8 +7769,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-63836458
-  m_bakeId: -63836458
+  m_lightingMeshName: default_789126930
+  m_bakeId: 789126930
 --- !u!114 &114828833726437826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7599,6 +7797,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 1
   m_activeLightCount: 8
+--- !u!114 &114832090696349510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163868216178198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-825972963
+  m_bakeId: -825972963
 --- !u!114 &114849711713329516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7629,8 +7846,27 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_2094221162
-  m_bakeId: 2094221162
+  m_lightingMeshName: default_-2010339078
+  m_bakeId: -2010339078
+--- !u!114 &114854393925675262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037626431903784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-985195072
+  m_bakeId: -985195072
 --- !u!114 &114869954511220920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7661,8 +7897,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1930258431
-  m_bakeId: -1930258431
+  m_lightingMeshName: default_103238141
+  m_bakeId: 103238141
 --- !u!114 &114881386423461698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7680,8 +7916,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-946025567
-  m_bakeId: -946025567
+  m_lightingMeshName: default_-433845518
+  m_bakeId: -433845518
 --- !u!114 &114888527384895946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7712,8 +7948,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1105394707
-  m_bakeId: 1105394707
+  m_lightingMeshName: default_-171702191
+  m_bakeId: -171702191
 --- !u!114 &114908062003529862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7727,6 +7963,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 1
   m_activeLightCount: 8
+--- !u!114 &114909332765456782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1999462993641034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07656beaf8e1ee941aceff075c373d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sourceMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_bakeSets: {fileID: 114263763698358838, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
+    type: 2}
+  m_originalMesh: {fileID: 0}
+  m_lightingMeshName: default_-1216845380
+  m_bakeId: -1216845380
 --- !u!114 &114913547009442014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7757,8 +8012,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_-1845163582
-  m_bakeId: -1845163582
+  m_lightingMeshName: default_-1687132408
+  m_bakeId: -1687132408
 --- !u!114 &114936119493931302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7785,6 +8040,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_static: 0
   m_activeLightCount: 8
+--- !u!114 &114942419959253200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122289071177672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638db0180ef2f438cae6341bf3c73797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_static: 0
+  m_activeLightCount: 4
 --- !u!114 &114945185204872288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7802,8 +8070,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_1859150240
-  m_bakeId: 1859150240
+  m_lightingMeshName: default_-342434662
+  m_bakeId: -342434662
 --- !u!114 &114955316900288512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7821,8 +8089,8 @@ MonoBehaviour:
   m_currentContainer: {fileID: 114537512318549526, guid: e12a76fb57cbfdf4b85f6ba689700bf3,
     type: 2}
   m_originalMesh: {fileID: 0}
-  m_lightingMeshName: default_332623301
-  m_bakeId: 332623301
+  m_lightingMeshName: default_-1452091492
+  m_bakeId: -1452091492
 --- !u!114 &114960696107029152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7876,41 +8144,19 @@ ParticleSystem:
   playOnAwake: 1
   autoRandomSeed: 1
   startDelay:
+    serializedVersion: 2
     minMaxState: 0
     scalar: 0
+    minScalar: 0
     maxCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     minCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -7922,8 +8168,10 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 10
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7961,8 +8209,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     startSpeed:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0.1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8002,6 +8252,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 0
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.99310344, g: 1, b: 0.875, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -8060,11 +8312,11 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.99310344, g: 1, b: 0.875, a: 1}
     startSize:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 0.1
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8090,8 +8342,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     startSizeY:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8117,8 +8371,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     startSizeZ:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8144,8 +8400,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     startRotationX:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8183,8 +8441,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     startRotationY:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8222,8 +8482,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     startRotation:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8265,8 +8527,10 @@ ParticleSystem:
     size3D: 0
     rotation3D: 0
     gravityModifier:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8317,8 +8581,10 @@ ParticleSystem:
       mode: 0
       spread: 0
       speed:
+        serializedVersion: 2
         minMaxState: 0
         scalar: 1
+        minScalar: 0
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -8360,8 +8626,10 @@ ParticleSystem:
       mode: 0
       spread: 0
       speed:
+        serializedVersion: 2
         minMaxState: 0
         scalar: 1
+        minScalar: 0
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -8414,8 +8682,10 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 4
     rateOverTime:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 10
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8453,8 +8723,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     rateOverDistance:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8496,8 +8768,10 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8523,8 +8797,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     y:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8550,8 +8826,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     z:
+      serializedVersion: 2
       minMaxState: 3
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8580,8 +8858,10 @@ ParticleSystem:
   RotationModule:
     enabled: 0
     x:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8619,8 +8899,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8658,8 +8940,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     curve:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0.7853982
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8702,6 +8986,8 @@ ParticleSystem:
     gradient:
       serializedVersion: 2
       minMaxState: 3
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
@@ -8760,13 +9046,13 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 7
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
   UVModule:
     enabled: 0
     frameOverTime:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 0.9999
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8804,8 +9090,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     startFrame:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8854,8 +9142,10 @@ ParticleSystem:
   VelocityModule:
     enabled: 0
     x:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8893,8 +9183,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8932,8 +9224,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     z:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8975,8 +9269,10 @@ ParticleSystem:
     enabled: 0
     m_Mode: 0
     m_Curve:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9016,8 +9312,10 @@ ParticleSystem:
   ForceModule:
     enabled: 0
     x:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9055,8 +9353,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9094,8 +9394,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     z:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9140,8 +9442,10 @@ ParticleSystem:
   ClampVelocityModule:
     enabled: 0
     x:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9179,8 +9483,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9218,8 +9524,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     z:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9257,8 +9565,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     magnitude:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9301,8 +9611,10 @@ ParticleSystem:
   NoiseModule:
     enabled: 0
     strength:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9340,8 +9652,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     strengthY:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9379,8 +9693,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     strengthZ:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9425,8 +9741,10 @@ ParticleSystem:
     octaveScale: 2
     quality: 2
     scrollSpeed:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9464,8 +9782,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     remap:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9503,8 +9823,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     remapY:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9542,8 +9864,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     remapZ:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9584,8 +9908,10 @@ ParticleSystem:
   SizeBySpeedModule:
     enabled: 0
     curve:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9623,8 +9949,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9662,8 +9990,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     z:
+      serializedVersion: 2
       minMaxState: 1
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9705,8 +10035,10 @@ ParticleSystem:
   RotationBySpeedModule:
     enabled: 0
     x:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9744,8 +10076,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9783,8 +10117,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     curve:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0.7853982
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9828,6 +10164,8 @@ ParticleSystem:
     gradient:
       serializedVersion: 2
       minMaxState: 1
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9886,8 +10224,6 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
     range: {x: 0, y: 1}
   CollisionModule:
     enabled: 0
@@ -9901,8 +10237,10 @@ ParticleSystem:
     plane4: {fileID: 0}
     plane5: {fileID: 0}
     m_Dampen:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9940,8 +10278,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_Bounce:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9979,8 +10319,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_EnergyLossOnCollision:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10058,8 +10400,10 @@ ParticleSystem:
     range: 1
     intensity: 1
     rangeCurve:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10097,8 +10441,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     intensityCurve:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10140,8 +10486,10 @@ ParticleSystem:
     enabled: 0
     ratio: 1
     lifetime:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10188,6 +10536,8 @@ ParticleSystem:
     colorOverLifetime:
       serializedVersion: 2
       minMaxState: 0
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10246,11 +10596,11 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
     widthOverTrail:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 1
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10290,6 +10640,8 @@ ParticleSystem:
     colorOverTrail:
       serializedVersion: 2
       minMaxState: 0
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10348,8 +10700,6 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
   CustomDataModule:
     enabled: 0
     mode0: 0
@@ -10357,6 +10707,8 @@ ParticleSystem:
     color0:
       serializedVersion: 2
       minMaxState: 0
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10415,11 +10767,11 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
     vector0_0:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10457,8 +10809,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector0_1:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10496,8 +10850,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector0_2:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10535,8 +10891,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector0_3:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10578,6 +10936,8 @@ ParticleSystem:
     color1:
       serializedVersion: 2
       minMaxState: 0
+      minColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10636,11 +10996,11 @@ ParticleSystem:
         m_Mode: 0
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
-      minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
     vector1_0:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10678,8 +11038,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector1_1:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10717,8 +11079,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector1_2:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10756,8 +11120,10 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vector1_3:
+      serializedVersion: 2
       minMaxState: 0
       scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:

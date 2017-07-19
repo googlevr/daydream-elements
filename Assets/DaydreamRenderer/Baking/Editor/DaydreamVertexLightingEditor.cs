@@ -169,20 +169,33 @@ namespace daydreamrenderer
 
         void OnGUI()
         {
-            if(SceneManager.GetActiveScene().name == "")
+
+            DaydreamRenderer renderer = FindObjectOfType<DaydreamRenderer>();
+            if (renderer == null)
+            {
+                GUILayout.Space(50);
+                EditorGUILayout.HelpBox("Enable Daydream Renderer To Start Baking", MessageType.Info);
+                if (GUILayout.Button("Launch Daydream Wizard"))
+                {
+                    DaydreamRendererImportManager.OpenWindow();
+                }
+                return;
+            }
+
+            if (SceneManager.GetActiveScene().name == "")
             {
                 GUILayout.Space(50);
                 EditorGUILayout.HelpBox("Save the scene to begin baking", MessageType.Info);
                 return;
             }
 
-            if (!DaydreamRendererImportSettings.BakingEnabledForScene)
+            if (!renderer.m_enableStaticLightingForScene)
             {
                 GUILayout.Space(50);
                 EditorGUILayout.HelpBox("Enable vertex baking to use Daydream Static Lighting", MessageType.Info);
                 if (GUILayout.Button("Enable Vertex Baking For Scene"))
                 {
-                    DaydreamRendererImportSettings.BakingEnabledForScene = true;
+                    renderer.m_enableStaticLightingForScene = true;
                 }
                 return;
             }

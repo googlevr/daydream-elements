@@ -35,6 +35,7 @@ namespace daydreamrenderer
 
         // setting this flag to false causes meshes to stop processing lights
         public static bool s_ignoreLights = false;
+        public static bool s_startup = true;
 
         // the 'isStatic' flag on any gameObject is 'editor only' this flag tracks its state and serializes it for use on device
         [HideInInspector]
@@ -51,7 +52,6 @@ namespace daydreamrenderer
 
         // cached references
         Renderer m_renderer;
-        Material[] m_sharedMaterials;
         MaterialPropertyBlock m_propsBlock;
 
         // the light data provided to materials
@@ -88,7 +88,6 @@ namespace daydreamrenderer
         int m_key = 0;
 
         int m_freqKey = -1;
-        bool m_startup = true;
 
         Renderer GetRenderer{
             get{
@@ -102,45 +101,64 @@ namespace daydreamrenderer
 
         bool UpdateSharedMaterials()
         {
-            #if UNITY_EDITOR
-            Material[] mats = m_renderer.sharedMaterials;
-            for (int i = 0, k = mats.Length; i < k; ++i)
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
             {
-                Material m = mats[i];
-                if (!Application.isPlaying && m != null)
+                Material[] mats = m_renderer.sharedMaterials;
+                int ddrMatCount = 0;
+                int maxActiveLights = 0;
+                for (int i = 0, k = mats.Length; i < k; ++i)
                 {
-                    if(!m.shader.name.ToLower().Contains("daydream"))
+                    Material m = mats[i];
+
+                    if (m != null && m.shader.name.ToLower().Contains("daydream"))
                     {
-                        DestroyImmediate(this);
-                        return false;
+                        ddrMatCount++;
+
+                        if (m != null && m.IsKeywordEnabled("MAX_LIGHT_COUNT_8"))
+                        {
+                            if (8 > maxActiveLights)
+                            {
+                                maxActiveLights = 8;
+                            }
+                        }
+                        else if (m != null && m.IsKeywordEnabled("DISABLE_LIGHTING"))
+                        {
+                            if (0 > maxActiveLights)
+                            {
+                                maxActiveLights = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (4 > maxActiveLights)
+                            {
+                                maxActiveLights = 4;
+                            }
+                        }
                     }
-
                 }
 
-                if(m.IsKeywordEnabled("MAX_LIGHT_COUNT_8"))
-                {
-                    m_activeLightCount = 8;
-                }else if(m.IsKeywordEnabled("DISABLE_LIGHTING"))
-                {
-                    m_activeLightCount = 0;
-                }else
-                {
-                    m_activeLightCount = 4;
-                }
+                m_activeLightCount = maxActiveLights;
 
                 // resize the arrays to save CPU time
-                if(m_lightList.Length != m_activeLightCount)
+                if (ddrMatCount <= 0)
                 {
-                    m_lightList = new int[m_activeLightCount];
-                    m_colors = new Vector4[m_activeLightCount];
-                    m_positions = new Vector4[m_activeLightCount];
-                    m_atten = new Vector4[m_activeLightCount];
-                    m_spotDir = new Vector4[m_activeLightCount];
+                    DestroyImmediate(this);
                 }
             }
-            #endif
+#endif
 
-            if(m_propsBlock == null)
+            if (m_lightList.Length != m_activeLightCount)
+            {
+                m_lightList = new int[m_activeLightCount];
+                m_colors = new Vector4[m_activeLightCount];
+                m_positions = new Vector4[m_activeLightCount];
+                m_atten = new Vector4[m_activeLightCount];
+                m_spotDir = new Vector4[m_activeLightCount];
+            }
+
+            if (m_propsBlock == null)
             {
                 m_propsBlock = new MaterialPropertyBlock();
             }
@@ -206,9 +224,6 @@ namespace daydreamrenderer
             UpdateLightAttenuationId();
             UpdateLightColorId();
             UpdateLightSpotDirectionId();
-            
-            // force lights to process
-            m_startup = true;
         }
 
         bool CompareTransforms()
@@ -336,10 +351,9 @@ namespace daydreamrenderer
             if (canUpdateLights)
             {
                 rebuildLights = (m_key != m_upateKey || lightChange);
-                
-                if (rebuildLights || m_startup)
+
+                if (rebuildLights || s_startup)
                 {
-                    m_startup = false;
                     int usedSlots = 0;
                     // rebuild the light array
                     DaydreamLight.GetSortedLights(m_upateKey, gameObject.layer, m_static, transform.position, m_bounds, ref m_lightList, ref usedSlots);
@@ -412,13 +426,13 @@ namespace daydreamrenderer
                 }
             }
 
-            // re-instate the propery block, we do this to not intefere needlessly with batching
+            // re-instate the property block, we do this to not interfere needlessly with batching
             if(!noLights && m_propsBlock == null)
             {
                 m_propsBlock = new MaterialPropertyBlock();
             }
 
-            if(m_propsBlock != null && m_activeLightCount > 0)
+            if (m_propsBlock != null && m_activeLightCount > 0)
             {
                 m_propsBlock.SetVectorArray(s_lightAttenId, m_atten);
                 m_propsBlock.SetVectorArray(s_lightColorId, m_colors);
@@ -428,8 +442,8 @@ namespace daydreamrenderer
 
             m_renderer.SetPropertyBlock(m_propsBlock);
 
-            // we clear the peroperty block when there are not lights in order to not interfere with batching
-            if(noLights)
+            // we clear the property block when there are not lights in order to not interfere with batching
+            if (noLights)
             {
                 m_propsBlock = null;
             }

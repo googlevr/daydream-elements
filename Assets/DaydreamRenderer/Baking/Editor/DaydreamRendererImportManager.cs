@@ -28,11 +28,14 @@ using UnityEditor.SceneManagement;
 
 namespace daydreamrenderer
 {
+    using UnityEditor.AnimatedValues;
     using MatEntry = DaydreamRendererMaterialHistory.Entry;
 
     class DaydreamRendererImportManager : EditorWindow
     {
         public static List<string> m_projectAssetAddDaydream = new List<string>();
+
+        static AnimBool m_UIFade;
 
         static Vector2 m_scrollPosConverted;
         static Vector2 m_scrollPosSplit;
@@ -59,37 +62,98 @@ namespace daydreamrenderer
 
         static class Styles
         {
+            public const string kEditorTitle = "Import Wizard";
             static public GUIStyle s_defaultLabel;
+            public static GUIStyle boldCentered;
+            public static GUIStyle boldButton;
+            public static GUIStyle imageStyle;
+            public static GUIStyle daydreamLightingStyle;
+            public static GUIStyle unityLightingStyle;
+            public static GUIStyle helpText;
+            public static GUIStyle sectionLabel;
+            public static GUIStyle sectionLineStyle;
 
             public const int kSectionSpacing = 35;
 
+            public static Texture2D daydreamLogo = AssetDatabase.LoadAssetAtPath<Texture2D>(BakeData.kDaydreamPath + "Baking/Editor/Images/Daydream_Icon_White_RGB.png");
+            public static Texture2D daydreamLight = AssetDatabase.LoadAssetAtPath<Texture2D>(BakeData.kDaydreamPath + "Baking/Editor/Images/DaydreamLight.png");
+            public static Texture2D unityLight = AssetDatabase.LoadAssetAtPath<Texture2D>(BakeData.kDaydreamPath + "Baking/Editor/Images/NormalLight.png");
+            public static Texture2D section = AssetDatabase.LoadAssetAtPath<Texture2D>(BakeData.kDaydreamPath + "Baking/Editor/Images/Section.png");
+
             public static GUIContent importStaticLightingLabel = new GUIContent("Import daydream static lighting");
             public static GUIContent importStaticLightingButton = new GUIContent("Convert");
-            public static GUIContent addComponents = new GUIContent("Add to Scene", "Adds Daydream lighting system components to scene objects");
-            public static GUIContent addComponentsToProject = new GUIContent("Add to Project Assets", "Adds Daydream lighting components to models and prefabs in the project (assets must have daydream shaders)");
-            public static GUIContent removeComponents = new GUIContent("Remove from Scene", "Removes all Daydream lighting system components from the scene objects");
-            public static GUIContent removeComponentsFromProject = new GUIContent("Remove from Project Assets", "Removes all Daydream lighting system components from models and prefabs in the project");
+            
             public static GUIContent toggleLightingSystem = new GUIContent("Enable Daydream Lighting System", "Daydream replaces the lighting system");
-            public static GUIContent toggleComponents = new GUIContent("Auto add Daydream lighting components in Scene", "Lighting system components will be auto added to the scene (applies only to edit-time)");
+            public static GUIContent ddrNotEnabled = new GUIContent("Daydream Renderer is not enabled for this scene");
+
             public const string kStaticConvertedMaterialListFrmt = "{0} Converted static lighting materials";
             public const string kDynamConvertedMaterialListFrmt = "{0} Converted dynamic lighting materials";
             public const string kDaydreamMaterialListFrmt = "{0} Daydream materials found";
             public const string kStaticSplitMaterialListFrmt = "{0} Split materials references. These materials were shared between a statically " +
                 "lit and non-statically lit objects. The material has been duplicated and changes applied to the static version (used by static objects). " +
                 "The duplicated material(s) can be found in Assets/Materials, appended with '_staticlit'.";
-            public const string kWelcomeMsg = "Welcome to the Daydream Renderer Import Wizard. From here you can easily convert your scene to use Daydream static and dynamic materials and shaders." +
-                " You can also control how the Daydream lighting system is applied to the scene and to project assets.";
+            public const string kDaydreamEnabled = "Daydream Renderer is enabled";
             public const string kObjectsWaiting = "{0} dynamic and {1} static objects waiting for conversion to daydream lighting";
-            public const string kToggleComponentsHelp = "Daydream Renderer can utilize a custom lighting system to provide lighting data to shaders. " + 
+            public const string kToggleComponentsHelp = "Daydream Renderer can utilize a custom lighting system to provide lighting data to shaders. " +
                 "For the best work-flow experience enable this option when using Daydream Renderer static lighting.";
             public const string kEnlightenHelp = "Daydream Renderer static lighting depends on Unity's light states in order apply lighting to static lit objects correctly. " +
                 "In order to have the light states apply to the scene you must bake the scene with the Enlighten at least once. Or, you can enable the Daydream lighting system";
+            
+            // content and styles for lighting system toggle 
+            static public GUIContent m_enableEnlightenUI = new GUIContent("Enable Unity Lighting", "Enable Unity Lighting support.");
+            static public GUIContent m_enableDaydreamUI = new GUIContent("Enable Daydream Lighting", "Daydream Renderer overrides Unity lighting system.");
+            static public GUIContent[] m_lightingSystemUI;
+            public static GUIStyle m_buttonUnselected = new GUIStyle(EditorStyles.toolbar);
+            public static GUIStyle m_buttonSelected = new GUIStyle(EditorStyles.toolbarButton);
+
+            // Lighting system advanced settings
+            public static GUIStyle dropDownStyle = new GUIStyle(EditorStyles.toolbarDropDown);
+            public static GUIStyle dropDownSelectedStyle = new GUIStyle(EditorStyles.toolbarDropDown);
+
             static Styles()
             {
+                boldCentered = new GUIStyle();
+                boldCentered.alignment = TextAnchor.MiddleCenter;
+                boldCentered.fontSize = 18;
+                boldCentered.margin = new RectOffset(10, 10, 10, 10);
+                boldCentered.normal.textColor = Color.white;
+
+                boldButton = new GUIStyle(GUI.skin.GetStyle("button"));
+                boldButton.alignment = TextAnchor.MiddleCenter;
+                boldButton.fontSize = 10;
+
                 s_defaultLabel = new GUIStyle(EditorStyles.label);
                 s_defaultLabel.fixedHeight = 18;
                 s_defaultLabel.wordWrap = false;
                 s_defaultLabel.stretchHeight = false;
+
+                imageStyle = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
+                imageStyle.normal.background = daydreamLogo;
+                imageStyle.alignment = TextAnchor.MiddleCenter;
+
+                helpText = new GUIStyle(GUI.skin.GetStyle("HelpBox"));
+                helpText.normal.textColor = Color.white;
+                helpText.alignment = TextAnchor.MiddleCenter;
+                helpText.fontSize = 18;
+
+                daydreamLightingStyle = new GUIStyle(EditorStyles.boldLabel);
+                daydreamLightingStyle.normal.background = daydreamLight;
+
+                unityLightingStyle = new GUIStyle(EditorStyles.boldLabel);
+                unityLightingStyle.normal.background = unityLight;
+
+                sectionLineStyle = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
+                sectionLineStyle.normal.background = section;
+                sectionLineStyle.alignment = TextAnchor.MiddleCenter;
+
+                sectionLabel = new GUIStyle(GUI.skin.label);
+                //sectionLabel.normal.textColor = Color.white;
+                sectionLabel.fontSize = 12;
+                sectionLabel.contentOffset = new Vector2(0f, 7f);
+
+                m_buttonUnselected.alignment = m_buttonSelected.alignment;
+                m_buttonSelected.normal = m_buttonSelected.active;
+                m_lightingSystemUI = new GUIContent[] { Styles.m_enableDaydreamUI, Styles.m_enableEnlightenUI };
             }
 
         }
@@ -101,25 +165,32 @@ namespace daydreamrenderer
             static FirstTimeLoader()
             {
                 EditorApplication.update += Update;
+                AssetDatabase.importPackageCompleted += PackageImport;
             }
 
             static void Update()
             {
-
                 if (!string.IsNullOrEmpty(SceneManager.GetActiveScene().name) && SceneManager.GetActiveScene().isLoaded)
                 {
                     if (DaydreamRendererImportSettings.FirstRun)
                     {
                         DaydreamRendererImportSettings.FirstRun = false;
-                        DaydreamRendererImportManager.Init();
+                        DaydreamRendererImportManager.OpenWindow();
                     }
                 }
 
-                if(DaydreamRendererImportSettings.EnableLightingComponentsAutoAdd && DaydreamRendererImportSettings.DaydreamLightinSystemEnabled && (DateTime.Now - s_lastUpdate).TotalSeconds > 2)
+                DaydreamRenderer renderer = FindObjectOfType<DaydreamRenderer>();
+                if (renderer != null && (DateTime.Now - s_lastUpdate).TotalSeconds > 2)
                 {
-                    s_lastUpdate = DateTime.Now;
                     ApplyLightingComponents();
+                    s_lastUpdate = DateTime.Now;
                 }
+
+            }
+
+            static void PackageImport(string packageName)
+            {
+                Debug.Log("package imported " + packageName);
             }
         }
 
@@ -166,14 +237,14 @@ namespace daydreamrenderer
         }
 
 
-        [MenuItem("Window/Daydream Renderer/Import Wizard")]
-        public static void Init()
+        [MenuItem("Window/Daydream Renderer/" + Styles.kEditorTitle)]
+        public static void OpenWindow()
         {
             Configure();
-            DaydreamRendererImportManager window = EditorWindow.GetWindow<DaydreamRendererImportManager>("Import Wizard");
+            DaydreamRendererImportManager window = EditorWindow.GetWindow<DaydreamRendererImportManager>(Styles.kEditorTitle);
             window.Show();
+            window.minSize = new Vector2(300, 500);
         }
-
 
         [MenuItem("GameObject/Daydream Baker/Convert Static Materials", false, 0)]
         public static void ConvertStaticMaterials()
@@ -204,14 +275,14 @@ namespace daydreamrenderer
                 HashSet<Renderer>.Enumerator iter = dictIter.Current.Value.GetEnumerator();
                 while (iter.MoveNext())
                 {
-                    if(iter.Current == null) continue;
+                    if (iter.Current == null) continue;
 
                     for (int i = 0, k = iter.Current.sharedMaterials.Length; i < k; ++i)
                     {
                         Material m = iter.Current.sharedMaterials[i];
 
-                        if(m == null) continue;
-                        
+                        if (m == null) continue;
+
                         if (m.shader.name != kDaydreamShader)
                         {
                             if (IsStaticLit(iter.Current))
@@ -239,6 +310,9 @@ namespace daydreamrenderer
         void OnEnable()
         {
             EditorApplication.hierarchyWindowChanged += OnSceneChange;
+
+            m_UIFade = new AnimBool(true);
+            m_UIFade.valueChanged.AddListener(Repaint);
         }
 
         public static void OnSceneChange()
@@ -256,126 +330,128 @@ namespace daydreamrenderer
             s_listContainerStaticMats = new SerializedObject(s_staticMaterialHistory);
         }
 
+        static void DrawCenteredLogo(int size)
+        {
+            GUILayout.BeginVertical();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Button("", Styles.imageStyle, GUILayout.Width(size), GUILayout.Height(size));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+        }
+
+        static void DrawLightingLogo(int size)
+        {
+            GUILayout.BeginVertical();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Button("", Styles.daydreamLightingStyle, GUILayout.Width(size), GUILayout.Height(size));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+        }
+
+        public static void DrawSection(int sizeX, int sizeY)
+        {
+            GUILayout.Button("", Styles.sectionLineStyle, GUILayout.Height(sizeY));
+        }
+
         void OnGUI()
         {
-            EditorGUILayout.HelpBox(Styles.kWelcomeMsg, MessageType.Info);
+            DrawCenteredLogo(100);
 
             if (s_staticMaterialHistory == null || s_dynamicMaterialHistory == null)
             {
                 Configure();
             }
 
-
-            //---------------------------------------------------------------------//
-            // Daydream lighting
-
-            EditorGUI.BeginChangeCheck();
-            GUILayout.Space(20);
-
-
-            if (DaydreamRendererImportSettings.DaydreamLightinSystemEnabled)
+            DaydreamRenderer renderer = FindObjectOfType<DaydreamRenderer>();
+            if (renderer == null)
             {
-                EditorGUILayout.HelpBox(Styles.kToggleComponentsHelp, MessageType.Info);
-            }
-            else
-            {
-                EditorGUILayout.HelpBox(Styles.kEnlightenHelp, MessageType.Warning);
-            }
+                m_UIFade.target = false;
 
-            EditorGUI.BeginChangeCheck();
-            DaydreamRendererImportSettings.DaydreamLightinSystemEnabled = EditorGUILayout.BeginToggleGroup(Styles.toggleLightingSystem, DaydreamRendererImportSettings.DaydreamLightinSystemEnabled);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if(!DaydreamRendererImportSettings.DaydreamLightinSystemEnabled)
+                EditorGUILayout.LabelField(Styles.ddrNotEnabled, Styles.helpText);
+
+                GUILayout.Space(10);
+
+                GUILayout.BeginVertical();
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                if(DREditorUtility.FlexibleHorizButton("Add The Daydream Renderer To Your Scene", Styles.boldButton, GUILayout.Width(280), GUILayout.Height(50)))
                 {
-                    RemoveAllLightingComponents();
+                    GameObject go = GameObject.Find("Daydream Renderer");
+                    if(go == null)
+                    {
+                        go = new GameObject("Daydream Renderer");
+                    }
+
+                    go.AddComponent<DaydreamRenderer>();
                 }
-                else if (EditorUtility.DisplayDialog("Daydream Lighting", "Would you like to add lighting to prefabs and models in your project folder? Only affects assets using Daydream Renderer shaders.", "Yes", "No"))
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
+
+                return;
+            }else
+            {
+                m_UIFade.target = true;
+            }
+
+            if (EditorGUILayout.BeginFadeGroup(m_UIFade.faded))
+            {
+
+                EditorGUILayout.LabelField(Styles.kDaydreamEnabled, Styles.helpText);
+
+                //---------------------------------------------------------------------//
+                // Daydream lighting
+                DrawDaydreamLightingToggle(renderer);
+
+                //---------------------------------------------------------------------//
+                // Daydream Material Wizard
+                GUILayout.Space(5);
+                DaydreamRendererImportManager.DrawSection(500, 1);
+                EditorGUILayout.LabelField("Material Conversion", Styles.sectionLabel, GUILayout.Height(25));
+                GUILayout.Space(5);
+
+                EditorGUILayout.HelpBox("The Material Wizard assists in converting an existing scene over to Daydream materials. It applies a conversion process to preserve all the feature selections of the original Unity shader but converted to the Daydream standard shader.", MessageType.Info);
+
+                if (GUILayout.Button("Scan Materials") || m_convertableMaterials == null || m_convertableMaterials.Count == 0 || s_gatherMetrics)
                 {
-                    ApplyLightingToProject();
+                    List<GameObject> roots = Utilities.GetAllRoots();
+                    GatherMaterials(roots.ToArray());
                 }
 
-                DaydreamRenderer renderer = FindObjectOfType<DaydreamRenderer>();
-                if (renderer)
+                EditorGUILayout.Separator();
+
+                EditorGUILayout.HelpBox(String.Format(Styles.kObjectsWaiting, m_dynamicConvertableCount, m_staticConvertableCount), MessageType.Info);
+
+                if (GUILayout.Button("Convert Materials Now"))
                 {
-                    renderer.EnableEnlighten(!DaydreamRendererImportSettings.DaydreamLightinSystemEnabled);
+                    DoDynamicLightingConversion();
+                    DoStaticLightingConversion();
                 }
-            }
 
+                string[] text = new string[] { "Dynamic Converted Materials", "Static Converted Materials", "List All Daydream Materials" };
+                s_importType = GUILayout.SelectionGrid(s_importType, text, 3, EditorStyles.radioButton);
 
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(20);
-            DaydreamRendererImportSettings.EnableLightingComponentsAutoAdd = EditorGUILayout.ToggleLeft(Styles.toggleComponents, DaydreamRendererImportSettings.EnableLightingComponentsAutoAdd);
-            EditorGUILayout.EndHorizontal();
-            if (!DaydreamRendererImportSettings.EnableLightingComponentsAutoAdd)
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Space(20);
-                if (GUILayout.Button(Styles.addComponents))
+                if (s_importType == 0)
                 {
-                    ApplyLightingComponents();
+                    DrawDynamicRevertMaterials();
+
                 }
-                if (GUILayout.Button(Styles.removeComponents))
+                else if (s_importType == 1)
                 {
-                    RemoveAllLightingComponents();
+
+                    DrawStaticRevertMaterials();
+
                 }
-                EditorGUILayout.EndHorizontal();
+                else if (m_convertedCount > 0)
+                {
+                    DrawDaydreamMaterialList();
+                }
             }
-
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(20);
-            if (GUILayout.Button(Styles.addComponentsToProject))
-            {
-                ApplyLightingToProject();
-            }
-            if (GUILayout.Button(Styles.removeComponentsFromProject))
-            {
-                RemoveAllLightingComponents();
-            }
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.EndToggleGroup();
-
-            //---------------------------------------------------------------------//
-            // Daydream Material Wizard
-
-            GUILayout.Space(Styles.kSectionSpacing);
-            EditorGUILayout.HelpBox("The Material Wizard assists in converting an existing scene over to Daydream materials. It applies a conversion process to preserve all the feature selections of the original Unity shader but converted to the Daydream standard shader.", MessageType.Info);
-            
-            if (GUILayout.Button("Scan Materials") || m_convertableMaterials == null || m_convertableMaterials.Count == 0 || s_gatherMetrics)
-            {
-                List<GameObject> roots = Utilities.GetAllRoots();
-                GatherMaterials(roots.ToArray());
-            }
-
-            EditorGUILayout.Separator();
-
-            EditorGUILayout.HelpBox(String.Format(Styles.kObjectsWaiting, m_dynamicConvertableCount, m_staticConvertableCount), MessageType.Info);
-
-            if (GUILayout.Button("Convert Materials Now"))
-            {
-                DoDynamicLightingConversion();
-                DoStaticLightingConversion();
-            }
-
-            string[] text = new string[] { "Dynamic Converted Materials", "Static Converted Materials", "List All Daydream Materials" };
-            s_importType = GUILayout.SelectionGrid(s_importType, text, 3, EditorStyles.radioButton);
-
-            if (s_importType == 0)
-            {
-                DrawDynamicRevertMaterials();
-
-            }
-            else if (s_importType == 1)
-            {
-
-                DrawStaticRevertMaterials();
-
-            }
-            else if (m_convertedCount > 0)
-            {
-                DrawDaydreamMaterialList();
-            }
+            EditorGUILayout.EndFadeGroup();
         }
 
         static void DoDynamicLightingConversion()
@@ -596,6 +672,66 @@ namespace daydreamrenderer
                 EditorUtility.DisplayDialog("Conversion Notice!", "New materials created and added to " + m_assetPathSplit, "Ok");
             }
 
+        }
+
+        public static void DrawDaydreamLightingToggle(DaydreamRenderer renderer)
+        {
+            if (renderer == null) return;
+
+            // determine lighting system in use
+            const int kDaydreamLighting = 0;
+            const int kUnityLighting = 1;
+            int selectedIndex = renderer.m_daydreamLighting ? kDaydreamLighting : kUnityLighting;
+
+            EditorGUI.BeginChangeCheck();
+
+            // draw section separator
+            DrawSection(500, 1);
+            EditorGUILayout.BeginHorizontal();
+            if (selectedIndex == kDaydreamLighting)
+            {
+                EditorGUILayout.LabelField("Lighting System", Styles.sectionLabel, GUILayout.Width(105), GUILayout.Height(25));
+                GUILayout.Button("", Styles.daydreamLightingStyle, GUILayout.Width(25), GUILayout.Height(25));
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Lighting System", Styles.sectionLabel, GUILayout.Width(105), GUILayout.Height(25));
+                GUILayout.Button("", Styles.unityLightingStyle, GUILayout.Width(25), GUILayout.Height(25));
+            }
+
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            EditorGUI.BeginChangeCheck();
+            DREditorUtility.RadioButtonOutput selected = DREditorUtility.DrawRadioButton(selectedIndex, Styles.m_lightingSystemUI, Styles.m_buttonUnselected, Styles.m_buttonSelected, 20, 32, 150, new bool[] { true, false });
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (selected.m_selectedIndex == kDaydreamLighting)
+                {
+                    if (renderer.m_daydreamLighting == false)
+                    {
+                        renderer.m_daydreamLighting = true;
+                        DaydreamRendererImportManager.ApplyLightingComponents();
+                        renderer.EnableEnlighten(false);
+                    }
+                }
+                else
+                {
+                    if (renderer.m_daydreamLighting == true)
+                    {
+                        renderer.m_daydreamLighting = false;
+                        DaydreamRendererImportManager.RemoveAllLightingComponents();
+                        renderer.EnableEnlighten(true);
+                    }
+                }
+
+                // display advanced settings
+                if(selected.m_dropDownSelected == kDaydreamLighting)
+                {
+                    LightSystemDialog.ShowDialog(null);
+                }
+            }
+            GUILayout.Space(5);
         }
 
         static void DrawDynamicRevertMaterials()
@@ -1086,13 +1222,11 @@ namespace daydreamrenderer
             return foundObjs;
         }
 
-        static void RemoveAllLightingComponents()
+        public static void RemoveAllLightingComponents()
         {
             DaydreamLight[] lightComp = GameObject.FindObjectsOfType<DaydreamLight>();
             DaydreamMeshRenderer[] meshComp = GameObject.FindObjectsOfType<DaydreamMeshRenderer>();
-
-            RemoveLightingComponentsFromAssets();
-
+            
             foreach (var v in lightComp)
             {
                 DestroyImmediate(v);
@@ -1103,7 +1237,7 @@ namespace daydreamrenderer
             }
         }
 
-        static void RemoveLightingComponentsFromAssets()
+        public static void RemoveLightingComponentsFromAssets()
         {
             // find models and prefabs
             string[] modelAssets = AssetDatabase.FindAssets("t:Model t:prefab");
@@ -1130,7 +1264,7 @@ namespace daydreamrenderer
             EditorUtility.ClearProgressBar();
         }
 
-        static void ApplyLightingToProject()
+        public static void ApplyLightingToProject()
         {
             // find models and prefabs
             string[] modelAssets = AssetDatabase.FindAssets("t:prefab");
@@ -1208,7 +1342,7 @@ namespace daydreamrenderer
             EditorUtility.ClearProgressBar();
         }
 
-        static void ApplyLightingComponents()
+        public static void ApplyLightingComponents()
         {
             // check renderers
             List<GameObject> roots = Utilities.GetAllRoots();

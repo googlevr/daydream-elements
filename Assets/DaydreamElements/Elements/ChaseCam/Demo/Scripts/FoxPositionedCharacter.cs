@@ -66,7 +66,7 @@ namespace DaydreamElements.Chase {
     }
 
     void OnTriggerEnter(Collider c) {
-      if (c.CompareTag("NearCollectible") == false) {
+      if (c.GetComponentInChildren<CollectibleCoin>() == null) {
         return;
       }
 

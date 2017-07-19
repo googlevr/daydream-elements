@@ -34,7 +34,7 @@ namespace DaydreamElements.Main {
 
     private LevelSelectButtonData data;
 
-    private const string MUSIC_TAG = "Music";
+    private const string MUSIC_OBJECT_NAME = "Music";
 
     public void Setup(LevelSelectButtonData buttonData) {
       Assert.IsNotNull(buttonData);
@@ -143,7 +143,7 @@ namespace DaydreamElements.Main {
     }
 
     private AudioFader FadeMusic() {
-      GameObject music = GameObject.FindWithTag(MUSIC_TAG);
+      GameObject music = GameObject.Find(MUSIC_OBJECT_NAME);
 
       if (music == null) {
         return null;

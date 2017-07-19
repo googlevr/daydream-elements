@@ -69,6 +69,12 @@ namespace DaydreamElements.Main {
     }
 
 #if UNITY_EDITOR
+    public Object SceneAsset {
+      get {
+        return sceneAsset;
+      }
+    }
+
     void OnValidate() {
       if (sceneAsset != null) {
         sceneAssetName = AssetDatabase.GetAssetPath(sceneAsset);

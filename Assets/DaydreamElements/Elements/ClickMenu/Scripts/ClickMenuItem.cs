@@ -21,10 +21,15 @@ namespace DaydreamElements.ClickMenu {
     fileName = "ClickMenuItem",
     menuName = "DaydreamElements/ClickMenu/Item",
     order = 1000)]
+  /// Serializes a section of the menu.
   public class ClickMenuItem : ScriptableObject {
+    [Tooltip("Assign a unique id for this item.")]
     public int id;
+    [Tooltip("Foreground sprite")]
     public Sprite icon;
+    [Tooltip("Optional background sprite")]
     public Sprite background;
+    [Tooltip("Text shown on hover")]
     public string toolTip;
     public bool closeAfterSelected = true;
   }

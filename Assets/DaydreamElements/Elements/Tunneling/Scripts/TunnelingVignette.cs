@@ -35,9 +35,17 @@ namespace DaydreamElements.Tunneling {
     private const string SHADER_PROP_VIGNETTE_PIXEL = "_VignettePixel";
     private const string SHADER_PROP_VIGNETTE_ALPHA = "_VignetteAlpha";
 
+    [Tooltip("The Transform used to position and rotate the Iris")]
+    [SerializeField]
+    private Transform irisContainer;
+
     [Tooltip("The mesh used to render the iris.")]
     [SerializeField]
     private MeshRenderer iris;
+
+    [Tooltip("The mesh used to render the cage.")]
+    [SerializeField]
+    private MeshRenderer cage;
 
     /// The radius of the sphere on which the iris is rendered.
     [Tooltip("Determines where the 'hole' will appear in z-space (meters).")]
@@ -63,10 +71,12 @@ namespace DaydreamElements.Tunneling {
 
     private bool fovNeedsUpdate = true;
     private Vector3 lastForwardVector;
-    private Color lastCageColor;
     private Vector4 vignetteVector;
     private Vector4 vignettePixelShader;
     private float vignetteAlpha = 1.0f;
+
+    private MaterialPropertyBlock irisPropertyBlock;
+    private MaterialPropertyBlock cagePropertyBlock;
 
     public float CurrentFOV {
       get {
@@ -122,7 +132,6 @@ namespace DaydreamElements.Tunneling {
         }
 
         vignetteAlpha = value;
-        Shader.SetGlobalFloat(vignetteAlphaId, vignetteAlpha);
 
         if (Alpha == 1.0f) {
           if (iris.sharedMaterials.Length == 1) {
@@ -142,10 +151,10 @@ namespace DaydreamElements.Tunneling {
       camForwardId = Shader.PropertyToID(SHADER_PROP_VIGNETTE_CAMERA_FORWARD);
       vignettePSId = Shader.PropertyToID(SHADER_PROP_VIGNETTE_PIXEL);
       vignetteAlphaId = Shader.PropertyToID(SHADER_PROP_VIGNETTE_ALPHA);
+    }
 
-      Shader.SetGlobalFloat(vignetteAlphaId, vignetteAlpha);
-      Shader.SetGlobalVector(vignetteCageColorId, cageColor);
-      lastCageColor = cageColor;
+    void Start() {
+      ReparentIris();
     }
 
     void LateUpdate() {
@@ -154,70 +163,78 @@ namespace DaydreamElements.Tunneling {
         return;
       }
 
+      if (cage == null) {
+        Debug.LogWarning("Cage is unassigned.");
+        return;
+      }
+
+      if (irisContainer == null) {
+        Debug.LogWarning("IrisContainer is unassigned.");
+        return;
+      }
+
       if (Camera.main == null) {
         Debug.LogWarning("Main Camera does not exist.");
         return;
       }
 
-      // Make sure the iris is always parented to the main camera.
-      if (iris.transform.parent != Camera.main.transform) {
-        iris.transform.SetParent(Camera.main.transform, false);
+      UpdateMeshesEnabled();
+
+      // If the meshes are disabled then return early.
+      // Nothing is visible, so we don't need to update.
+      if (!iris.enabled && !cage.enabled) {
+        return;
+      }
+
+      if (irisPropertyBlock == null) {
+        irisPropertyBlock = new MaterialPropertyBlock();
+      }
+
+      if (cagePropertyBlock == null) {
+        cagePropertyBlock = new MaterialPropertyBlock();
+      }
+
+      iris.GetPropertyBlock(irisPropertyBlock);
+      cage.GetPropertyBlock(cagePropertyBlock);
+
+      Transform cameraTransform = Camera.main.transform;
+
+      // If the iris isn't a child of the camera, position it manually.
+      // This happens when previewing the vignette in the editor.
+      // It's important to re-parent the iris when in play mode to avoid
+      // timing issues between positioning the camera and positioning the iris.
+      if (irisContainer.transform.parent != cameraTransform) {
+        irisContainer.position = cameraTransform.position;
+        irisContainer.rotation = cameraTransform.rotation;
       }
 
       // We can minimize the number of times these are set, while still making
       // this work reliably in the editor by caching the previously set value.
-      Vector3 forward = Camera.main.transform.forward;
+      Vector3 forward = cameraTransform.forward;
       if (forward != lastForwardVector) {
         // We can assume this needs to be updated continuously, although maybe
         // we can find an existing shader variable for this.
-        Shader.SetGlobalVector(camForwardId, forward);
+        irisPropertyBlock.SetVector(camForwardId, forward);
+        cagePropertyBlock.SetVector(camForwardId, forward);
+
         lastForwardVector = forward;
       }
 
-      if (cageColor != lastCageColor) {
-        Shader.SetGlobalVector(vignetteCageColorId, cageColor);
-        lastCageColor = cageColor;
-      }
+      UpdateFOV();
 
+      irisPropertyBlock.SetFloat(vignetteAlphaId, vignetteAlpha);
+      cagePropertyBlock.SetFloat(vignetteAlphaId, vignetteAlpha);
+      cagePropertyBlock.SetColor(vignetteCageColorId, cageColor);
+
+      iris.SetPropertyBlock(irisPropertyBlock);
+      cage.SetPropertyBlock(cagePropertyBlock);
+    }
+
+    private void UpdateFOV() {
       if (!fovNeedsUpdate) {
         return;
       }
 
-      UpdateFOV();
-      UpdateIrisEnabled();
-    }
-
-    private void UpdateIrisEnabled() {
-      if (iris == null) {
-        return;
-      }
-
-      if (currentFOV > CULL_IRIS_FOV) {
-        if (iris.enabled) {
-          iris.enabled = false;
-        }
-      } else if (!iris.enabled) {
-        iris.enabled = true;
-      }
-    }
-
-#if UNITY_EDITOR
-    public void SetPreviewFOV(float newFOV) {
-      if (!Application.isPlaying) {
-        Shader.SetGlobalVector(vignetteCageColorId, cageColor);
-        CurrentFOV = newFOV;
-        UnityEditor.EditorUtility.SetDirty(this);
-      }
-    }
-
-    public void SetPreviewAlpha(float newAlpha) {
-      if (!Application.isPlaying) {
-        Alpha = newAlpha;
-      }
-    }
-#endif
-
-    private void UpdateFOV() {
       // The following components are used for occluding the cage.
       vignettePixelShader.x = Mathf.Cos(Mathf.Deg2Rad * (currentFOV + 3 * currentFadeFOV) * 0.5f);
       vignettePixelShader.y = Mathf.Cos(Mathf.Deg2Rad * currentFOV * 0.5f);
@@ -233,10 +250,65 @@ namespace DaydreamElements.Tunneling {
         / HALF_PI);
 
       vignetteVector.w = irisDistance;
-      Shader.SetGlobalVector(vignetteMinMaxId, vignetteVector);
+      irisPropertyBlock.SetVector(vignetteMinMaxId, vignetteVector);
 
-      Shader.SetGlobalVector(vignettePSId, vignettePixelShader);
+      cagePropertyBlock.SetVector(vignettePSId, vignettePixelShader);
+
       fovNeedsUpdate = false;
     }
+
+    private void UpdateMeshesEnabled() {
+      if (iris == null) {
+        return;
+      }
+
+      if (cage == null) {
+        return;
+      }
+
+      if (currentFOV > CULL_IRIS_FOV || Alpha == 0.0f) {
+        iris.enabled = false;
+        cage.enabled = false;
+      } else {
+        iris.enabled = true;
+        cage.enabled = true;
+      }
+    }
+
+    // Reparent the Iris to the main camera
+    // so that it moves with the Camera
+    private void ReparentIris() {
+      // Don't do this in edit mode, it will break the prefab.
+      if (!Application.isPlaying) {
+        return;
+      }
+
+      if (irisContainer == null) {
+        return;
+      }
+
+      Camera camera = Camera.main;
+      if (camera == null) {
+        return;
+      }
+
+      irisContainer.transform.SetParent(camera.transform, false);
+    }
+
+#if UNITY_EDITOR
+    public void SetPreviewFOV(float newFOV) {
+      if (!Application.isPlaying) {
+        CurrentFOV = newFOV;
+        UnityEditor.EditorUtility.SetDirty(this);
+      }
+    }
+
+    public void SetPreviewAlpha(float newAlpha) {
+      if (!Application.isPlaying) {
+        Alpha = newAlpha;
+        UnityEditor.EditorUtility.SetDirty(this);
+      }
+    }
+#endif
   }
 }

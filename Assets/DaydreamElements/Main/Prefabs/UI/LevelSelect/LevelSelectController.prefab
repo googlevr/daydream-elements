@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 114000011205586942}
   - component: {fileID: 114000013675797782}
   - component: {fileID: 114000013002566074}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: LevelSelectMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010864664786}
   - component: {fileID: 114000014238849766}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: SwipeRightSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224000012823038548}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 224000012514738026}
   - component: {fileID: 222000012235402488}
   - component: {fileID: 114000012618469532}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 114000011524899118}
   - component: {fileID: 114000010583865228}
   - component: {fileID: 114000010949931472}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012146392976}
   - component: {fileID: 114000010218258636}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: SwipeLeftSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 114151744530861792}
   - component: {fileID: 222663884891964206}
   - component: {fileID: 114491427971084868}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: BreadcrumbBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4928116364595350}
   - component: {fileID: 114997443549839412}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FooterParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 224334543573420276}
   - component: {fileID: 222410116698865964}
   - component: {fileID: 114755978223671502}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224316674468601216}
   - component: {fileID: 114033570424791978}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Footer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 114740859311914578}
   - component: {fileID: 114494232749970772}
   - component: {fileID: 114152743321484176}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: BreadcrumbTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4533280580807416}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Breadcrumbs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 4487011067761818}
   - component: {fileID: 33709515264205644}
   - component: {fileID: 23229112740555770}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: BackgroundSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ Camera:
   m_Depth: 100
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

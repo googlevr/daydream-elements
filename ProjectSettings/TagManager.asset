@@ -3,11 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Collectible
-  - NearCollectible
-  - Music
-  - Character
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -17,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - No Walking
-  - Island
-  - LevelSelect
-  - Ignore DDRenderer
-  - DDRenderer
-  - Dynamic
-  - Walking
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

@@ -38,6 +38,7 @@ ModelImporter:
     4300000: Target
     4300002: glow
     4300004: target
+    11400000: glow
   materials:
     importMaterials: 1
     materialName: 0
