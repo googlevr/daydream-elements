@@ -20,28 +20,38 @@ public class GVRDemoManager : MonoBehaviour {
   public DemoInputManager m_demoInputManager;
 
   void Start() {
-#if !UNITY_HAS_GOOGLEVR || !UNITY_ANDROID || UNITY_EDITOR
+#if !UNITY_ANDROID || UNITY_EDITOR
     if (m_launchVrHomeButton == null) {
       return;
     }
     m_launchVrHomeButton.SetActive(false);
 #else
-    GvrDaydreamApi.Create();
-#endif  // !UNITY_HAS_GOOGLEVR || !UNITY_ANDROID || UNITY_EDITOR
+    GvrDaydreamApi.CreateAsync((success) => {
+      if (!success) {
+        // Unexpected. See GvrDaydreamApi log messages for details.
+        Debug.LogError("GvrDaydreamApi.CreateAsync() failed");
+      }
+    });
+#endif  // !UNITY_ANDROID || UNITY_EDITOR
   }
 
-#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
   void Update() {
     if (m_launchVrHomeButton == null || m_demoInputManager == null) {
       return;
     }
     m_launchVrHomeButton.SetActive(m_demoInputManager.IsCurrentlyDaydream());
   }
-#endif  // UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#endif  // UNITY_ANDROID && !UNITY_EDITOR
 
   public void LaunchVrHome() {
-#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
-    GvrDaydreamApi.LaunchVrHome();
-#endif  // UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
+    GvrDaydreamApi.LaunchVrHomeAsync((success) => {
+      if (!success) {
+        // Unexpected. See GvrDaydreamApi log messages for details.
+        Debug.LogError("GvrDaydreamApi.LaunchVrHomeAsync() failed");
+      }
+    });
+#endif  // UNITY_ANDROID && !UNITY_EDITOR
   }
 }

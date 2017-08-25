@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires for 1 frame on app button down.
 public class AppButtonDownTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.AppButtonDown;
+    return GvrControllerInput.AppButtonDown;
   }
 }

@@ -81,5 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7dcc90c2e60c4011896c7f21fc1f557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastMode: 1
+  overridePointerCamera: {fileID: 0}
   reticleSegments: 20
   reticleGrowthSpeed: 8
+  reticleSortingOrder: 32767

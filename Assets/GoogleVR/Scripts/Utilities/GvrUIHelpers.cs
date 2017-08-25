@@ -17,7 +17,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 public static class GvrUIHelpers {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   /// Finds the meters scale for the local coordinate system
   /// of the root canvas that contains the canvasObject passed in.
   public static float GetMetersToCanvasScale(Transform canvasObject) {
@@ -33,5 +32,4 @@ public static class GvrUIHelpers {
     float metersToCanvasScale = canvas.transform.localScale.x;
     return metersToCanvasScale;
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

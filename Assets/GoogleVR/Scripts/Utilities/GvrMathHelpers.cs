@@ -35,13 +35,10 @@ public static class GvrMathHelpers {
   public static Vector2 GetViewportCenter() {
     int viewportWidth = Screen.width;
     int viewportHeight = Screen.height;
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR) && UNITY_ANDROID
-    // GVR native integration is supported.
     if (VRSettings.enabled) {
       viewportWidth = VRSettings.eyeTextureWidth;
       viewportHeight = VRSettings.eyeTextureHeight;
     }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR) && UNITY_ANDROID
 
     return new Vector2(0.5f * viewportWidth, 0.5f * viewportHeight);
   }

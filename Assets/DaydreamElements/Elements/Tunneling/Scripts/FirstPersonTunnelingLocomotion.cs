@@ -71,25 +71,23 @@ namespace DaydreamElements.Tunneling {
     }
 
     protected virtual void Update() {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-      if (GvrController.TouchDown) {
-        initTouch = GvrController.TouchPos;
+      if (GvrControllerInput.TouchDown) {
+        initTouch = GvrControllerInput.TouchPos;
       } else if (CanStartMoving()) {
         isMoving = true;
         smoothTouch = Vector2.zero;
         vignetteController.ShowVignette();
-      } else if (GvrController.TouchUp) {
+      } else if (GvrControllerInput.TouchUp) {
         StopMoving();
       }
 
       if (isMoving) {
         Move();
       }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     }
 
     protected virtual void Move() {
-      Vector2 touchPos = TouchPosBetweenNegativeOneToOne();
+      Vector2 touchPos = GvrControllerInput.TouchPosCentered;
 
       bool isTouchTranslating = IsTouchTranslating(touchPos);
       bool isTouchRotating = IsTouchRotating(touchPos);
@@ -189,8 +187,7 @@ namespace DaydreamElements.Tunneling {
     }
 
     private bool CanStartMoving() {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-      if (!GvrController.IsTouching) {
+      if (!GvrControllerInput.IsTouching) {
         return false;
       }
 
@@ -202,19 +199,16 @@ namespace DaydreamElements.Tunneling {
         return false;
       }
 
-      bool isOutsideSlop = IsTouchOutsideSlop(GvrController.TouchPos);
+      bool isOutsideSlop = IsTouchOutsideSlop(GvrControllerInput.TouchPos);
       bool needsSwipe = onlyMoveAfterSwiping && !isOutsideSlop;
 
 
-      Vector2 touchPos = TouchPosBetweenNegativeOneToOne();
+      Vector2 touchPos = GvrControllerInput.TouchPosCentered;
       bool isTouchTranslating = IsTouchTranslating(touchPos);
       bool isTouchRotating = IsTouchRotating(touchPos);
       bool isTouchMoving = isTouchTranslating || isTouchRotating;
 
       return isTouchMoving && !needsSwipe;
-#else
-      return false;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     }
 
     private bool IsTouchTranslating(Vector2 touchPos) {
@@ -223,19 +217,6 @@ namespace DaydreamElements.Tunneling {
 
     private bool IsTouchRotating(Vector2 touchPos) {
       return Mathf.Abs(touchPos.x) > minInputThreshold;
-    }
-
-    private Vector2 TouchPosBetweenNegativeOneToOne() {
-      // GvrController.TouchPos gives you values between 0.0 and 1.0, with 0.5 being the middle of the touch pad.
-      // We must convert this to a range of -1.0 to 1.0 with 0.0 in the middle.
-      Vector2 result;
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-      result.x = (GvrController.TouchPos.x * 2.0f) - 1.0f;
-      result.y = ((GvrController.TouchPos.y * 2.0f) - 1.0f) * -1.0f;
-      result.x = Mathf.Clamp(result.x, -1.0f, 1.0f);
-      result.y = Mathf.Clamp(result.y, -1.0f, 1.0f);
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-      return result;
     }
   }
 }

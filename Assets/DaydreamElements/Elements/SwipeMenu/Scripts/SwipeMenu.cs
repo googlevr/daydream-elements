@@ -89,8 +89,8 @@ namespace DaydreamElements.SwipeMenu {
       const float SELECT_RADIUS = 0.04f;
 
       // Touchpad constants.
-      bool touching = GvrController.IsTouching;
-      Vector2 touchPos = GvrController.TouchPos;
+      bool touching = GvrControllerInput.IsTouching;
+      Vector2 touchPos = GvrControllerInput.TouchPos;
       touchPos.y = -touchPos.y;
 
       // Set the origin of the touch.
@@ -101,7 +101,7 @@ namespace DaydreamElements.SwipeMenu {
         firstTouch = true;
       }
 
-      if (GvrController.ClickButton) {
+      if (GvrControllerInput.ClickButton) {
         touchOrigin = touchPos;
       }
 

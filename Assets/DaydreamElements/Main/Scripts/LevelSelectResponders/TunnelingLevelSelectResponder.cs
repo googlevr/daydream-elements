@@ -22,7 +22,7 @@ namespace DaydreamElements.Main {
   /// Used to disable locomotion when the level select menu is open.
   public class TunnelingLevelSelectResponder : BaseLevelSelectResponder {
     private FirstPersonTunnelingLocomotion locomotion;
-    private GvrControllerVisualManager controller;
+    private GvrTrackedController controller;
 
 
     public override void OnMenuOpened() {
@@ -38,7 +38,7 @@ namespace DaydreamElements.Main {
     void Start() {
       locomotion = SceneHelpers.FindObjectOfType<FirstPersonTunnelingLocomotion>(true);
       Assert.IsNotNull(locomotion);
-      controller = SceneHelpers.FindObjectOfType<GvrControllerVisualManager>(true);
+      controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
     }
   }

@@ -16,8 +16,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
 
-// GVR soundfield component that allows playback of first-order ambisonic recordings. The
-// audio sample should be in Ambix (ACN-SN3D) format.
+/// GVR soundfield component that allows playback of first-order ambisonic recordings. The audio
+/// sample should be in Ambix (ACN-SN3D) format.
 [AddComponentMenu("GoogleVR/Audio/GvrAudioSoundfield")]
 public class GvrAudioSoundfield : MonoBehaviour {
   /// Denotes whether the room effects should be bypassed.
@@ -344,23 +344,8 @@ public class GvrAudioSoundfield : MonoBehaviour {
         audioSources[channelSet].SetSpatializerFloat((int) GvrAudio.SpatializerData.MinDistance,
                                                      soundfieldMinDistance);
       }
+      GvrAudio.UpdateAudioSoundfield(id, this);
     }
-    GvrAudio.UpdateAudioSoundfield(id, this);
-  }
-
-  void OnValidate () {
-    clip0102 = soundfieldClip0102;
-    clip0304 = soundfieldClip0304;
-    loop = soundfieldLoop;
-    mute = soundfieldMute;
-    pitch = soundfieldPitch;
-    priority = soundfieldPriority;
-    spatialBlend = soundfieldSpatialBlend;
-    volume = soundfieldVolume;
-    dopplerLevel = soundfieldDopplerLevel;
-    minDistance = soundfieldMinDistance;
-    maxDistance = soundfieldMaxDistance;
-    rolloffMode = soundfieldRolloffMode;
   }
 
   /// Pauses playing the clip.
@@ -434,7 +419,7 @@ public class GvrAudioSoundfield : MonoBehaviour {
       for (int channelSet = 0; channelSet < audioSources.Length; ++channelSet) {
         audioSources[channelSet].UnPause();
       }
-      isPaused = true;
+      isPaused = false;
     }
   }
 
@@ -486,5 +471,24 @@ public class GvrAudioSoundfield : MonoBehaviour {
     // Ensure that the output is zeroed after shutdown.
     source.SetSpatializerFloat((int) GvrAudio.SpatializerData.ZeroOutput, 1.0f);
     source.spatialize = false;
+  }
+
+  void OnDidApplyAnimationProperties () {
+    OnValidate();
+  }
+
+  void OnValidate () {
+    clip0102 = soundfieldClip0102;
+    clip0304 = soundfieldClip0304;
+    loop = soundfieldLoop;
+    mute = soundfieldMute;
+    pitch = soundfieldPitch;
+    priority = soundfieldPriority;
+    spatialBlend = soundfieldSpatialBlend;
+    volume = soundfieldVolume;
+    dopplerLevel = soundfieldDopplerLevel;
+    minDistance = soundfieldMinDistance;
+    maxDistance = soundfieldMaxDistance;
+    rolloffMode = soundfieldRolloffMode;
   }
 }

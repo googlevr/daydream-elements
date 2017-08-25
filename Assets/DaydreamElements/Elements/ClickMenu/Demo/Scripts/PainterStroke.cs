@@ -43,10 +43,10 @@ namespace DaydreamElements.ClickMenu {
     }
 
     void Update() {
-      if (painter.IsEraser && GvrController.ClickButtonDown &&
+      if (painter.IsEraser && GvrControllerInput.ClickButtonDown &&
           painter.menuRoot.IsMenuOpen()==false) {
         isClicking = true;
-      } else if (GvrController.ClickButtonUp) {
+      } else if (GvrControllerInput.ClickButtonUp) {
         isClicking = false;
       }
       if (painter.IsEraser && isClicking) {

@@ -26,9 +26,6 @@ namespace DaydreamElements.ClickMenu {
     private Vector3 menuCenter;
     private Quaternion menuOrientation;
 
-    /// Reticle distance to return to after closing the menu.
-    private float reticleDistance;
-
     private ClickMenuIcon dummyParent;
     private bool selected;
 
@@ -71,9 +68,9 @@ namespace DaydreamElements.ClickMenu {
     [Tooltip("Prefab used for each item in the menu")]
     public ClickMenuIcon menuIconPrefab;
 
-    [Tooltip("Maximum number of meters the reticle can move per frame.")]
-    [Range(0.02f, 0.5f)]
-    public float reticleDelta = 0.03f;
+    [Tooltip("Maximum number of meters the reticle can move per second.")]
+    [Range(0.1f, 50.0f)]
+    public float reticleDelta = 10.0f;
 
     [Tooltip("Distance away from the controller of the menu in meters.")]
     [Range(0.6f, 5.0f)]
@@ -91,7 +88,7 @@ namespace DaydreamElements.ClickMenu {
     /// determine the max distance of the pointer. Without this scale factor,
     /// the max distance will fall short of the menu by an increasing amount as the
     /// pointer moves away from the center of the menu.
-    private const float POINTER_DISTANCE_SCALE = 1.15f;
+    private const float POINTER_DISTANCE_SCALE = 1.0f;
 
 
     void Awake() {
@@ -106,25 +103,20 @@ namespace DaydreamElements.ClickMenu {
     private bool IsButtonClicked() {
       switch (menuActivationButton) {
         case GvrMenuActivationButton.ClickButtonDown:
-          return GvrController.ClickButtonDown;
+          return GvrControllerInput.ClickButtonDown;
         case GvrMenuActivationButton.ClickButtonUp:
-          return GvrController.ClickButtonUp;
+          return GvrControllerInput.ClickButtonUp;
         case GvrMenuActivationButton.AppButtonDown:
-          return GvrController.AppButtonDown;
+          return GvrControllerInput.AppButtonDown;
         case GvrMenuActivationButton.AppButtonUp:
-          return GvrController.AppButtonUp;
+          return GvrControllerInput.AppButtonUp;
         default:
           return false;
       }
     }
 
     private void SetMenuLocation() {
-      // Get the position and orientation from the arm model.
-      Vector3 pointerPosition = laserPointer.transform.position;
-      Vector3 ray = laserPointer.transform.rotation * Vector3.forward;
-
-      // Calculate the intersection of the point with the head sphere.
-      Vector3 laserEndPt = pointerPosition + ray * menuDistance;
+      Vector3 laserEndPt = laserPointer.GetPointAlongPointer(menuDistance);
 
       // Center and orient the menu
       menuCenter = laserEndPt;
@@ -146,10 +138,12 @@ namespace DaydreamElements.ClickMenu {
     }
 
     private bool IsPointingAway() {
+      if (!laserPointer.IsAvailable) {
+        return true;
+      }
+
       // Get the position and orientation form the arm model
-      Vector3 pointerPosition = laserPointer.transform.position;
-      Vector3 ray = laserPointer.transform.rotation * Vector3.forward;
-      Vector3 laserEnd = pointerPosition + ray * laserPointer.maxReticleDistance;
+      Vector3 laserEnd = laserPointer.MaxPointerEndPoint;
 
       Vector3 cameraCenter = Camera.main.transform.position;
       Vector3 menuCenterRelativeToCamera = menuCenter - cameraCenter;
@@ -165,24 +159,16 @@ namespace DaydreamElements.ClickMenu {
         dummyParent.CloseAll();
         Destroy(dummyParent.gameObject);
         dummyParent = null;
-        laserPointer.maxReticleDistance = reticleDistance;
         if (OnMenuClosed != null) {
           OnMenuClosed.Invoke();
         }
       }
     }
     void Update() {
-      // Shorten laser when menus are open
-      if (dummyParent) {
-        float newDist = laserPointer.maxReticleDistance - reticleDelta;
-        laserPointer.maxReticleDistance = Mathf.Max(newDist, menuDistance * POINTER_DISTANCE_SCALE);
-      }
-
       // Update the menu state if it needs to suddenly open or close
       if (!dummyParent && IsButtonClicked()) {
         SetMenuLocation();
         if (IsMenuInFOV()) {
-          reticleDistance = laserPointer.maxReticleDistance;
           dummyParent = (ClickMenuIcon)Instantiate(menuIconPrefab, transform);
           dummyParent.menuRoot = this;
           ClickMenuIcon.ShowMenu(this, menuTree.tree.Root, dummyParent,
@@ -192,10 +178,10 @@ namespace DaydreamElements.ClickMenu {
             OnMenuOpened.Invoke();
           }
         }
-      } else if ((GvrController.ClickButtonDown && !selected) ||
+      } else if ((GvrControllerInput.ClickButtonDown && !selected) ||
                  IsPointingAway()) {
         CloseAll();
-      } else if (dummyParent && GvrController.AppButtonUp) {
+      } else if (dummyParent && GvrControllerInput.AppButtonUp) {
         MakeSelection(null);
         dummyParent.DeepestMenu().ShowParentMenu();
       }

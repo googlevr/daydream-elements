@@ -18,7 +18,6 @@ using System;
 using System.Collections;
 
 public class UIFadeTransition : MonoBehaviour, IUITransition {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private bool transitioning;
   private Action runningInterruptCallback;
 
@@ -114,5 +113,4 @@ public class UIFadeTransition : MonoBehaviour, IUITransition {
     return canvasGroup;
   }
 
-#endif  // UNITY_HAS_GOOGLEVR &&(UNITY_ANDROID || UNITY_EDITOR
 }

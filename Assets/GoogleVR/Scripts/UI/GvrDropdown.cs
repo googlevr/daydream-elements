@@ -87,7 +87,6 @@ public class GvrDropdown : Dropdown {
     dest.blockingMask = source.blockingMask;
     dest.blockingObjects = source.blockingObjects;
     dest.ignoreReversedGraphics = source.ignoreReversedGraphics;
-    dest.raycastMode = source.raycastMode;
   }
 
   private static T GetOrAddComponent<T>(GameObject go, out bool addedComponent) where T : Component {

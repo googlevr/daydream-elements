@@ -62,7 +62,6 @@ Shader "GoogleVR/UI/Overlay" {
 
       #include "UnityCG.cginc"
       #include "UnityUI.cginc"
-      #include "GvrUnityCompatibility.cginc"
 
       #pragma multi_compile __ UNITY_UI_ALPHACLIP
 
@@ -86,7 +85,7 @@ Shader "GoogleVR/UI/Overlay" {
       v2f vert(appdata_t IN) {
         v2f OUT;
         OUT.worldPosition = IN.vertex;
-        OUT.vertex = GvrUnityObjectToClipPos(OUT.worldPosition);
+        OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
         OUT.texcoord = IN.texcoord;
 

@@ -63,7 +63,7 @@ namespace DaydreamElements.Main {
     private Camera levelSelectCamera;
 
     [SerializeField]
-    private GameObject pointerPrefab;
+    private GameObject pointer;
 
     [SerializeField]
     [Range(0.0f, 1.0f)]
@@ -76,7 +76,6 @@ namespace DaydreamElements.Main {
     private MaterialPropertyBlock materialPropertyBlock;
     private int colorId;
     private float backgroundAlpha = 0.0f;
-    private GameObject pointer;
     private bool isTransitioningLevel;
 
     private const string LEVEL_SELECT_LAYER_NAME = "UI";
@@ -124,7 +123,7 @@ namespace DaydreamElements.Main {
         return;
       }
 
-      SetupPointer();
+      ShowPointer();
       levelSelectCamera.enabled = true;
 
       CurrentState = MenuState.Opening;
@@ -156,7 +155,7 @@ namespace DaydreamElements.Main {
     public void PreLoadLevel() {
       // Pointer must be re-created for each level.
       // This is due to the lifecycle of the main camera and GvrEventSystem.
-      DestroyPointer();
+      HidePointer();
     }
 
     public void PostLoadLevel() {
@@ -190,7 +189,7 @@ namespace DaydreamElements.Main {
     }
 
     void Update() {
-      if (GvrController.AppButtonDown) {
+      if (GvrControllerInput.AppButtonDown) {
         if (CurrentState == MenuState.Open || CurrentState == MenuState.Opening) {
           LevelSelectPageProvider levelSelect = levelSelectMenu.GetComponentInChildren<LevelSelectPageProvider>();
           if (levelSelect.IsOnRootPage && CanCloseMenu()) {
@@ -199,11 +198,11 @@ namespace DaydreamElements.Main {
         } else {
           Invoke("OpenMenu", APP_LONG_PRESS_DURATION);
         }
-      } else if (GvrController.AppButtonUp) {
+      } else if (GvrControllerInput.AppButtonUp) {
         CancelInvoke("OpenMenu");
       }
 
-      if (GvrController.Recentered) {
+      if (GvrControllerInput.Recentered) {
         StartCoroutine(RepsositionMenuDelayed());
       }
 
@@ -315,9 +314,7 @@ namespace DaydreamElements.Main {
 
       levelSelectMenu.SetActive(false);
 
-      if (pointer != null) {
-        pointer.SetActive(false);
-      }
+      HidePointer();
 
       LevelSelectCamera.enabled = false;
 
@@ -329,40 +326,23 @@ namespace DaydreamElements.Main {
       AddListeners();
     }
 
-    private void SetupPointer() {
-      CreatePointer();
-
+    private void ShowPointer() {
       pointer.SetActive(true);
 
       GvrLaserPointer laser = pointer.GetComponentInChildren<GvrLaserPointer>();
       Assert.IsNotNull(laser);
-      laser.SetAsMainPointer();
-
-      // Turn off tooltips.
-      GvrTooltip tooltip = pointer.GetComponentInChildren<GvrTooltip>();
-      if (tooltip != null) {
-        tooltip.transform.parent.gameObject.SetActive(false);
-      }
+      GvrPointerInputModule.Pointer = laser;
     }
 
-    private void CreatePointer() {
-      if (pointer != null) {
-        return;
-      }
-
-      pointer = Instantiate(pointerPrefab);
-      pointer.transform.SetParent(LevelSelectCamera.transform.parent, false);
-      int layer = LevelSelectLayer;
-      SceneHelpers.SetLayerRecursively(pointer, layer);
-    }
-
-    private void DestroyPointer() {
+    private void HidePointer() {
       if (pointer == null) {
         return;
       }
 
-      Destroy(pointer);
-      GvrPointerManager.Pointer = null;
+      pointer.SetActive(false);
+      if (GvrPointerInputModule.Pointer == pointer) {
+        GvrPointerInputModule.Pointer = null;
+      }
     }
 
     private bool IsInitialScene() {

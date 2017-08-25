@@ -14,7 +14,6 @@
 
 // This script only works in Unity 5.6 or newer since older versions of Unity
 // don't have IPreprocessBuild and IPostprocessBuild.
-
 #if UNITY_5_6_OR_NEWER && UNITY_ANDROID
 using System;
 using UnityEditor;
@@ -137,4 +136,4 @@ class MyCustomBuildProcessor : IPreprocessBuild, IPostprocessBuild
         m_cardboardAddedFromCode = false;
     }
 }
-#endif  // UNITY_5_6_OR_NEWER
+#endif  // UNITY_5_6_OR_NEWER && UNITY_ANDROID

@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires for 1 frame on app button up.
 public class AppButtonUpTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.AppButtonUp;
+    return GvrControllerInput.AppButtonUp;
   }
 }

@@ -21,7 +21,6 @@ using System.Collections;
 /// in a staggered fashion relative to the page.
 /// Requires the pages to have a TiledPage script.
 public class TileScrollEffect : BaseScrollEffect {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   public override void ApplyEffect(BaseScrollEffect.UpdateData updateData) {
     TiledPage tiledPage = updateData.page.GetComponent<TiledPage>();
 
@@ -37,5 +36,4 @@ public class TileScrollEffect : BaseScrollEffect {
 
     tiledPage.ApplyScrollEffect(clampedDifference, updateData.spacing, updateData.isInteractable);
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

@@ -20,7 +20,7 @@ namespace DaydreamElements.Main {
   /// Used to disable Painter and Click Menu when the navigation menu is open
   public class ClickMenuLevelSelectResponder : BaseLevelSelectResponder {
     private ClickMenuRoot clickMenu;
-    private GvrControllerVisualManager controller;
+    private GvrTrackedController controller;
     private GvrLaserPointer pointer;
 
     public override void OnMenuOpened() {
@@ -34,7 +34,7 @@ namespace DaydreamElements.Main {
     void Start() {
       clickMenu = SceneHelpers.FindObjectOfType<ClickMenuRoot>(true);
       Assert.IsNotNull(clickMenu);
-      controller = SceneHelpers.FindObjectOfType<GvrControllerVisualManager>(true);
+      controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
       pointer = controller.GetComponentInChildren<GvrLaserPointer>();
       Assert.IsNotNull(pointer);
@@ -44,7 +44,7 @@ namespace DaydreamElements.Main {
       clickMenu.gameObject.SetActive(enabled);
       controller.gameObject.SetActive(enabled);
       if (enabled) {
-        pointer.SetAsMainPointer();
+        GvrPointerInputModule.Pointer = pointer;
       }
     }
   }

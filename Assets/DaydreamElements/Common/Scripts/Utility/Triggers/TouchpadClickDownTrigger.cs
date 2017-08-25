@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires for 1 frame when trackpad button is pressed down.
 public class TouchpadClickDownTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.ClickButtonDown;
+    return GvrControllerInput.ClickButtonDown;
   }
 }

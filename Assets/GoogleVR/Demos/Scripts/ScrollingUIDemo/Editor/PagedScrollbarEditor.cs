@@ -19,7 +19,6 @@ using System.Collections;
 
 [CustomEditor(typeof(PagedScrollBar))]
 public class PagedScrollbarEditor : ScrollbarEditor {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private SerializedProperty pagedScrollRect;
 
   protected override void OnEnable() {
@@ -34,5 +33,4 @@ public class PagedScrollbarEditor : ScrollbarEditor {
 
     base.OnInspectorGUI();
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

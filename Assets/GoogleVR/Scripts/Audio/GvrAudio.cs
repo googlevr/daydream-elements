@@ -277,7 +277,7 @@ public static class GvrAudio {
   /// Source occlusion detection rate in seconds.
   public const float occlusionDetectionInterval = 0.2f;
 
-  // Number of first-order ambisonic input channels.
+  /// Number of first-order ambisonic input channels.
   public const int numFoaChannels = 4;
 
   [StructLayout(LayoutKind.Sequential)]
@@ -325,9 +325,9 @@ public static class GvrAudio {
   // Converts given |position| and |rotation| from Unity space to audio space.
   private static void ConvertAudioTransformFromUnity (ref Vector3 position,
                                                       ref Quaternion rotation) {
-    pose.SetRightHanded(Matrix4x4.TRS(position, rotation, Vector3.one));
-    position = pose.Position;
-    rotation = pose.Orientation;
+    transformMatrix = flipZ * Matrix4x4.TRS(position, rotation, Vector3.one) * flipZ;
+    position = transformMatrix.GetColumn(3);
+    rotation = Quaternion.LookRotation(transformMatrix.GetColumn(2), transformMatrix.GetColumn(1));
   }
 
   // Returns room properties of the given |room|.
@@ -360,6 +360,9 @@ public static class GvrAudio {
     return roomProperties;
   }
 
+  // Right-handed to left-handed matrix converter (and vice versa).
+  private static readonly Matrix4x4 flipZ = Matrix4x4.Scale(new Vector3(1.0f, 1.0f, -1.0f));
+
   // Boundaries instance to be used in room detection logic.
   private static Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
 
@@ -378,8 +381,8 @@ public static class GvrAudio {
   // Occlusion layer mask.
   private static int occlusionMaskValue = -1;
 
-  // 3D pose instance to be used in transform space conversion.
-  private static MutablePose3D pose = new MutablePose3D();
+  // 4x4 transformation matrix to be used in transform space conversion.
+  private static Matrix4x4 transformMatrix = Matrix4x4.identity;
 
 #if UNITY_IOS
   private const string pluginName = "__Internal";

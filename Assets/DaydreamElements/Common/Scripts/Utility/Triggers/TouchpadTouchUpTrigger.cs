@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires if users finger is not touching the touchpad.
 public class TouchpadTouchUpTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.TouchUp;
+    return GvrControllerInput.TouchUp;
   }
 }

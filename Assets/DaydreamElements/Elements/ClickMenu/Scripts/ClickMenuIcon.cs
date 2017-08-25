@@ -16,6 +16,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using DaydreamElements.Common;
+using DaydreamElements.Common.IconMenu;
 
 namespace DaydreamElements.ClickMenu {
 
@@ -91,13 +92,6 @@ namespace DaydreamElements.ClickMenu {
     private float startAngle;
     private float endAngle;
 
-    public enum FadeState {
-      Shown,   // icon is shown
-      Hidden,  // icon not shown, but will be kept around.
-      Closed,  // icon not shown. It was just created or about to be destroyed.
-      Hovering // icon is open and is highlighted
-    }
-
     /// The time when the fade started. Used to interpolate fade parameters
     private float timeAtFadeStart;
     private float alphaAtFadeStart;
@@ -112,18 +106,18 @@ namespace DaydreamElements.ClickMenu {
     /// The most recent fade is at the front of the list.
     // Old fades are removed after they finish.
     List<FadeParameters> fades = new List<FadeParameters>(){
-      new FadeParameters(FadeState.Closed, FadeState.Closed)
+      new FadeParameters(IconState.Closed, IconState.Closed)
     };
 
     /// Describes how a button should behave in a particular state.
     //  Provides functionality to interpolate to the new draw style.
     private class FadeParameters {
-      public FadeParameters(FadeState nextState, FadeState prevState) {
+      public FadeParameters(IconState nextState, IconState prevState) {
         state = nextState;
         switch(state) {
-        case FadeState.Shown:
+        case IconState.Shown:
           alpha = 1.0f;
-          if (prevState == FadeState.Hovering) {
+          if (prevState == IconState.Hovering) {
             duration = HOVER_ANIMATION_SECONDS;
           } else {
             duration = SHOW_ANIMATION_SECONDS;
@@ -133,7 +127,7 @@ namespace DaydreamElements.ClickMenu {
           scale = 1.0f;
           zOffset = SHOWING_Z_OFFSET;
           break;
-        case FadeState.Hovering:
+        case IconState.Hovering:
           alpha = 1.0f;
           duration = HOVER_ANIMATION_SECONDS;
           buttonActive = true;
@@ -141,7 +135,7 @@ namespace DaydreamElements.ClickMenu {
           scale = 1.0f;
           zOffset = HOVERING_Z_OFFSET;
           break;
-        case FadeState.Hidden:
+        case IconState.Hidden:
           alpha = 0.0f;
           duration = HIDE_ANIMATION_SECONDS;
           buttonActive = false;
@@ -149,7 +143,7 @@ namespace DaydreamElements.ClickMenu {
           scale = 1.5f;
           zOffset = HIDING_Z_OFFSET;
           break;
-        case FadeState.Closed:
+        case IconState.Closed:
           alpha = 0.0f;
           duration = CLOSE_ANIMATION_SECONDS;
           buttonActive = false;
@@ -160,7 +154,7 @@ namespace DaydreamElements.ClickMenu {
         }
       }
 
-      public FadeState state;
+      public IconState state;
       public float duration;
       public float scale;
       public float alpha;
@@ -251,7 +245,7 @@ namespace DaydreamElements.ClickMenu {
       }
 
       parentMenu.childMenus.Add(this);
-      StartFade(FadeState.Shown);
+      StartFade(IconState.Shown);
       SetButtonTransparency(0.0f);
       SetPieMeshTransparency(0.0f, 0.0f);
     }
@@ -407,8 +401,8 @@ namespace DaydreamElements.ClickMenu {
       if (!parentMenu) {
         menuRoot.CloseAll();
       } else {
-        FadeChildren(FadeState.Closed);
-        parentMenu.FadeChildren(FadeState.Shown);
+        FadeChildren(IconState.Closed);
+        parentMenu.FadeChildren(IconState.Shown);
         childMenus.Clear();
       }
     }
@@ -428,13 +422,13 @@ namespace DaydreamElements.ClickMenu {
       if (buttonActive) {
         // Make button interactive and process clicks
         MakeMeshCollider();
-        if (selected && (GvrController.ClickButtonDown)) {
+        if (selected && (GvrControllerInput.ClickButtonDown)) {
           menuRoot.MakeSelection(menuItem);
           if (isBackButton) {
             parentMenu.ShowParentMenu();
           } else {
             if (ShowChildMenu()) {
-              parentMenu.FadeChildren(FadeState.Hidden);
+              parentMenu.FadeChildren(IconState.Hidden);
             }
           }
         }
@@ -511,13 +505,13 @@ namespace DaydreamElements.ClickMenu {
       }
     }
 
-    private void FadeChildren(FadeState nextState) {
+    private void FadeChildren(IconState nextState) {
       foreach (ClickMenuIcon child in childMenus) {
         child.StartFade(nextState);
       }
     }
 
-    private void StartFade(FadeState nextState) {
+    private void StartFade(IconState nextState) {
       FadeParameters prev = fades[0];
       if (prev.state == nextState) {
         return;
@@ -567,7 +561,7 @@ namespace DaydreamElements.ClickMenu {
         meshCollider.sharedMesh = sharedMesh;
         buttonActive = true;
       }
-      if (finishedFade.state == FadeState.Closed) {
+      if (finishedFade.state == IconState.Closed) {
         Destroy(gameObject);
       }
     }
@@ -587,9 +581,9 @@ namespace DaydreamElements.ClickMenu {
       SetButtonScale(scale, GetCurrentZOffset());
       SetButtonTransparency(alpha);
       SetPieMeshTransparency(alpha, GetCurrentHighlight());
-      if (fades[0].state == FadeState.Closed) {
+      if (fades[0].state == IconState.Closed) {
         selected = false;
-      } else if (fades[0].state == FadeState.Hidden) {
+      } else if (fades[0].state == IconState.Hidden) {
         MakeMeshCollider();
         selected = false;
       } else {
@@ -604,8 +598,8 @@ namespace DaydreamElements.ClickMenu {
     }
 
     /// Starts a fade if the there is a match for fromState
-    private void FadeIfNeeded(FadeState fromState,
-                      FadeState toState)
+    private void FadeIfNeeded(IconState fromState,
+                      IconState toState)
     {
       if (fades[0].state != fromState) {
         return;
@@ -626,8 +620,8 @@ namespace DaydreamElements.ClickMenu {
     private float GetCurrentZOffset() {
       float zOffset = zOffsetAtFadeStart;
       if (fades.Count > 1) {
-        if (fades[0].state == FadeState.Closed &&
-           fades[1].state == FadeState.Hovering) {
+        if (fades[0].state == IconState.Closed &&
+           fades[1].state == IconState.Hovering) {
           // Special Behavior: One button is hovering above the others.
           // Force it to close with the same height as other buttons.
           zOffset = SHOWING_Z_OFFSET;
@@ -668,7 +662,7 @@ namespace DaydreamElements.ClickMenu {
         child.CloseAll();
       }
       if (buttonActive) {
-        StartFade(FadeState.Closed);
+        StartFade(IconState.Closed);
       } else {
         // If the button is already disabled, destroy it instantly
         Destroy(gameObject);
@@ -689,12 +683,12 @@ namespace DaydreamElements.ClickMenu {
         menuRoot.MakeHover(menuItem);
       }
       selected = true;
-      FadeIfNeeded(FadeState.Shown, FadeState.Hovering);
+      FadeIfNeeded(IconState.Shown, IconState.Hovering);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
       selected = false;
-      FadeIfNeeded(FadeState.Hovering, FadeState.Shown);
+      FadeIfNeeded(IconState.Hovering, IconState.Shown);
     }
 
 

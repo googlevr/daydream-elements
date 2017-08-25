@@ -21,7 +21,6 @@ using UnityEngine.Events;
 // the z-axis and tilt towards the camera when the gvr controller pointer is
 // hovering over them.
 public class FloatTile : BaseTile {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private const float PARENT_CHANGE_THRESHOLD_PERCENT = 0.33f;
   private const float _360_DEGREES = 360.0f;
   private const float _180_DEGREES = 180.0f;
@@ -57,38 +56,30 @@ public class FloatTile : BaseTile {
     myTransform.SetParent(originalParent, true);
     myTransform.SetAsLastSibling();
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
 
   public override void OnPointerEnter(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = true;
 
     // Since canvas graphics render facing the negative Z direction,
     // negative z is the forward direction for a canvas element.
     desiredPositionZ = -hoverPositionZMeters / GetMetersToCanvasScale();
     desiredScale = new Vector3(hoverScale, hoverScale, hoverScale);
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnPointerExit(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = false;
 
     desiredRotation = Quaternion.identity;
     desiredPositionZ = 0.0f;
     desiredScale = Vector3.one;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnGvrPointerHover(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = true;
     UpdateDesiredRotation(eventData.pointerCurrentRaycast.worldPosition);
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   void Update() {
     UpdateRotation();
     UpdateFloatPosition();
@@ -205,5 +196,4 @@ public class FloatTile : BaseTile {
 
     return Mathf.Clamp(degrees, -maxDegrees, maxDegrees);
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

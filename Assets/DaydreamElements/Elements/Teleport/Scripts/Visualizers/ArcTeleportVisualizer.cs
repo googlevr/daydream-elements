@@ -275,9 +275,6 @@ namespace DaydreamElements.Teleport {
     }
 
     private Vector3 ControlPointForLine(Vector3 start, Vector3 end, float maxDistance, Transform controller) {
-      Vector3 lineVector = end - start;
-      Vector3 halfLineVect = lineVector * .5f;
-
       Vector3 halfVect = end - start;
       Vector3 controlPoint = start + (halfVect.normalized * (halfVect.magnitude / 2));
 

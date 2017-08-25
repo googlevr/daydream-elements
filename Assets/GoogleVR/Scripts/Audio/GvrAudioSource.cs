@@ -440,7 +440,7 @@ public class GvrAudioSource : MonoBehaviour {
     if (audioSource != null) {
       audioSource.Stop();
       ShutdownSource();
-      isPaused = false;
+      isPaused = true;
     }
   }
 

@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires for 1 frame when trackpad button is released.
 public class TouchpadClickUpTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.ClickButtonUp;
+    return GvrControllerInput.ClickButtonUp;
   }
 }

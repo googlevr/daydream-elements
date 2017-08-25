@@ -37,6 +37,13 @@ namespace DaydreamElements.Common {
       }
     }
 
+    /// Flattens an AssetTree.Node into the list serializedRoot which can then be serialized.
+    public void SaveForSerialization() {
+      Node top = Root;
+      serializedRoot.Clear();
+      SaveForSerialization(top);
+    }
+
 #region Serialization
 
     public const string ROOT_PROP = "serializedRoot";
@@ -102,6 +109,19 @@ namespace DaydreamElements.Common {
       return nextIndex;
     }
 
+    private void SaveForSerialization(Node node) {
+      if (node != null) {
+        SerializedNode sNode = new SerializedNode();
+        sNode.childrenCount = node.children.Count;
+        sNode.value = node.value;
+        serializedRoot.Add(sNode);
+
+        foreach (var child in node.children) {
+          SaveForSerialization(child);
+        }
+      }
+      return;
+    }
 #endregion
   }
 }

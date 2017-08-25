@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires every frame while finger is touching touchpad.
 public class TouchpadTouchingTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.IsTouching;
+    return GvrControllerInput.IsTouching;
   }
 }

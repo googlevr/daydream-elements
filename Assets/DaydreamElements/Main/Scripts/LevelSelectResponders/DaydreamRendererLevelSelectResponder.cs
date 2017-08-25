@@ -20,7 +20,7 @@ using DaydreamElements.Teleport;
 namespace DaydreamElements.Main {
 
   public class DaydreamRendererLevelSelectResponder : BaseLevelSelectResponder {
-    private GvrControllerVisualManager controller;
+    private GvrTrackedController controller;
     private TeleportController teleport;
 
     public override void OnMenuOpened() {
@@ -32,7 +32,7 @@ namespace DaydreamElements.Main {
     }
 
     void Start() {
-      controller = SceneHelpers.FindObjectOfType<GvrControllerVisualManager>(true);
+      controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
       teleport = SceneHelpers.FindObjectOfType<TeleportController>(true);
       Assert.IsNotNull(teleport);

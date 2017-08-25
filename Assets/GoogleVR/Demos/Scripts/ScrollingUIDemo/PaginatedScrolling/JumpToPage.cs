@@ -19,7 +19,6 @@ using System.Collections;
 
 /// Jumps to a specified page in a PagedScrollRect when it is clicked on.
 public class JumpToPage : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   [Tooltip("Destination page.")]
   public RectTransform page;
 
@@ -97,27 +96,20 @@ public class JumpToPage : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
       hoverTransform.localPosition = localPosition;
     }
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   public void OnPointerEnter(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     // Since canvas graphics render facing the negative Z direction,
     // negative z is the forward direction for a canvas element.
     float metersToCanvasScale = GvrUIHelpers.GetMetersToCanvasScale(page);
     desiredPositionZ = -hoverPositionZMeters / metersToCanvasScale;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public void OnPointerExit(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     desiredPositionZ = 0.0f;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public void OnPointerClick(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     if (CanClick) {
       PageOwnerScrollRect.SnapToVisiblePage(page);
     }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 }

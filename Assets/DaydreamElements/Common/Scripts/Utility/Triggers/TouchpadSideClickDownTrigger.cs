@@ -30,12 +30,12 @@ public class TouchpadSideClickDownTrigger : BaseActionTrigger {
   private float sideWidth = .2f;
 
   public override bool TriggerActive() {
-    if (GvrController.IsTouching == false ||
-        GvrController.ClickButtonDown == false) {
+    if (GvrControllerInput.IsTouching == false ||
+        GvrControllerInput.ClickButtonDown == false) {
       return false;
     }
 
-    float xPos = GvrController.TouchPos.x;
+    float xPos = GvrControllerInput.TouchPos.x;
 
     // Check for left side active.
     if (xPos <= sideWidth) {

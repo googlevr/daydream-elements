@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// This provider is only available on an Android device.
+#if UNITY_ANDROID && !UNITY_EDITOR
 using UnityEngine;
 
 using System;
@@ -22,9 +24,6 @@ namespace Gvr.Internal {
   /// Controller Provider that uses the native GVR C API to communicate with controllers
   /// via Google VR Services on Android.
   class AndroidNativeControllerProvider : IControllerProvider {
-#if !UNITY_HAS_GOOGLEVR || (!UNITY_ANDROID && !UNITY_EDITOR)
-    public void Dispose() { }
-#else
     // Note: keep structs and function signatures in sync with the C header file (gvr_controller.h).
     // GVR controller option flags.
     private const int GVR_CONTROLLER_ENABLE_ORIENTATION = 1 << 0;
@@ -79,7 +78,7 @@ namespace Gvr.Internal {
       internal float y;
     }
 
-    private const string dllName = "gvr";
+    private const string dllName = GvrActivityHelper.GVR_DLL_NAME;
 
     [DllImport(dllName)]
     private static extern int gvr_controller_get_default_options();
@@ -176,6 +175,7 @@ namespace Gvr.Internal {
     private const string VRCORE_UTILS_CLASS = "com.google.vr.vrcore.base.api.VrCoreUtils";
 
     private IntPtr api;
+    private bool hasBatteryMethods = false;
 
     private AndroidJavaObject androidContext;
     private AndroidJavaObject classLoader;
@@ -186,6 +186,10 @@ namespace Gvr.Internal {
     private IntPtr statePtr;
 
     private MutablePose3D pose3d = new MutablePose3D();
+
+    public bool SupportsBatteryStatus {
+      get { return hasBatteryMethods; }
+    }
 
     internal AndroidNativeControllerProvider() {
 #if !UNITY_EDITOR
@@ -231,6 +235,16 @@ namespace Gvr.Internal {
         error = true;
         errorDetails = "Failed to initialize Daydream controller API.";
         return;
+      }
+
+      try {
+        gvr_controller_state_get_battery_charging(statePtr);
+        gvr_controller_state_get_battery_level(statePtr);
+        hasBatteryMethods = true;
+      } catch (EntryPointNotFoundException) {
+        // Older VrCore version. Does not support battery indicator.
+        // Note that controller API is not dynamically loaded as of June 2017 (b/35662043),
+        // so we'll need to support this case indefinitely...
       }
 
       Debug.Log("GVR API successfully initialized. Now resuming it.");
@@ -312,12 +326,9 @@ namespace Gvr.Internal {
       outState.recentered = 0 != gvr_controller_state_get_recentered(statePtr);
       outState.gvrPtr = statePtr;
 
-      // Update battery information.
-      try {
+      if (hasBatteryMethods) {
         outState.isCharging = 0 != gvr_controller_state_get_battery_charging(statePtr);
         outState.batteryLevel = (GvrControllerBatteryLevel)gvr_controller_state_get_battery_level(statePtr);
-      } catch (EntryPointNotFoundException) {
-        // Older VrCore version. Does not support battery indicator.
       }
    }
 
@@ -390,7 +401,7 @@ namespace Gvr.Internal {
         return 0;
       }
     }
-#endif  // !UNITY_HAS_GOOGLEVR || (!UNITY_ANDROID && !UNITY_EDITOR)
   }
 }
 /// @endcond
+#endif  // UNITY_ANDROID && !UNITY_EDITOR

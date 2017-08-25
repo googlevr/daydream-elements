@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DaydreamElements.Chase {
 
@@ -24,7 +25,7 @@ namespace DaydreamElements.Chase {
   /// overriding IsPointedAtValidMovePosition(), or by ignoring the position
   /// inside your positioned character subclass.
   [RequireComponent(typeof(LineRenderer))]
-  public class CharacterPositionPointer : MonoBehaviour {
+  public class CharacterPositionPointer : GvrBasePointer, IGvrArmModelReceiver {
     /// Color of the line pointer.
     [Tooltip("Color of the laser pointer")]
     public Color laserColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
@@ -43,44 +44,47 @@ namespace DaydreamElements.Chase {
     /// Target prefab is positioned at end of the laser pointer.
     [Tooltip("Prefab to place at the end of the laser pointer")]
     public GameObject targetPrefab;
-    private GameObject target;
 
     [Tooltip("Maximum surface angle for valid selections")]
     [Range(0, 180)]
     public float maxHitAngleDegrees = 30.0f;
 
-    /// Implementation of the pointer logic since it's not a monobehaviour.
-    private CharacterPositionPointerImpl pointer;
-    public CharacterPositionPointerImpl Pointer {
-      get {
-        return pointer;
-      }
-    }
+    public float maxPointerDistance = 20.0f;
+
+    private LineRenderer line;
+
+    /// Position of current pointer raycast hit.
+    private Vector3 hitPosition;
+    private GameObject hitGameObject;
+
+    /// Target object to position at hit point.
+    private GameObject target;
+
+    /// Raycast hit result if pointed at object.
+    private RaycastResult hitRaycastResult;
+
+    public GvrBaseArmModel ArmModel { get; set; }
 
     // Use this for initialization
-    void Start () {
+    protected override void Start() {
+      base.Start();
+
       if (targetPrefab == null) {
         Debug.LogError("Character position pointer must have target prefab!");
         return;
       }
-
-      pointer = new CharacterPositionPointerImpl();
-      pointer.line = GetComponent<LineRenderer>();
-      pointer.PointerTransform = transform;
-      pointer.OnStart();
-
+        
+      line = GetComponent<LineRenderer>();
       target = Instantiate(targetPrefab, transform);
-      pointer.target = target;
     }
 
     void Update() {
-      pointer.laserColor = laserColor;
-      pointer.lineWidth = lineWidth;
-      pointer.OnUpdate();
+      UpdateLaserPointer();
+      UpdateTargetPosition();
 
       // We hide the pointer target if there's no valid selection.
-      bool isValid = IsPointedAtValidMovePosition() && IsPointedAtValidAngle();
-      pointer.target.SetActive(isValid);
+      bool isValid = IsPointedAtObject && IsPointedAtValidAngle();
+      target.SetActive(isValid);
 
       if (!isValid) {
         return;
@@ -98,28 +102,102 @@ namespace DaydreamElements.Chase {
 
       if (moveTrigger.TriggerActive()) {
         // Ask the character to move to pointed at position.
-        character.SetTargetPosition(pointer.hitPosition);
+        character.SetTargetPosition(hitPosition);
         return;
       }
     }
 
-    /// Override this method for custom logic for character movement
-    /// if you want to do filtering based on tags, layers, etc.
-    protected virtual bool IsPointedAtValidMovePosition() {
-      if (pointer == null) {
-        return false;
-      }
-      return pointer.IsPointedAtObject;
-    }
-
     /// Ignore steep surfaces, like walls.
     protected virtual bool IsPointedAtValidAngle() {
-      if (pointer == null || pointer.IsPointedAtObject == false) {
+      if (!IsPointedAtObject) {
         return false;
       }
 
-      float angle = Vector3.Angle(Vector3.up, pointer.HitRaycastResult.worldNormal);
+      float angle = Vector3.Angle(Vector3.up, hitRaycastResult.worldNormal);
       return angle <= maxHitAngleDegrees;
+    }
+
+    /// True if we're currently pointed at something.
+    public bool IsPointedAtObject {
+      get {
+        return hitGameObject != null;
+      }
+    }
+
+    public override float MaxPointerDistance {
+      get {
+        return maxPointerDistance;
+      }
+    }
+
+    /// Called when the pointer is facing a valid GameObject. This can be a 3D
+    /// or UI element.
+    public override void OnPointerEnter(RaycastResult raycastResult, bool isInteractive) {
+      hitRaycastResult = raycastResult;
+      hitGameObject = raycastResult.gameObject;
+      hitPosition = raycastResult.worldPosition;
+      UpdateLaserPointer();
+    }
+
+    /// Called every frame the user is still pointing at a valid GameObject. This
+    /// can be a 3D or UI element.
+    public override void OnPointerHover(RaycastResult raycastResultResult, bool isInteractive) {
+      hitRaycastResult = raycastResultResult;
+      hitGameObject = raycastResultResult.gameObject;
+      hitPosition = raycastResultResult.worldPosition;
+      UpdateLaserPointer();
+    }
+
+    /// Called when the pointer no longer faces an object previously
+    /// intersected with a ray projected from the camera.
+    /// This is also called just before **OnInputModuleDisabled** and may have have any of
+    /// the values set as **null**.
+    public override void OnPointerExit(GameObject targetObject) {
+      hitGameObject = null;
+      hitPosition = Vector3.zero;
+      UpdateLaserPointer();
+    }
+
+    /// Called when a click is initiated.
+    public override void OnPointerClickDown() {
+    }
+
+    /// Called when click is finished.
+    public override void OnPointerClickUp() {
+    }
+
+    public override void GetPointerRadius(out float enterRadius, out float exitRadius) {
+      enterRadius = 0;
+      exitRadius = 0;
+    }
+
+    private Vector3 CalculateLaserEndPoint() {
+      if (hitGameObject != null) {
+        return hitPosition;
+      } else {
+        return base.PointerTransform.position
+        + (base.PointerTransform.forward * maxPointerDistance);
+      }
+    }
+
+    private void UpdateLaserPointer() {
+      Vector3 lineEndPoint = CalculateLaserEndPoint();
+      line.SetPosition(0, base.PointerTransform.position);
+      line.SetPosition(1, lineEndPoint);
+
+      float preferredAlpha = ArmModel != null ? ArmModel.PreferredAlpha : .5f;
+      line.startColor = Color.Lerp(Color.clear, laserColor, preferredAlpha);
+      line.endColor = Color.clear;
+    }
+
+    private void UpdateTargetPosition() {
+      if (target == null) {
+        return;
+      }
+
+      target.SetActive(hitGameObject != null);
+      target.transform.position = hitPosition;
+      target.transform.rotation = Quaternion.identity;
     }
   }
 }

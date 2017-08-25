@@ -23,7 +23,6 @@ using System.Collections;
 // over the tile. The edges of the image are masked off if they go beyond the
 // bounding rectangle of the tile.
 public class MaskedTile : BaseTile {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private const string OBJ_NAME_MASKED_IMAGE = "MaskedImage";
 
   private const float PARENT_CHANGE_THRESHOLD_PERCENT = 0.33f;
@@ -115,25 +114,19 @@ public class MaskedTile : BaseTile {
     UpdateFloatPosition();
     UpdateScale();
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
   public override void OnPointerEnter(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = true;
     desiredPositionZ = -hoverPositionZMeters / GetMetersToCanvasScale();
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnPointerExit(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = false;
     maskedScrollOffset = Vector3.zero;
     desiredPositionZ = 0.0f;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnGvrPointerHover(PointerEventData eventData) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isHovering = true;
     Vector3 pos = eventData.pointerCurrentRaycast.worldPosition;
 
@@ -159,10 +152,8 @@ public class MaskedTile : BaseTile {
     Vector3 direction = pos - worldCenter;
     maskedScrollOffset.x = movementWeight * enlargedImageSize.x * direction.x;
     maskedScrollOffset.y = movementWeight * enlargedImageSize.y * direction.y;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private void UpdateScrollPosition() {
     Vector3 desiredPosition = originalMaskedPosition;
 
@@ -218,5 +209,4 @@ public class MaskedTile : BaseTile {
     currentSize = Vector2.Lerp(currentSize, desiredSize, Time.deltaTime * interpolationSpeed);
     maskedImage.rectTransform.sizeDelta = currentSize;
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

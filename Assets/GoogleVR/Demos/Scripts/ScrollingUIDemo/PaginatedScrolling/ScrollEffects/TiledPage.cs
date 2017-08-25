@@ -20,7 +20,6 @@ using System.Linq;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class TiledPage : MonoBehaviour {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   /// Allows you to assign a custom set of tiles
   /// To animate when this page is scrolling.
   [SerializeField]
@@ -265,5 +264,4 @@ public class TiledPage : MonoBehaviour {
     }
     return cellRect;
   }
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

@@ -161,8 +161,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: To use the controller, please upgrade to a version of Unity with the GVR
-    native integration
+  m_Text: Messages will appear here at runtime.
 --- !u!114 &11499020
 MonoBehaviour:
   m_ObjectHideFlags: 1

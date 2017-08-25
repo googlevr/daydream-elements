@@ -51,14 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78e562282a62924eb870537cbb2bc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuTree: {fileID: 0}
+  menuTree: {fileID: 11400000, guid: 79308d7e18093ab438d24398075bbf90, type: 2}
   backIcon: {fileID: 21300000, guid: 83f13b0d48a3cd9429b0bbc9a5806cc0, type: 3}
   laserPointer: {fileID: 0}
   pieMaterial: {fileID: 2100000, guid: 3c1e303d42e791f4ebbd917d82797c9b, type: 2}
+  iconScale: 0.1
   menuActivationButton: 3
   menuIconPrefab: {fileID: 114000014107134468, guid: dbffb642d18a2dc46a34b83758ceff80,
     type: 2}
-  reticleDelta: 0.03
+  reticleDelta: 10
   menuDistance: 0.75
   closeAngle: 25
   openFovAngle: 35

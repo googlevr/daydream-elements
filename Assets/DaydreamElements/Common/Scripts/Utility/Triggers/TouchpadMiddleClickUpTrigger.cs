@@ -19,11 +19,11 @@ public class TouchpadMiddleClickUpTrigger : BaseActionTrigger {
   private float edgeWidth = .2f;
 
   public override bool TriggerActive() {
-    if (GvrController.ClickButtonUp == false) {
+    if (GvrControllerInput.ClickButtonUp == false) {
       return false;
     }
 
-    float xPos = GvrController.TouchPos.x;
+    float xPos = GvrControllerInput.TouchPos.x;
     if (xPos < edgeWidth || xPos > (1 - edgeWidth)) {
       return false;
     }

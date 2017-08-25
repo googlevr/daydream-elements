@@ -245,11 +245,11 @@ namespace DaydreamElements.Teleport {
         return controller;
       }
 
-      if (GvrPointerManager.Pointer == null) {
+      if (GvrPointerInputModule.Pointer == null) {
         return null;
       }
 
-      return GvrPointerManager.Pointer.PointerTransform;
+      return GvrPointerInputModule.Pointer.PointerTransform;
     }
 
     /// Returns true if player rotation was applied.

@@ -33,7 +33,7 @@ namespace DaydreamElements.Common {
     void Update() {
       // If the play recenter's, then we need to undo the rotation
       // so that the recenter results in the user facing the correct direction.
-      if (GvrController.Recentered && initialRotation != Quaternion.identity) {
+      if (GvrControllerInput.Recentered && initialRotation != Quaternion.identity) {
         transform.localRotation = transform.localRotation * Quaternion.Inverse(initialRotation);
         initialRotation = Quaternion.identity;
       }

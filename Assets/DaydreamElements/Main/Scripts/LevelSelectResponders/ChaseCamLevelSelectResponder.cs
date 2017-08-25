@@ -22,7 +22,7 @@ namespace DaydreamElements.Main {
   /// in the ChaseCam demo scene, and disables chase cam to stop triggers.
   public class ChaseCamLevelSelectResponder : BaseLevelSelectResponder {
     private BasePositionedCharacter positionedCharacter;
-    private GvrControllerVisualManager controller;
+    private GvrTrackedController controller;
     private CharacterPositionPointer pointer;
     private ChaseCam chaseCam;
 
@@ -34,7 +34,7 @@ namespace DaydreamElements.Main {
 
     public override void OnMenuClosed() {
       controller.gameObject.SetActive(true);
-      GvrPointerManager.Pointer = pointer.Pointer;
+      GvrPointerInputModule.Pointer = pointer;
       chaseCam.enabled = true;
     }
 
@@ -43,7 +43,7 @@ namespace DaydreamElements.Main {
       positionedCharacter = SceneHelpers.FindObjectOfType<BasePositionedCharacter>(true);
       Assert.IsNotNull(positionedCharacter);
 
-      controller = SceneHelpers.FindObjectOfType<GvrControllerVisualManager>(true);
+      controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
 
       pointer = controller.GetComponentInChildren<CharacterPositionPointer>();

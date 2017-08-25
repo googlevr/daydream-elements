@@ -1,17 +1,16 @@
-
-// Copyright (C) 2016 Google Inc. All Rights Reserved.
+// Copyright 2016 Google Inc. All Rights Reserved.
 //
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  http://www.apache.org/licenses/LICENSE-2.0
+//     http://www.apache.org/licenses/LICENSE-2.0
 //
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//    limitations under the License.
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,15 +23,6 @@ using System.Collections.Generic;
 /// Plays video using Exoplayer rendering it on the main texture.
 /// </summary>
 public class GvrVideoPlayerTexture : MonoBehaviour {
-
-  private const int MIN_BUFFER_SIZE = 3;
-  private const int MAX_BUFFER_SIZE = 15;
-
-  /// <summary>
-  /// The video texture array used as a circular buffer to get the video image.
-  /// </summary>
-  private Texture2D[] videoTextures;
-  private int currentTexture;
 
   /// <summary>
   /// The video player pointer used to uniquely identify the player instance.
@@ -48,6 +38,9 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   private int videoPlayerEventBase;
 
   private Texture initialTexture;
+  private Texture surfaceTexture;
+  private float[] videoMatrix;
+  private long lastVideoTimestamp;
 
   private bool initialized;
   private int texWidth = 1024;
@@ -63,8 +56,7 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   /// </summary>
   private IntPtr renderEventFunction;
 
-  private bool processingRunning;
-  private bool exitProcessing;
+  private bool playOnResume;
 
   /// <summary>List of callbacks to invoke when the video is ready.</summary>
   private List<Action<int>> onEventCallbacks;
@@ -132,12 +124,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     RenderRightEye = 4,
     Shutdown = 5
   };
-
-  // The circular buffer has to be at least 2,
-  // but in some cases that is too small, so set some reasonable range
-  // so a slider shows up in the property inspector.
-  [Range(MIN_BUFFER_SIZE, MAX_BUFFER_SIZE)]
-  public int bufferSize;
 
   /// <summary>
   /// The type of the video.
@@ -228,6 +214,7 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
 
   /// Create the video player instance and the event base id.
   void Awake() {
+    videoMatrix = new float[16];
     // Find the components on which to set the video texture.
     graphicComponent = GetComponent<Graphic>();
     rendererComponent = GetComponent<Renderer>();
@@ -236,12 +223,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   }
 
   void CreatePlayer() {
-    bufferSize = bufferSize < MIN_BUFFER_SIZE ? MIN_BUFFER_SIZE : bufferSize;
-    if (videoTextures != null) {
-      DestroyVideoTextures();
-    }
-    videoTextures = new Texture2D[bufferSize];
-    currentTexture = 0;
     videoPlayerPtr = CreateVideoPlayer();
     videoPlayerEventBase = GetVideoPlayerEventBase(videoPlayerPtr);
     Debug.Log(" -- " + gameObject.name + " created with base " +
@@ -260,17 +241,8 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
 
     if (rendererComponent != null) {
       initialTexture = rendererComponent.material.mainTexture;
-    } else if (graphicComponent) {
+    } else if (graphicComponent != null) {
       initialTexture = graphicComponent.mainTexture;
-    }
-  }
-
-  IEnumerator Start() {
-    CreateTextureForVideoMaybe();
-    renderEventFunction = GetRenderEventFunc();
-    if (renderEventFunction != IntPtr.Zero) {
-      IssuePlayerEvent(RenderCommand.InitializePlayer);
-      yield return StartCoroutine(CallPluginAtEndOfFrames());
     }
   }
 
@@ -297,20 +269,22 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     }
 
     if (rendererComponent != null) {
-      rendererComponent.sharedMaterial.mainTexture = initialTexture;
+      rendererComponent.sharedMaterial.mainTexture = texture;
     } else if (graphicComponent != null) {
-      graphicComponent.material.mainTexture = initialTexture;
+      graphicComponent.material.mainTexture = texture;
     }
   }
 
   public void CleanupVideo() {
     Debug.Log("Cleaning Up video!");
-    exitProcessing = true;
     if (videoPlayerPtr != IntPtr.Zero) {
       DestroyVideoPlayer(videoPlayerPtr);
       videoPlayerPtr = IntPtr.Zero;
     }
-    DestroyVideoTextures();
+    if (surfaceTexture != null) {
+      Destroy(surfaceTexture);
+      surfaceTexture = null;
+    }
     if (rendererComponent != null) {
       rendererComponent.sharedMaterial.mainTexture = initialTexture;
     } else if (graphicComponent != null) {
@@ -327,39 +301,12 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
 
     if (videoPlayerPtr == IntPtr.Zero) {
       CreatePlayer();
-      IssuePlayerEvent(RenderCommand.InitializePlayer);
     }
-    if (Init()) {
-      StartCoroutine(CallPluginAtEndOfFrames());
-    }
-  }
-
-  void DestroyVideoTextures() {
-    if (videoTextures != null) {
-      foreach (Texture2D t in videoTextures) {
-        if (t != null) {
-          // Free GPU memory immediately.
-          t.Resize(1, 1);
-          t.Apply();
-          // Unity's destroy is lazy.
-          Destroy(t);
-        }
-      }
-      videoTextures = null;
-    }
-  }
-
-  void OnEnable() {
-    if (videoPlayerPtr != IntPtr.Zero) {
-      StartCoroutine(CallPluginAtEndOfFrames());
-    }
+    Init();
   }
 
   void OnDestroy() {
-    if (videoPlayerPtr != IntPtr.Zero) {
-      DestroyVideoPlayer(videoPlayerPtr);
-    }
-    DestroyVideoTextures();
+    CleanupVideo();
   }
 
   void OnValidate() {
@@ -374,66 +321,79 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   void OnApplicationPause(bool bPause) {
     if (videoPlayerPtr != IntPtr.Zero) {
       if (bPause) {
+        playOnResume = !IsPaused;
         PauseVideo(videoPlayerPtr);
       } else {
-        PlayVideo(videoPlayerPtr);
+        if (playOnResume) {
+          PlayVideo(videoPlayerPtr);
+        }
       }
     }
   }
 
-  void OnRenderObject() {
-
+  void UpdateMaterial() {
     // Don't render if not initialized.
-    if (videoPlayerPtr == IntPtr.Zero || videoTextures[0] == null) {
+    if (videoPlayerPtr == IntPtr.Zero) {
       return;
     }
 
-    Texture newTex = videoTextures[currentTexture];
+    texWidth = GetWidth(videoPlayerPtr);
+    texHeight = GetHeight(videoPlayerPtr);
+
+    int externalTextureId = GetExternalSurfaceTextureId(videoPlayerPtr);
+    if (surfaceTexture != null
+        && surfaceTexture.GetNativeTexturePtr().ToInt32() != externalTextureId) {
+      Destroy(surfaceTexture);
+      surfaceTexture = null;
+    }
+    if (surfaceTexture == null && externalTextureId != 0) {
+      Debug.Log("Creating external texture with surface texture id " + externalTextureId);
+      // Size of this texture doesn't really matter and can change on the fly anyway.
+      surfaceTexture = Texture2D.CreateExternalTexture(4, 4, TextureFormat.RGBA32,
+          false, false, new System.IntPtr(externalTextureId));
+    }
+    if (surfaceTexture == null) {
+      return;
+    }
+
+    // Don't swap the textures if the video ended.
+    if (PlayerState == VideoPlayerState.Ended) {
+      return;
+    }
+
+    if (graphicComponent == null && rendererComponent == null) {
+      Debug.LogError("GvrVideoPlayerTexture: No render or graphic component.");
+      return;
+    }
+
+    // Extract the shader's simplified scale/offset from the SurfaceTexture's
+    // transformation matrix.
+    Vector2 vidTexScale = new Vector2(videoMatrix[0], videoMatrix[5]);
+    Vector2 vidTexOffset = new Vector2(videoMatrix[12], videoMatrix[13]);
 
     // Handle either the renderer component or the graphic component.
     if (rendererComponent != null) {
-
-      // Don't render the first texture from the player, it is unitialized.
-      if (currentTexture <= 1 && framecount <= 1) {
-        return;
-      }
-
-      // Don't swap the textures if the video ended.
-      if (PlayerState == VideoPlayerState.Ended) {
-        return;
-      }
-
       // Unity may build new a new material instance when assigning
       // material.x which can lead to duplicating materials each frame
       // whereas using the shared material will modify the original material.
-      if (rendererComponent.material.mainTexture != null) {
-        IntPtr currentTexId =
-          rendererComponent.sharedMaterial.mainTexture.GetNativeTexturePtr();
-
-        // Update the material's texture if it is different.
-        if (currentTexId != newTex.GetNativeTexturePtr()) {
-          rendererComponent.sharedMaterial.mainTexture = newTex;
-          framecount += 1f;
-        }
-      } else {
-        rendererComponent.sharedMaterial.mainTexture = newTex;
+      // Update the material's texture if it is different.
+      if (rendererComponent.material.mainTexture == null ||
+          rendererComponent.sharedMaterial.mainTexture.GetNativeTexturePtr() !=
+            surfaceTexture.GetNativeTexturePtr()) {
+        rendererComponent.sharedMaterial.mainTexture = surfaceTexture;
       }
+      rendererComponent.sharedMaterial.mainTextureScale = vidTexScale;
+      rendererComponent.sharedMaterial.mainTextureOffset = vidTexOffset;
 
     } else if (graphicComponent != null) {
-      if (graphicComponent.material.mainTexture != null) {
-        IntPtr currentTexId =
-          graphicComponent.material.mainTexture.GetNativeTexturePtr();
-
-        // Update the material's texture if it is different.
-        if (currentTexId != newTex.GetNativeTexturePtr()) {
-          graphicComponent.material.mainTexture = newTex;
-          framecount += 1f;
-        }
-      } else {
-        graphicComponent.material.mainTexture = newTex;
+      if (graphicComponent.material.mainTexture == null ||
+          graphicComponent.material.mainTexture.GetNativeTexturePtr() !=
+            surfaceTexture.GetNativeTexturePtr()) {
+          graphicComponent.material.mainTexture = surfaceTexture;
       }
-    } else {
-      Debug.LogError("GvrVideoPlayerTexture: No render or graphic component.");
+      graphicComponent.material.mainTextureScale = vidTexScale;
+      graphicComponent.material.mainTextureOffset = vidTexOffset;
+
     }
   }
 
@@ -453,11 +413,12 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     string theUrl = ProcessURL();
 
     InitVideoPlayer(videoPlayerPtr, (int) videoType, theUrl,
-      videoContentID,
-      videoProviderId,
-      useSecurePath,
-      true);
+                    videoContentID,
+                    videoProviderId,
+                    useSecurePath,
+                    true);
     framecount = 0;
+    lastVideoTimestamp = -1;
   }
 
   public void SetCurrentVolume(int val) {
@@ -492,16 +453,16 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     videoPlayerPtr = InitVideoPlayer(videoPlayerPtr, (int) videoType, theUrl,
               videoContentID, videoProviderId,
               useSecurePath, false);
+    IssuePlayerEvent(RenderCommand.InitializePlayer);
     initialized = true;
     framecount = 0;
+    lastVideoTimestamp = -1;
     return videoPlayerPtr != IntPtr.Zero;
   }
 
   public bool Play() {
     if (!initialized) {
       Init();
-    } else if (!processingRunning) {
-      StartCoroutine(CallPluginAtEndOfFrames());
     }
     if (videoPlayerPtr != IntPtr.Zero && IsVideoReady(videoPlayerPtr)) {
       return PlayVideo(videoPlayerPtr) == 0;
@@ -540,53 +501,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     transform.localScale = newscale;
   }
 
-  /// <summary>
-  /// Creates the texture for video if needed.
-  /// </summary>
-  private void CreateTextureForVideoMaybe() {
-    if (videoTextures[0] == null || (texWidth != videoTextures[0].width ||
-      texHeight != videoTextures[0].height)) {
-
-      // Check the dimensions to make sure they are valid.
-      if (texWidth < 0 || texHeight < 0) {
-        // Maybe use the last dimension.  This happens when re-initializing the player.
-        if (videoTextures != null && videoTextures[0].width > 0) {
-          texWidth = videoTextures[0].width;
-          texHeight = videoTextures[0].height;
-        }
-      }
-
-      int[] tex_ids = new int[videoTextures.Length];
-      for (int idx = 0; idx < videoTextures.Length; idx++) {
-        // Resize the existing texture if there, otherwise create it.
-        if (videoTextures[idx] != null) {
-          if (videoTextures[idx].width != texWidth
-              || videoTextures[idx].height != texHeight)
-          {
-            videoTextures[idx].Resize(texWidth, texHeight);
-            videoTextures[idx].Apply();
-          }
-        } else {
-          videoTextures[idx] = new Texture2D(texWidth, texHeight,
-            TextureFormat.RGBA32, false);
-          videoTextures[idx].filterMode = FilterMode.Bilinear;
-          videoTextures[idx].wrapMode = TextureWrapMode.Clamp;
-        }
-
-        tex_ids[idx] = videoTextures[idx].GetNativeTexturePtr().ToInt32();
-      }
-
-      SetExternalTextures(videoPlayerPtr, tex_ids, tex_ids.Length,
-                          texWidth, texHeight);
-      currentTexture = 0;
-      UpdateStatusText();
-    }
-
-    if (adjustAspectRatio) {
-      AdjustAspectRatio();
-    }
-  }
-
   private void UpdateStatusText() {
     float fps = CurrentPosition > 0 ?
       (framecount / (CurrentPosition / 1000f)) : CurrentPosition;
@@ -595,7 +509,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     if (statusText != null) {
       if (statusText.text != status) {
         statusText.text = status;
-        Debug.Log("STATUS: " + status);
       }
     }
   }
@@ -607,71 +520,37 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   ///     instance.
   /// </param>
   private void IssuePlayerEvent(RenderCommand evt) {
-    if (renderEventFunction != IntPtr.Zero && evt != RenderCommand.None) {
-      GL.IssuePluginEvent(renderEventFunction,
-        videoPlayerEventBase + (int) evt);
+    if (renderEventFunction == IntPtr.Zero) {
+      renderEventFunction = GetRenderEventFunc();
     }
+
+    if (renderEventFunction == IntPtr.Zero || evt == RenderCommand.None) {
+      Debug.LogError("Attempt to IssuePlayerEvent before renderEventFunction ready.");
+      return;
+    }
+
+    GL.IssuePluginEvent(renderEventFunction, videoPlayerEventBase + (int)evt);
   }
 
   void Update() {
     while (ExecuteOnMainThread.Count > 0) {
       ExecuteOnMainThread.Dequeue().Invoke();
     }
-  }
 
-  private IEnumerator CallPluginAtEndOfFrames() {
-    if (processingRunning) {
-      Debug.LogError("CallPluginAtEndOfFrames invoked while already running.");
-      yield break;
-    }
-
-    // Only run while the video is playing.
-    bool running = true;
-    processingRunning = true;
-    exitProcessing = false;
-    WaitForEndOfFrame wfeof = new WaitForEndOfFrame();
-    while (running) {
-      // Wait until all frame rendering is done
-      yield return wfeof;
-
-      if (exitProcessing) {
-        running = false;
-        break;
-      }
-
-      if (videoPlayerPtr != IntPtr.Zero) {
-        CreateTextureForVideoMaybe();
-      }
-
-      IntPtr tex = GetRenderableTextureId(videoPlayerPtr);
-      currentTexture = 0;
-      for (int i = 0; i < videoTextures.Length; i++) {
-        if (tex == videoTextures[i].GetNativeTexturePtr()) {
-          currentTexture = i;
-        }
-      }
-
-      if (!VideoReady) {
-        continue;
-      } else if (framecount > 1 && PlayerState == VideoPlayerState.Ended) {
-        running = false;
-      }
-
+    if (VideoReady) {
       IssuePlayerEvent(RenderCommand.UpdateVideo);
-      IssuePlayerEvent(RenderCommand.RenderMono);
-
-      int w = GetWidth(videoPlayerPtr);
-      int h = GetHeight(videoPlayerPtr);
-      // Limit total pixel count to the same as 2160p.
-      // 3840 * 2160 == 2880 * 2880
-      if (w * h > 2880 * 2880) {
-        // Clamp the max resolution preserving aspect ratio.
-        float aspectRoot = (float) Math.Sqrt(w / h);
-        w = (int) (2880 * aspectRoot);
-        h = (int) (2880 / aspectRoot);
+      GetVideoMatrix(videoPlayerPtr, videoMatrix);
+      long vidTimestamp = GetVideoTimestampNs(videoPlayerPtr);
+      if (vidTimestamp != lastVideoTimestamp) {
+        framecount++;
       }
-      texWidth = w;
-      texHeight = h;
+      lastVideoTimestamp = vidTimestamp;
+
+      UpdateMaterial();
+
+      if (adjustAspectRatio) {
+        AdjustAspectRatio();
+      }
 
       if ((int) framecount % 30 == 0) {
         UpdateStatusText();
@@ -683,7 +562,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
         UpdateStatusText();
       }
     }
-    processingRunning = false;
   }
 
   public void RemoveOnVideoEventCallback(Action<int> callback) {
@@ -817,6 +695,16 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   [DllImport(dllName)]
   private static extern IntPtr GetRenderableTextureId(IntPtr videoPlayerPtr);
 
+  [DllImport(dllName)]
+  private static extern int GetExternalSurfaceTextureId(IntPtr videoPlayerPtr);
+
+  [DllImport(dllName)]
+  private static extern void GetVideoMatrix(IntPtr videoPlayerPtr,
+                                            float[] videoMatrix);
+
+  [DllImport(dllName)]
+  private static extern long GetVideoTimestampNs(IntPtr videoPlayerPtr);
+
   // Keep public so we can check for the dll being present at runtime.
   [DllImport(dllName)]
   public static extern IntPtr CreateVideoPlayer();
@@ -923,7 +811,23 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
   }
 
   private static IntPtr GetRenderableTextureId(IntPtr videoPlayerPtr) {
+    Debug.Log(NOT_IMPLEMENTED_MSG);
     return IntPtr.Zero;
+  }
+
+  private static int GetExternalSurfaceTextureId(IntPtr videoPlayerPtr) {
+    Debug.Log(NOT_IMPLEMENTED_MSG);
+    return 0;
+  }
+
+  private static void GetVideoMatrix(IntPtr videoPlayerPtr,
+                                     float[] videoMatrix) {
+    Debug.Log(NOT_IMPLEMENTED_MSG);
+  }
+
+  private static long GetVideoTimestampNs(IntPtr videoPlayerPtr) {
+    Debug.Log(NOT_IMPLEMENTED_MSG);
+    return -1;
   }
 
   // Make this public so we can test the loading of the DLL.
@@ -931,7 +835,6 @@ public class GvrVideoPlayerTexture : MonoBehaviour {
     Debug.Log(NOT_IMPLEMENTED_MSG);
     return IntPtr.Zero;
   }
-
 
   // Make this public so we can test the loading of the DLL.
   public static void DestroyVideoPlayer(IntPtr videoPlayerPtr) {

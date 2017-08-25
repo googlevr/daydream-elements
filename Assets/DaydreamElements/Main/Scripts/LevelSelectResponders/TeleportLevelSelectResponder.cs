@@ -24,7 +24,7 @@ namespace DaydreamElements.Main {
   /// Also, prevents the user from opening the level select menu while
   /// teleporting.
   public class TeleportLevelSelectResponder : BaseLevelSelectResponder {
-    private GvrControllerVisualManager controller;
+    private GvrTrackedController controller;
     private TeleportController teleport;
 
     public override void OnMenuOpened() {
@@ -36,7 +36,7 @@ namespace DaydreamElements.Main {
     }
 
     void Start() {
-      controller = SceneHelpers.FindObjectOfType<GvrControllerVisualManager>(true);
+      controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
       teleport = SceneHelpers.FindObjectOfType<TeleportController>(true);
       Assert.IsNotNull(teleport);

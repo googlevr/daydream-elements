@@ -24,7 +24,7 @@ Shader "DaydreamElements/Demo/UI/OverlayNoZTest" {
     _StencilReadMask ("Stencil Read Mask", Float) = 255
 
     _ColorMask ("Color Mask", Float) = 15
-
+    _MipBias ("Mip Map Bias", Float) = -0.5
     [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
   }
 
@@ -61,7 +61,6 @@ Shader "DaydreamElements/Demo/UI/OverlayNoZTest" {
 
       #include "UnityCG.cginc"
       #include "UnityUI.cginc"
-      #include "Assets/GoogleVR/Shaders/GvrUnityCompatibility.cginc"
 
       #pragma multi_compile __ UNITY_UI_ALPHACLIP
 
@@ -74,20 +73,20 @@ Shader "DaydreamElements/Demo/UI/OverlayNoZTest" {
       struct v2f {
         float4 vertex   : SV_POSITION;
         fixed4 color    : COLOR;
-        half2 texcoord  : TEXCOORD0;
+        half4 texcoord  : TEXCOORD0;
         float4 worldPosition : TEXCOORD1;
       };
 
       fixed4 _Color;
       fixed4 _TextureSampleAdd;
       float4 _ClipRect;
-
+      half _MipBias;
       v2f vert(appdata_t IN) {
         v2f OUT;
         OUT.worldPosition = IN.vertex;
-        OUT.vertex = GvrUnityObjectToClipPos(OUT.worldPosition);
+        OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
-        OUT.texcoord = IN.texcoord;
+        OUT.texcoord = half4(IN.texcoord,0,_MipBias) ;
 
         #ifdef UNITY_HALF_TEXEL_OFFSET
         OUT.vertex.xy += (_ScreenParams.zw-1.0) * float2(-1,1) * OUT.vertex.w;
@@ -101,7 +100,7 @@ Shader "DaydreamElements/Demo/UI/OverlayNoZTest" {
 
       fixed4 frag(v2f IN) : SV_Target {
         half4 color =
-          (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+          (tex2Dbias(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 
         color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
 

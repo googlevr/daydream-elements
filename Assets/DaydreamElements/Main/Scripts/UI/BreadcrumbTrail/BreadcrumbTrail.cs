@@ -97,7 +97,7 @@ namespace DaydreamElements.Main {
     }
 
     void LateUpdate() {
-      if (GvrController.AppButtonDown) {
+      if (GvrControllerInput.AppButtonDown) {
         if (breadcrumbs.Count > 1) {
           OnBreadcrumbClicked(breadcrumbs[breadcrumbs.Count - 2].Data);
         }

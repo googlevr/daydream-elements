@@ -267,11 +267,11 @@ namespace DaydreamElements.ClickMenu {
       }
 
       // Start, stop, or continue painting
-      if (GvrController.ClickButtonDown) {
+      if (GvrControllerInput.ClickButtonDown) {
         StartStroke();
-      } else if (GvrController.ClickButtonUp) {
+      } else if (GvrControllerInput.ClickButtonUp) {
         EndStroke();
-      } else if (GvrController.ClickButton) {
+      } else if (GvrControllerInput.ClickButton) {
         ContinueStroke();
       }
     }
@@ -309,9 +309,21 @@ namespace DaydreamElements.ClickMenu {
     }
 
     private Vector3 GetBrushPosition() {
-      Vector3 pointerPosition = GvrArmModel.Instance.pointerPosition;
-      Vector3 ray = GvrArmModel.Instance.pointerRotation * Vector3.forward;
-      return pointerPosition + ray * laserPointer.maxReticleDistance;
+      GvrLaserPointer pointer = GvrPointerInputModule.Pointer as GvrLaserPointer;
+      if (pointer == null) {
+        return Vector3.zero;
+      }
+
+      Vector3 pointerEndPoint;
+      if (pointer.CurrentRaycastResult.gameObject != null) {
+        pointerEndPoint = pointer.CurrentRaycastResult.worldPosition;
+      } else {
+        pointerEndPoint = pointer.GetPointAlongPointer(pointer.defaultReticleDistance);
+      }
+
+      Vector3 result = transform.InverseTransformPoint(pointerEndPoint);
+
+      return result;
     }
 
     private void UpdateCurMesh() {
@@ -365,7 +377,7 @@ namespace DaydreamElements.ClickMenu {
     }
 
     private Vector3 GetPerpVector(Vector3 delta, Vector3 point) {
-      Vector3 sideDir = useControllerAngle ? GvrController.Orientation * Vector3.up : delta;
+      Vector3 sideDir = useControllerAngle ? GvrControllerInput.Orientation * Vector3.up : delta;
       return Vector3.Cross(sideDir, point).normalized * brushThickness;
     }
   }

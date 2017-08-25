@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires while trackpad button is pressed down.
 public class TouchpadClickTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.ClickButton;
+    return GvrControllerInput.ClickButton;
   }
 }

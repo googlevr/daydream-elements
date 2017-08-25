@@ -17,6 +17,6 @@ using UnityEngine;
 /// Trigger that fires while controller app button is pressed down.
 public class AppButtonClickTrigger : BaseActionTrigger {
   public override bool TriggerActive() {
-    return GvrController.AppButton;
+    return GvrControllerInput.AppButton;
   }
 }

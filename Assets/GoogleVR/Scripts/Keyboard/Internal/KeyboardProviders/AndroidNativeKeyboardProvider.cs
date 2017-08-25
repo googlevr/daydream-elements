@@ -25,6 +25,19 @@ namespace Gvr.Internal {
   public class AndroidNativeKeyboardProvider : IKeyboardProvider {
     private IntPtr renderEventFunction;
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+    private float currentDistance = 0.0f;
+#endif // UNITY_ANDROID && !UNITY_EDITOR
+
+    // Android method names.
+    private const string METHOD_NAME_GET_PACKAGE_MANAGER = "getPackageManager";
+    private const string METHOD_NAME_GET_PACKAGE_INFO = "getPackageInfo";
+    private const string PACKAGE_NAME_VRINPUTMETHOD = "com.google.android.vr.inputmethod";
+    private const string FIELD_NAME_VERSION_CODE = "versionCode";
+
+    // Min version for VrInputMethod.
+    private const int MIN_VERSION_VRINPUTMETHOD = 170509062;
+
     // Library name.
     private const string dllName = "gvr_keyboard_shim_unity";
 
@@ -45,7 +58,7 @@ namespace Gvr.Internal {
       public int top;
     }
 
-    [DllImport ("gvr")]
+    [DllImport (GvrActivityHelper.GVR_DLL_NAME)]
     private static extern gvr_clock_time_point gvr_get_time_point_now();
 
     [DllImport (dllName)]
@@ -162,7 +175,8 @@ namespace Gvr.Internal {
 
     // Initialization function.
     public AndroidNativeKeyboardProvider() {
-#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
+      // Running on Android device.
       AndroidJavaObject activity = GvrActivityHelper.GetActivity();
       if (activity == null) {
         Debug.Log("Failed to get activity for keyboard.");
@@ -180,11 +194,8 @@ namespace Gvr.Internal {
         plugin.Call("initializeKeyboard", context);
         isValid = true;
       }
-#endif // UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
-      // Prevent compilation errors on 5.3.3 and lower.
-#if UNITY_HAS_GOOGLEVR
+#endif // UNITY_ANDROID && !UNITY_EDITOR
       InputTracking.disablePositionalTracking = true;
-#endif  // UNITY_HAS_GOOGLEVR
       renderEventFunction = GetKeyboardRenderEventFunc();
     }
 
@@ -193,12 +204,19 @@ namespace Gvr.Internal {
     }
 
     public bool Create(GvrKeyboard.KeyboardCallback keyboardEvent) {
+      if (!IsVrInputMethodAppMinVersion(keyboardEvent)) {
+        return false;
+      }
       keyboard_context = gvr_keyboard_create(IntPtr.Zero, keyboardEvent);
       isReady = keyboard_context != IntPtr.Zero;
       return isReady;
     }
 
     public void Show(Matrix4x4 userMatrix, bool useRecommended, float distance, Matrix4x4 model) {
+#if UNITY_ANDROID && !UNITY_EDITOR
+      currentDistance = distance;
+#endif  // UNITY_ANDROID && !UNITY_EDITOR
+
       if (useRecommended) {
         worldMatrix = getRecommendedMatrix(distance);
       } else {
@@ -215,20 +233,24 @@ namespace Gvr.Internal {
     }
 
     public void UpdateData() {
-#if UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
+      // Running on Android device.
       // Update controller state.
-      GvrBasePointer pointer = GvrPointerManager.Pointer;
-      if (pointer != null && GvrController.State == GvrConnectionState.Connected) {
-        bool pressed = GvrController.ClickButton;
+      GvrBasePointer pointer = GvrPointerInputModule.Pointer;
+      bool isPointerAvailable = pointer != null && pointer.IsAvailable;
+      if (isPointerAvailable && GvrControllerInput.State == GvrConnectionState.Connected) {
+        bool pressed = GvrControllerInput.ClickButton;
         gvr_keyboard_update_button_state(keyboard_context, kGvrControllerButtonClick, pressed);
 
-        Vector3 startPoint = pointer.PointerTransform.position;
+        GvrBasePointer.PointerRay pointerRay = pointer.GetRayForDistance(currentDistance);
+
+        Vector3 startPoint = pointerRay.ray.origin;
         // Need to flip Z for native library
         startPoint.z *= -1;
         IntPtr start_ptr = Marshal.AllocHGlobal(Marshal.SizeOf(startPoint));
         Marshal.StructureToPtr(startPoint, start_ptr, true);
 
-        Vector3 endPoint = pointer.LineEndPoint;
+        Vector3 endPoint = pointerRay.ray.GetPoint(pointerRay.distance);
         // Need to flip Z for native library
         endPoint.z *= -1;
         IntPtr end_ptr = Marshal.AllocHGlobal(Marshal.SizeOf(endPoint));
@@ -242,7 +264,7 @@ namespace Gvr.Internal {
         hit = (Vector3)Marshal.PtrToStructure(hit_ptr, typeof(Vector3));
         hit.z *= -1;
       }
-#endif  // UNITY_HAS_GOOGLEVR && UNITY_ANDROID && !UNITY_EDITOR
+#endif  // UNITY_ANDROID && !UNITY_EDITOR
 
       // Get time stamp.
       gvr_clock_time_point time = gvr_get_time_point_now();
@@ -289,6 +311,38 @@ namespace Gvr.Internal {
       result = (Matrix4x4) Marshal.PtrToStructure(mat_ptr, typeof(Matrix4x4));
 
       return result;
+    }
+
+    // Returns true if the VrInputMethod APK is at least as high as MIN_VERSION_VRINPUTMETHOD.
+    private bool IsVrInputMethodAppMinVersion(GvrKeyboard.KeyboardCallback keyboardEvent) {
+#if UNITY_ANDROID && !UNITY_EDITOR
+      // Running on Android device.
+      AndroidJavaObject activity = GvrActivityHelper.GetActivity();
+      if (activity == null) {
+        Debug.Log("Failed to get activity for keyboard.");
+        return false;
+      }
+      AndroidJavaObject packageManager = activity.Call<AndroidJavaObject>(METHOD_NAME_GET_PACKAGE_MANAGER);
+      if (packageManager == null) {
+        Debug.Log("Failed to get activity package manager");
+        return false;
+      }
+
+      AndroidJavaObject info = packageManager.Call<AndroidJavaObject>(METHOD_NAME_GET_PACKAGE_INFO, PACKAGE_NAME_VRINPUTMETHOD, 0);
+      if (info == null) {
+        Debug.Log("Failed to get package info for com.google.android.apps.vr.inputmethod");
+        return false;
+      }
+
+      int versionCode = info.Get<int>(FIELD_NAME_VERSION_CODE);
+      if (versionCode < MIN_VERSION_VRINPUTMETHOD) {
+        keyboardEvent(IntPtr.Zero, GvrKeyboardEvent.GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED);
+        return false;
+      }
+      return true;
+#else
+      return true;
+#endif  // UNITY_ANDROID && !UNITY_EDITOR
     }
   }
 }

@@ -12,20 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// The controller is not available for versions of Unity without the
-// GVR native integration.
-
 using UnityEngine;
-
-#if UNITY_HAS_GOOGLEVR
 using UnityEngine.VR;
-#endif  // UNITY_HAS_GOOGLEVR
 
 // Recenter only the controller.
 // Usage: Set GvrControllerPointer > Controller as the pointer field, and
 // the camera to recenter (e.g. Main Camera).
 public class GvrRecenterOnlyController : MonoBehaviour {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   private Quaternion recenteringOffset = Quaternion.identity;
 
   [Tooltip("The controller to recenter")]
@@ -42,19 +35,24 @@ public class GvrRecenterOnlyController : MonoBehaviour {
 
   void Update() {
     if (cam == null || pointer == null
-        || VRSettings.loadedDeviceName != "daydream"
-        || GvrController.State != GvrConnectionState.Connected) {
+       || GvrControllerInput.State != GvrConnectionState.Connected) {
       return;
     }
-
-    if (GvrController.Recentered) {
+    // Daydream is loaded only on deivce, not in editor.
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (VRSettings.loadedDeviceName != "daydream")
+        {
+            return;
+        }
+#endif
+    if (GvrControllerInput.Recentered) {
       pointer.transform.rotation = recenteringOffset;
       cam.transform.parent.rotation = recenteringOffset;
       return;
     }
 
 #if !UNITY_EDITOR
-    if (GvrController.HomeButtonDown || GvrController.HomeButtonState) {
+    if (GvrControllerInput.HomeButtonDown || GvrControllerInput.HomeButtonState) {
       return;
     }
 #endif  // !UNITY_EDITOR
@@ -69,5 +67,4 @@ public class GvrRecenterOnlyController : MonoBehaviour {
     }
   }
 
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

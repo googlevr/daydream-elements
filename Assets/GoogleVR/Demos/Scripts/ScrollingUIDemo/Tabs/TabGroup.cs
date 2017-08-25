@@ -24,7 +24,6 @@ using System.Linq;
 ///
 [RequireComponent(typeof(ToggleGroup))]
 public class TabGroup : MonoBehaviour {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   /// This Tab will be the tab that starts open
   /// when the scene is initially loaded.
   [Tooltip("The tab that should start open.")]
@@ -78,5 +77,4 @@ public class TabGroup : MonoBehaviour {
     startingTab.Open();
   }
 
-#endif  // UNITY_HAS_GOOGLEVR &&(UNITY_ANDROID || UNITY_EDITOR
 }

@@ -14,111 +14,68 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 /// This script provides shared functionality used by all Gvr raycasters.
 public abstract class GvrBasePointerRaycaster : BaseRaycaster {
-  public enum RaycastMode {
-    /// Default method for casting ray.
-    /// Casts a ray from the camera through the target of the pointer.
-    /// This is ideal for reticles that are always rendered on top.
-    /// The object that is selected will always be the object that appears
-    /// underneath the reticle from the perspective of the camera.
-    /// This also prevents the reticle from appearing to "jump" when it starts/stops hitting an object.
-    ///
-    /// Note: This will prevent the user from pointing around an object to hit something that is out of sight.
-    /// This isn't a problem in a typical use case.
-    Camera,
-    /// Cast a ray directly from the pointer origin.
-    /// This is ideal for full-length laser pointers.
-    Direct
-  }
+#if UNITY_EDITOR
+  public bool drawDebugRays = false;
+#endif  // UNITY_EDITOR
 
-  /// Determines which raycast mode to use for this raycaster.
-  public RaycastMode raycastMode = RaycastMode.Camera;
+  private GvrBasePointer.PointerRay lastRay;
 
-  private Ray lastRay;
-
-  /// Returns the pointer's maximum distance from the pointer's origin.
-  public float MaxPointerDistance {
-    get {
-      if (GvrPointerManager.Pointer == null) {
-        return 0.0f;
-      }
-
-      return GvrPointerManager.Pointer.MaxPointerDistance;
-    }
-  }
-
-  /// Returns the pointer's radius to use for the raycast.
-  public float PointerRadius {
-    get {
-      if (GvrPointerManager.Pointer == null) {
-        return 0.0f;
-      }
-
-      float enterRadius, exitRadius;
-      GvrPointerManager.Pointer.GetPointerRadius(out enterRadius, out exitRadius);
-      if (GvrPointerManager.Pointer.ShouldUseExitRadiusForRaycast) {
-        return exitRadius;
-      } else {
-        return enterRadius;
-      }
-    }
-  }
+  protected GvrBasePointer.RaycastMode CurrentRaycastModeForHybrid { get; private set; }
 
   protected GvrBasePointerRaycaster() {
   }
 
-  /// Returns true if the pointer and the pointer's transform are both
-  /// available through the GvrPointerManager.
-  public bool IsPointerAvailable() {
-    if (GvrPointerManager.Pointer == null) {
-      return false;
-    }
-
-    if (GvrPointerManager.Pointer.PointerTransform == null) {
-      return false;
-    }
-
-    return true;
-  }
-
-  public Ray GetLastRay() {
+  public GvrBasePointer.PointerRay GetLastRay() {
     return lastRay;
   }
 
-  /// Calculates the ray to use for raycasting based on
-  /// the selected raycast mode.
-  protected Ray GetRay() {
-    if (!IsPointerAvailable()) {
-      Debug.LogError("Calling GetRay when the pointer isn't available.");
-      lastRay = new Ray();
-      return lastRay;
+  public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList) {
+    GvrBasePointer pointer = GvrPointerInputModule.Pointer;
+    if (pointer == null || !pointer.IsAvailable) {
+      return;
     }
 
-    Transform pointerTransform = GvrPointerManager.Pointer.PointerTransform;
-
-    switch (raycastMode) {
-      case RaycastMode.Camera:
-        Vector3 rayPointerStart = pointerTransform.position;
-        Vector3 rayPointerEnd = rayPointerStart + (pointerTransform.forward * MaxPointerDistance);
-
-        Vector3 cameraLocation = Camera.main.transform.position;
-        Vector3 finalRayDirection = rayPointerEnd - cameraLocation;
-        finalRayDirection.Normalize();
-
-        Vector3 finalRayStart = cameraLocation + (finalRayDirection * Camera.main.nearClipPlane);
-
-        lastRay = new Ray(finalRayStart, finalRayDirection);
-        break;
-      case RaycastMode.Direct:
-        lastRay = new Ray(pointerTransform.position, pointerTransform.forward);
-        break;
-      default:
-        lastRay = new Ray();
-        break;
+    if (pointer.raycastMode == GvrBasePointer.RaycastMode.HybridExperimental) {
+      RaycastHybrid(pointer, eventData, resultAppendList);
+    } else {
+      RaycastDefault(pointer, eventData, resultAppendList);
     }
+  }
 
-    return lastRay;
+  protected abstract bool PerformRaycast(GvrBasePointer.PointerRay pointerRay, float radius,
+    PointerEventData eventData, List<RaycastResult> resultAppendList);
+
+  private void RaycastHybrid(GvrBasePointer pointer, PointerEventData eventData, List<RaycastResult> resultAppendList) {
+    CurrentRaycastModeForHybrid = GvrBasePointer.RaycastMode.Direct;
+    lastRay = GvrBasePointer.CalculateHybridRay(pointer, CurrentRaycastModeForHybrid);
+    float radius = pointer.CurrentPointerRadius;
+    bool foundHit = PerformRaycast(lastRay, radius, eventData, resultAppendList);
+    MaybeDrawDebugRaysForEditor(Color.blue);
+
+    if (!foundHit) {
+      CurrentRaycastModeForHybrid = GvrBasePointer.RaycastMode.Camera;
+      lastRay = GvrBasePointer.CalculateHybridRay(pointer, CurrentRaycastModeForHybrid);
+      PerformRaycast(lastRay, radius, eventData, resultAppendList);
+      MaybeDrawDebugRaysForEditor(Color.green);
+    }
+  }
+
+  private void RaycastDefault(GvrBasePointer pointer, PointerEventData eventData, List<RaycastResult> resultAppendList) {
+    lastRay = GvrBasePointer.CalculateRay(pointer, pointer.raycastMode);
+    float radius = pointer.CurrentPointerRadius;
+    PerformRaycast(lastRay, radius, eventData, resultAppendList);
+    MaybeDrawDebugRaysForEditor(Color.red);
+  }
+
+  private void MaybeDrawDebugRaysForEditor(Color color) {
+#if UNITY_EDITOR
+    if (drawDebugRays) {
+      Debug.DrawRay(lastRay.ray.origin, lastRay.ray.direction * lastRay.distance, color);
+    }
+#endif  // UNITY_EDITOR
   }
 }
