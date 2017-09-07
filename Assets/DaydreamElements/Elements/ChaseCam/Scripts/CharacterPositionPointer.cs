@@ -65,7 +65,6 @@ namespace DaydreamElements.Chase {
 
     public GvrBaseArmModel ArmModel { get; set; }
 
-    // Use this for initialization
     protected override void Start() {
       base.Start();
 
@@ -73,13 +72,12 @@ namespace DaydreamElements.Chase {
         Debug.LogError("Character position pointer must have target prefab!");
         return;
       }
-        
+
       line = GetComponent<LineRenderer>();
       target = Instantiate(targetPrefab, transform);
     }
 
     void Update() {
-      UpdateLaserPointer();
       UpdateTargetPosition();
 
       // We hide the pointer target if there's no valid selection.
@@ -105,6 +103,10 @@ namespace DaydreamElements.Chase {
         character.SetTargetPosition(hitPosition);
         return;
       }
+    }
+
+    void LateUpdate() {
+      UpdateLaserPointer();
     }
 
     /// Ignore steep surfaces, like walls.

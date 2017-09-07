@@ -329,7 +329,7 @@ namespace DaydreamElements.Main {
     private void ShowPointer() {
       pointer.SetActive(true);
 
-      GvrLaserPointer laser = pointer.GetComponentInChildren<GvrLaserPointer>();
+      GvrLaserPointer laser = pointer.GetComponentInChildren<GvrLaserPointer>(true);
       Assert.IsNotNull(laser);
       GvrPointerInputModule.Pointer = laser;
     }

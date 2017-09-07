@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 95889296344059828}
   - component: {fileID: 143613863654761978}
   - component: {fileID: 114026590333224596}
-  m_Layer: 4
+  m_Layer: 2
   m_Name: Fox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

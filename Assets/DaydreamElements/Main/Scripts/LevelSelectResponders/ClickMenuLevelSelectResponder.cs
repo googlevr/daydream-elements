@@ -36,7 +36,7 @@ namespace DaydreamElements.Main {
       Assert.IsNotNull(clickMenu);
       controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
-      pointer = controller.GetComponentInChildren<GvrLaserPointer>();
+      pointer = controller.GetComponentInChildren<GvrLaserPointer>(true);
       Assert.IsNotNull(pointer);
     }
 

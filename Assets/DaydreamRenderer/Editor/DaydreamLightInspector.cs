@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+﻿﻿///////////////////////////////////////////////////////////////////////////////
 //Copyright 2017 Google Inc.
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,6 +57,8 @@ namespace daydreamrenderer
         [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
         static void DrawGizmos(DaydreamLight source, GizmoType gizmoType)
         {
+            if (source == null || !source.enabled) return;
+
             Vector4 pos = source.transform.position;
             pos.w = 1f;
 

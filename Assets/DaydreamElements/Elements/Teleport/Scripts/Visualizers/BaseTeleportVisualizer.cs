@@ -18,6 +18,9 @@ using System.Collections;
 namespace DaydreamElements.Teleport {
   /// Base class for a teleport visualization of current selection.
   public abstract class BaseTeleportVisualizer : MonoBehaviour {
+    // Behavior during teleport.
+    public abstract void OnTeleport();
+
     // Start teleport selection.
     public abstract void StartSelection(Transform controller);
 

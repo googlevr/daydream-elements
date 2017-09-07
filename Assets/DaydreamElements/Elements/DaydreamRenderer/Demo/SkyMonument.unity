@@ -411,7 +411,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1820761120, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 555767533, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
       propertyPath: m_Name
@@ -857,6 +857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &504681216
 GameObject:
@@ -1223,6 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &687945146
 GameObject:
@@ -1325,7 +1327,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 74388141}
-  - {fileID: 1902431201}
   - {fileID: 117770291}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1607,6 +1608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &1024816246
 GameObject:
@@ -1705,6 +1707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &1067642047
 GameObject:
@@ -1751,6 +1754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!23 &1067642050
 MeshRenderer:
@@ -2006,8 +2010,8 @@ MonoBehaviour:
   m_heightFogEnable: 0
   m_fogMode: 0
   m_enableEnlighten: 0
-  m_enableManualLightingComponents: 0
-  m_enableStaticLightingForScene: 0
+  m_enableManualLightingComponents: 1
+  m_enableStaticLightingForScene: 1
 --- !u!4 &1231981377
 Transform:
   m_ObjectHideFlags: 0
@@ -2769,6 +2773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &1863442945
 GameObject:
@@ -2853,7 +2858,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 690922057}
+    m_TransformParent: {fileID: 117770291}
     m_Modifications:
     - target: {fileID: 4861707068164836, guid: 12df8e28906cf439e881f226e6cb25b8, type: 2}
       propertyPath: m_LocalPosition.x
@@ -2885,7 +2890,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4861707068164836, guid: 12df8e28906cf439e881f226e6cb25b8, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114109792773804450, guid: 12df8e28906cf439e881f226e6cb25b8,
         type: 2}
@@ -2922,14 +2927,14 @@ Prefab:
       propertyPath: maxVerticalChange
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114276664077903634, guid: 12df8e28906cf439e881f226e6cb25b8,
+        type: 2}
+      propertyPath: raycastMask.m_Bits
+      value: 17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 12df8e28906cf439e881f226e6cb25b8, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1902431201 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4861707068164836, guid: 12df8e28906cf439e881f226e6cb25b8,
-    type: 2}
-  m_PrefabInternal: {fileID: 1902431200}
 --- !u!1 &1914080826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,46 +3245,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &2115852936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2115852938}
-  - component: {fileID: 2115852937}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2115852937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2115852936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a00605732ed24fceadef881dd96b06b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2115852938
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2115852936}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116382199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3377,6 +3342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_static: 0
+  m_staticState: 
   m_activeLightCount: 4
 --- !u!1 &2116936796
 GameObject:

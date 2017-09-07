@@ -1,4 +1,4 @@
-﻿// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ namespace DaydreamElements.Teleport {
     public BaseTeleportDetector detector;
 
     /// Visualize active teleport selection.
-    [Tooltip("Visulize a teleport selection")]
+    [Tooltip("Visualize a teleport selection")]
     public BaseTeleportVisualizer visualizer;
 
     /// Transition used for teleporting if selection is valid.
@@ -77,7 +77,7 @@ namespace DaydreamElements.Teleport {
     [Tooltip("Rotate the player when they click the side of the touchpad")]
     public bool allowRotation = true;
 
-    /// Speed we'll rotate at while trigger is active.
+    /// Speed to rotate at while trigger is active.
     [Tooltip("Rotation speed while trigger is active")]
     public float rotationSpeed = 45.0f;
 
@@ -90,6 +90,12 @@ namespace DaydreamElements.Teleport {
     /// State tracking for completing animated rotations.
     private bool isRotating;
     private Quaternion finalRotation;
+
+    // The transform of the current controller.
+    private Transform currentController;
+
+    // The selection result returned by the detector.
+    private BaseTeleportDetector.Result selectionResult;
 
     /// Returns true if the user is currently selecting a location to teleport to.
     public bool IsSelectingTeleportLocation {
@@ -109,15 +115,23 @@ namespace DaydreamElements.Teleport {
       }
     }
 
+#if UNITY_EDITOR
+
+    void OnValidate() {
+      if (Application.isPlaying && isActiveAndEnabled) {
+        Start();
+      }
+    }
+
+#endif
+
     void Start() {
       if (detector == null) {
         detector = GetComponent<BaseTeleportDetector>();
       }
-
       if (visualizer == null) {
         visualizer = GetComponent<BaseTeleportVisualizer>();
       }
-
       if (transition == null) {
         transition = GetComponent<BaseTeleportTransition>();
       }
@@ -147,23 +161,35 @@ namespace DaydreamElements.Teleport {
         return;
       }
 
-      // Ignore everything until teleport transition completes.
+      currentController = GetControllerTransform();
+
+      // Complete active teleport transitions.
       if (IsTeleporting) {
+        visualizer.OnTeleport();
+        // Update the visualization.
+        visualizer.UpdateSelection(currentController, selectionResult);
         return;
       }
 
-      // No teleport session started yet, let's check our triggers.
+      // If rotation is allowed, handle player rotations.
+      if (allowRotation) {
+        HandlePlayerRotations();
+      }
+
+      // If a teleport selection session has not started, check the appropriate
+      // trigger to see if one should start.
       if (selectionIsActive == false) {
         if (teleportStartTrigger.TriggerActive()) {
-          selectionIsActive = true;
           StartTeleportSelection();
         }
       }
 
-      // Always process rotations until complete.
-      if (allowRotation && HandlePlayerRotations()) {
-        return;
-      }
+      // Get the current selection result from the detector.
+      float playerHeight = DetectPlayerHeight();
+      selectionResult = detector.DetectSelection(currentController, playerHeight);
+
+      // Update the visualization.
+      visualizer.UpdateSelection(currentController, selectionResult);
 
       // If not actively teleporting, just return.
       if (selectionIsActive == false) {
@@ -178,20 +204,9 @@ namespace DaydreamElements.Teleport {
         return;
       }
 
-      Transform currentController = GetControllerTransform();
-
-      // Detect the teleport selection, and if it's valid for moving to.
-      BaseTeleportDetector.Result selectionResult =
-        detector.DetectSelection(currentController);
-
-      // Update the visualization.
-      visualizer.UpdateSelection(currentController, selectionResult);
-
       // When trigger deactivates we finish the teleport.
       if (selectionIsActive && teleportCommitTrigger.TriggerActive()) {
         if (selectionResult.selectionIsValid) {
-          float playerHeight = DetectPlayersHeight();
-
           Vector3 nextPlayerPosition = new Vector3(
             selectionResult.selection.x,
             selectionResult.selection.y + playerHeight,
@@ -209,37 +224,31 @@ namespace DaydreamElements.Teleport {
     }
 
     private void StartTeleportSelection() {
-      if (selectionIsActive == false) {
-        return;
-      }
-
-      Transform controllerTransform = GetControllerTransform();
-      detector.StartSelection(controllerTransform);
-      visualizer.StartSelection(controllerTransform);
+      detector.StartSelection(currentController);
+      visualizer.StartSelection(currentController);
+      selectionIsActive = true;
     }
 
     private void EndTeleportSelection() {
-      if (selectionIsActive == false) {
-        return;
-      }
-
       detector.EndSelection();
       visualizer.EndSelection();
       selectionIsActive = false;
     }
 
-    private float DetectPlayersHeight() {
+    private float DetectPlayerHeight() {
       RaycastHit hit;
       if (Physics.Raycast(player.position, Vector3.down, out hit)) {
         return hit.distance;
       }
       else{
         // Log error, and default to something sensible.
-        Debug.LogError("Failed to detect players height by raycasting downwards");
-        return 1;
+        Debug.LogError("Failed to detect player height by raycasting downwards");
+        return 1.0f;
       }
     }
 
+    // Returns the transform of the assigned controller.
+    // The pointer provided by GVR is used if no controller is assigned.
     private Transform GetControllerTransform() {
       if (controller != null) {
         return controller;

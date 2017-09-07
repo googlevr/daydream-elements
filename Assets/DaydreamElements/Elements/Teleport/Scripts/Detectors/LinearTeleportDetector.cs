@@ -18,18 +18,17 @@ using System.Collections;
 namespace DaydreamElements.Teleport {
   /// Teleport detecter that does a simple direct raycast for layers.
   public class LinearTeleportDetector : BaseTeleportDetector {
+
     // Start teleport selection.
     public override void StartSelection(Transform controller) {
-      // Nothing to do.
     }
 
     /// End teleport selection.
     public override void EndSelection() {
-      // Nothing to do.
     }
 
     /// Return true if there's a raycast hit in valid teleport location.
-    public override Result DetectSelection(Transform controllerTransform) {
+    public override Result DetectSelection(Transform controllerTransform, float playerHeight) {
       Result result = new Result();
       result.maxDistance = maxDistance;
 

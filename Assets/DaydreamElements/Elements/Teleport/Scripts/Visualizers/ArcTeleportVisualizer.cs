@@ -1,4 +1,4 @@
-﻿// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,66 +19,149 @@ namespace DaydreamElements.Teleport {
   /// a bezier arc for showing your teleport destination. This class
   /// will generate geometry used for the arc, and calculates the 3
   /// required verticies for the bezier arc curve start/end/control.
-  /// These 3 verticies are passed to the bezier arc shader which
+  /// These 3 verticies are passed to the bezier arc material which
   /// uses a vertex shader to reposition the arc geometry into place.
+  /// When parented under a GvrTrackedController, the arc will inherit
+  /// the near clip transparency behavior of the controller.
   [RequireComponent(typeof(MeshFilter))]
   [RequireComponent(typeof(MeshRenderer))]
-  public class ArcTeleportVisualizer : BaseTeleportVisualizer {
-    /// Smoothness of the arc.
-    [Tooltip("Number of steps in arc geometry.")]
-    [Range(3, 200)]
-    public int arcSmoothness = 100;
-
-    /// Controller angle from ground to start bending arc.
-    [Tooltip("Controller angle from ground to start arc bending")]
-    [Range(0, 180)]
-    public float startBendingAngle = 90;
-
-    /// Amount of bending to apply to the arc.
-    [Range(0, .1f)]
-    [Tooltip("Amount of bending in the arc")]
-    public float arcBendingStrength = .04f;
-
-    /// Width of the selection line.
-    [Tooltip("Width of the selection line")]
-    public float lineWidth = .08f;
-
-    /// Offset for line so it doesn't overlap controller.
-    [Tooltip("Offset from controller")]
-    public float lineStartOffset = .1f;
-
-    /// Offset for line so we don't overlap the target.
-    [Tooltip("Offset from selection target")]
-    public float lineEndOffset = .2f;
-
-    /// Material for line when selection is valid.
-    [Tooltip("Valid selection material for line")]
-    public Material validSelectionMat;
-
-    /// Material for line when selection is invalid.
-    [Tooltip("Invalid selection material for line")]
-    public Material invalidSelectionMat;
+  public class ArcTeleportVisualizer : BaseTeleportVisualizer, IGvrArmModelReceiver {
+    /// An optional game object that is placed at the origin of the laser arc.
+    [Tooltip("An optional game object that is placed at the origin of the laser arc.")]
+    public GameObject lineOriginPrefab;
 
     /// Prefab for object to place at final teleport location.
-    [Tooltip("Optional target to place at end of line for valid selections")]
+    [Tooltip("Optional target to place at end of line for valid selections.")]
     public GameObject targetPrefab;
 
-    /// Multiplier for growing line width over distance.
-    public float distanceLineScaler = 0.01f;
+    /// Segments in the arc mesh.
+    [Tooltip("Number of steps in the arc mesh.")]
+    [Range(3, 200)]
+    public int segments = 100;
 
-    /// Instance of the target prefab.
-    private GameObject target;
+    /// Offset for the starting angle of the line.
+    [Tooltip("Line start angle offset.")]
+    public float forwardAngleOffset = -15f;
 
-    /// Property block for material values.
+    /// Visual offset for the line origin.
+    [Tooltip("Visual offset for line origin.")]
+    public Vector3 lineStartOffset = new Vector3(0, -0.0099f, 0.1079f);
+
+    /// The minimum line length when no selection is available.
+    [Tooltip("Resting line length.")]
+    public float minLineLength = 0f;
+
+    /// Speed of arc length transition.
+    [Tooltip("Speed of arc length transition.")]
+    public float arcTransitionSpeed = 15f;
+
+    /// Percentage of the line that is visible when there is a valid selection.
+    [Tooltip("Percentage of the line that is visible when there is a valid selection.")]
+    [Range(0, 1f)]
+    public float maxLineVisualCompletion = 0.8f;
+
+    /// Percentage of the line that is visible when there is a valid selection.
+    [Tooltip("Percentage of the line that is visible when there is a valid selection.")]
+    [Range(0, 1f)]
+    public float minLineVisualCompletion = 0f;
+
+    /// The target becomes visible when this percentage of the line is visible.
+    [Tooltip("The target becomes visible when this percentage of the line is visible.")]
+    [Range(0, 1f)]
+    public float completionThreshold = 0.6f;
+
+    /// Duration of target scale transition in smoothed time.
+    [Tooltip("Duration of target scale transition.")]
+    public float targetScaleTransitionDuration = 0.04f;
+
+    /// Duration of lineOrigin scale transition in smoothed time.
+    [Tooltip("Duration of lineOrigin scale transition.")]
+    public float lineOriginScaleTransitionDuration = 0.01f;
+
+    /// The mesh renderer for the line.
+    [Tooltip("The mesh renderer used by the line.")]
+    public MeshRenderer arcMeshRenderer;
+
+    /// The mesh renderer for the line origin visual.
+    [Tooltip("The mesh renderer used by the line origin visual.")]
+    public MeshRenderer lineOriginRenderer;
+
+    public GvrBaseArmModel ArmModel { get; set; }
+
+    // Property block for material values.
     private MaterialPropertyBlock propertyBlock;
 
-    /// Reference to the mesh for destroying it later.
+    // Reference to the arc mesh for destroying it later.
     private Mesh mesh;
 
+    // Whether a valid selection has been made.
+    private bool validHitFound;
+
+    private int startPositionID;
+    private int endPositionID;
+    private int controlPositionID;
+    private int completionID;
+    private int alphaID;
+
+    private float arcCompletion = 0f;
+
+    // Instance of the target prefab.
+    private GameObject target;
+    // Dampened velocity for target size transitions.
+    private float targetSizeVelocity = 0.0f;
+    private float targetCurrentSize = 0f;
+    private float targetGoalSize = 0f;
+
+    // Instance of the line origin visual prefab.
+    private GameObject lineOrigin;
+    private bool lineOriginActive = true;
+    // Dampened velocity for line origin visual size transitions.
+    private float lineOriginSizeVelocity = 0.0f;
+    private float lineOriginCurrentSize = 0f;
+    private float lineOriginGoalSize = 0f;
+
+    // The forward vector of the line origin.
+    private Vector3 forward;
+
+    // The position of the last valid selection.
+    private Vector3 lastValidHitPosition;
+
+    // Control point positions for the bezier arc.
+    private Vector3 start;
+    private Vector3 end;
+    private Vector3 control;
+
+    // Smoothed end point position for the bezier arc.
+    private Vector3 smoothEnd;
+
+    private const float CONTROLLER_DOWN_ANGLE_THRESHOLD = 60f;
+    private const float MAX_PITCH_WITH_OFFSET = 80f;
+    private const float MAX_PITCH_BLEND = 10f;
+    private const float MAX_ROLL_TOLERANCE = 10f;
+    private const float TARGET_MIN_SCALE_THRESHOLD = 0.01f;
+
+    void OnValidate() {
+      if (!arcMeshRenderer) {
+        arcMeshRenderer = GetComponent<MeshRenderer>();
+      }
+    }
+
+    void OnEnable() {
+      Reset();
+    }
+
     void Awake() {
-      propertyBlock = new MaterialPropertyBlock();
-      GetComponent<MeshRenderer>().enabled = false;
+      Reset();
       GenerateMesh();
+      startPositionID = Shader.PropertyToID("_StartPosition");
+      endPositionID = Shader.PropertyToID("_EndPosition");
+      controlPositionID = Shader.PropertyToID("_ControlPosition");
+      completionID = Shader.PropertyToID("_Completion");
+      alphaID = Shader.PropertyToID("_Alpha");
+      propertyBlock = new MaterialPropertyBlock();
+    }
+
+    void Start() {
     }
 
     void OnDestroy() {
@@ -87,23 +170,23 @@ namespace DaydreamElements.Teleport {
       }
     }
 
-    // Generate a flat mesh in the 0-1 z+ direction for BezierArcShader to manipulate.
+    // Generate a mesh ribbon in the 0-1 z+ direction for BezierArcShader to manipulate.
     private void GenerateMesh() {
-      if (arcSmoothness == 0) {
-        Debug.LogError ("Can't build line mesh with 0 arcSteps");
+      if (segments == 0) {
+        Debug.LogError("Can't build line mesh with 0 segments.");
         return;
       }
 
-      // Smoothness is used as the number of vertex rows in the arc.
-      int vertexRowCount = arcSmoothness;
+      int vertexRowCount = segments;
       float increment = 1 / (float)vertexRowCount;
 
-      int vertexCount = vertexRowCount * 2;
+      int vertexCount = vertexRowCount * 2; // 2 vertices per row.
       Vector3[] verticies = new Vector3[vertexCount];
       Vector2[] uvs = new Vector2[vertexCount];
       int[] triangles = new int[(vertexRowCount - 1) * 6];
 
-      // The mesh has a width of 2 (from x -1 to 1), shader update to final width.
+      // The mesh has a width of 2 (from x -1 to 1).
+      // The final width is updated by the shader.
       float width = 1;
 
       // Generate verticies first with z-position from 0-1.
@@ -113,8 +196,8 @@ namespace DaydreamElements.Teleport {
         verticies[vertOffset] = new Vector3(width, 0, zOffset); // Right vertex.
         verticies[vertOffset + 1] = new Vector3(-width, 0, zOffset); // Left vertex.
 
-        uvs[vertOffset] = new Vector2(0, zOffset);
-        uvs[vertOffset + 1] = new Vector2(1, zOffset);
+        uvs[vertOffset] = new Vector2(0f, zOffset); // Right vertex.
+        uvs[vertOffset + 1] = new Vector2(1f, zOffset); // Left vertex.
       }
 
       // Create triangles by connecting verticies in step ahead of it.
@@ -127,169 +210,266 @@ namespace DaydreamElements.Teleport {
         int frontLeft = vertexOffset + 3;
 
         // Right triangle.
-        int triangleOffset = i * 6; // we create 2 triangles for each row.
+        int triangleOffset = i * 6; // We create 4 triangles for each row.
         triangles[triangleOffset] = frontRight;
         triangles[triangleOffset + 1] = backRight;
         triangles[triangleOffset + 2] = frontLeft;
 
         // Left triangle.
-        triangles[triangleOffset + 3] = backRight;
-        triangles[triangleOffset + 4] = backLeft;
-        triangles[triangleOffset + 5] = frontLeft;
+        triangles[triangleOffset + 3] = frontLeft;
+        triangles[triangleOffset + 4] = backRight;
+        triangles[triangleOffset + 5] = backLeft;
       }
 
-      // We hold onto the mesh since unity doesn't deallocated meshes automatically.
+      // We hold onto the mesh since Unity doesn't automatically deallocate meshes.
       mesh = new Mesh ();
       GetComponent<MeshFilter>().mesh = mesh;
       mesh.vertices = verticies;
       mesh.uv = uvs;
       mesh.triangles = triangles;
 
-      // Force the mesh to always have a visible bounds.
+      // Force the mesh to always have visible bounds.
       float boundValue = 10000;
-      mesh.bounds = new Bounds(transform.position,
-        new Vector3(boundValue, boundValue, boundValue));
+      // Generate the bounds in local space.
+      mesh.bounds = new Bounds(Vector3.zero, new Vector3(boundValue, boundValue, boundValue));
+    }
+
+    // Behavior during teleport.
+    public override void OnTeleport() {
+      arcMeshRenderer.enabled = false;
+      Reset();
     }
 
     // Start teleport selection.
     public override void StartSelection(Transform controller) {
-      GetComponent<MeshRenderer>().enabled = true;
-      ShowTarget();
+      arcMeshRenderer.enabled = true;
     }
 
     // End teleport selection.
     public override void EndSelection() {
-      GetComponent<MeshRenderer>().enabled = false;
-      HideTarget();
+      validHitFound = false;
+      targetGoalSize = 0f;
     }
 
-    // Visualize the current selection.
+    // Update the visualization.
     public override void UpdateSelection(
         Transform controllerTransform,
         BaseTeleportDetector.Result selectionResult) {
-      // Calculate verticies that define our bezier arc.
-      Vector3 start;
-      Vector3 end;
-      Vector3 control;
 
-      // Calculate the position for the 3 verticies.
-      UpdateLine(controllerTransform, selectionResult,
-        out start, out end, out control);
+      // Calculate the position for the 3 control verticies on the line.
+      UpdateLine(controllerTransform,
+                 selectionResult,
+                 out start, out end, out control);
 
-      // Update the material on the line.
-      UpdateLineMaterial(selectionResult.selectionIsValid,
-        start, end, control);
-
-      // Update the target objects position at end of line.
+      // Update the target object's position at end of line.
       UpdateTarget(selectionResult);
+
+      // Update the object used to represent the origin of the line.
+      UpdateLineOrigin(selectionResult);
+
+      // Update mesh renderers.
+      UpdateMaterials(selectionResult.selectionIsValid,
+        start, end, control);
     }
 
-    private void UpdateLine(
-        Transform controllerTransform,
+    private void UpdateLine(Transform controller,
         BaseTeleportDetector.Result selectionResult,
         out Vector3 start,
         out Vector3 end,
         out Vector3 control) {
       // Start point of line.
-      start = controllerTransform.position
-        + (controllerTransform.forward * lineStartOffset);
+      start = controller.position +
+              controller.up * lineStartOffset.y +
+              controller.forward * lineStartOffset.z;
 
       // End line at selection or max distance.
-      end = selectionResult.selection;
+      if (selectionResult.selectionIsValid) {
+        validHitFound = true;
+        end = lastValidHitPosition = selectionResult.selection;
+      } else {
+        // When there isn't a selection available, retract the line.
+        Vector3 defaultEndPosition = start + forward * minLineLength;
 
-      // We can only offset if the line is long enough for it.
-      float lineLength = (end - start).magnitude;
-      float clampedEndOffset = Mathf.Clamp(this.lineEndOffset, 0, lineLength);
+        // If a valid hit was previously cached, interpolate from that position.
+        if (validHitFound) {
+          smoothEnd = lastValidHitPosition;
+          defaultEndPosition.x = lastValidHitPosition.x;
+          defaultEndPosition.z = lastValidHitPosition.z;
+          validHitFound = false;
+        // Otherwise, just retract the laser to its default length.
+        } else {
+          smoothEnd = defaultEndPosition;
+        }
+        
+        end = Vector3.Lerp(smoothEnd, defaultEndPosition,
+                           Time.deltaTime * arcTransitionSpeed);
+      }
 
-      Vector3 lineEndVector = end - start
-        - (controllerTransform.forward * clampedEndOffset);
-      end = start + lineEndVector;
+      // In order to apply an offset to the arc's start angle and have the arc
+      // ignore controller roll, we need to manually recalculate controller forward.
+
+      // Get the current forward vector of the controller.
+      forward = controller.forward;
+      // Get the pitch of the controller.
+      float pitch = Mathf.Rad2Deg * Mathf.Asin(forward.y);
+      float absPitch = Mathf.Abs(pitch);
+      // Safeguards to prevent undesired behavior around rotation poles.
+      if (absPitch < MAX_PITCH_WITH_OFFSET) {
+        float pitchBlend = 1 - Mathf.Clamp01((absPitch - (MAX_PITCH_WITH_OFFSET - MAX_PITCH_BLEND)) / MAX_PITCH_BLEND);
+        // Apply the visual offset to the pitch of the arc. Blend the offset to
+        // zero as controller pitch approaches -90 or 90 degrees.
+        float angleOffset = pitchBlend * forwardAngleOffset;
+        float yaw = Mathf.Rad2Deg * Mathf.Atan2(forward.x, forward.z);
+        float pitchRad = Mathf.Deg2Rad * (angleOffset + pitch);
+        Vector3 pitchVec = new Vector3(0, Mathf.Sin(pitchRad), Mathf.Cos(pitchRad));
+        // Calculate the axes of the forward vector in the appropriate order.
+        forward = Quaternion.AngleAxis(yaw, Vector3.up) * pitchVec;
+      }
+
+      // Blend forward back to controller forward as the controller unrolls.
+      float blend = Mathf.Clamp01(Vector3.Angle(controller.up, Vector3.up) / MAX_ROLL_TOLERANCE);
+      forward = Vector3.Lerp(forward, controller.forward, blend);
 
       // Get control point used to bend the line into an arc.
       control = ControlPointForLine(
         start,
         end,
-        selectionResult.maxDistance,
-        controllerTransform);
+        forward);
     }
 
     private void ShowTarget() {
+      // Wait until the arc is over the desired threshold to show the target.
+      if (arcCompletion >= completionThreshold) {
+        targetGoalSize = 1f;
+      } else {
+        targetGoalSize = 0f;
+      }
+    }
+
+    private void HideTarget() {
+      targetGoalSize = 0f;
+    }
+
+    protected void UpdateTarget(BaseTeleportDetector.Result selectionResult) {
       if (targetPrefab == null) {
         return;
       }
 
       if (target == null) {
-        target = Instantiate(targetPrefab, transform) as GameObject;
+        target = Instantiate(targetPrefab) as GameObject;
       }
 
-      target.SetActive(true);
+        targetCurrentSize = Mathf.SmoothDamp(targetCurrentSize, targetGoalSize, ref targetSizeVelocity, targetScaleTransitionDuration);
+        target.transform.localScale = new Vector3(targetCurrentSize, targetCurrentSize, targetCurrentSize);
+
+      if (selectionResult.selectionIsValid) {
+        target.transform.position = selectionResult.selection;
+        // Make visible and grow the teleport target object when there is a valid selection.
+        ShowTarget();
+      } else if (validHitFound) {
+        // If there isn't a valid selection, but one was previously found and cached, show the
+        // target at that position instead.
+        target.transform.position = lastValidHitPosition;
+        HideTarget();
+      } else {
+        // Otherwise, just hide the teleport target.
+        HideTarget();
+      }
     }
 
-    private void HideTarget() {
-      if (target == null) {
+    protected void UpdateLineOrigin(BaseTeleportDetector.Result selectionResult) {
+      if (lineOriginPrefab == null) {
         return;
       }
 
-      target.SetActive(false);
-    }
-
-    protected void UpdateTarget(BaseTeleportDetector.Result selectionResult) {
-      if (target == null) {
-        return;
+      if (lineOrigin == null) {
+        lineOrigin = Instantiate(lineOriginPrefab) as GameObject;
       }
 
-      if (selectionResult.selectionIsValid == false) {
-        target.SetActive(false);
-        return;
+      if (lineOriginRenderer == null) {
+        lineOriginRenderer = lineOrigin.GetComponent<MeshRenderer>();
       }
 
-      target.SetActive(true);
-      target.transform.position = selectionResult.selection;
+      // Move the line origin prefab to the start of the line.
+      lineOrigin.transform.position = start;
+
+      // Show the lineOrigin if there is a valid selection.
+      // Hide the lineOrigin if there is no valid selection and the line
+      // is also hidden.
+      if (lineOrigin && minLineLength == 0f) {
+        lineOriginActive = selectionResult.selectionIsValid;
+      }
+
+      if (lineOriginActive) {
+        lineOriginGoalSize = 1f;
+      } else {
+        lineOriginGoalSize = 0f;
+      }
+
+      lineOriginCurrentSize = Mathf.SmoothDamp(lineOriginCurrentSize, lineOriginGoalSize, ref lineOriginSizeVelocity, lineOriginScaleTransitionDuration);
+      lineOrigin.transform.localScale = new Vector3(lineOriginCurrentSize, lineOriginCurrentSize, lineOriginCurrentSize);
     }
 
-    protected void UpdateLineMaterial(bool isValidSelection,
+    protected void UpdateMaterials(bool isValidSelection,
         Vector3 start,
         Vector3 end,
         Vector3 control) {
-      MeshRenderer mr = GetComponent<MeshRenderer>();
-      if (mr == null) {
-        Debug.LogError("Can't update material without mesh renderer");
-        return;
-      }
+
+      // Drive transparency with the preferred alpha from the arm model.
+      float alpha = ArmModel != null ? ArmModel.PreferredAlpha : 1.0f;
 
       if (isValidSelection) {
-        mr.material = validSelectionMat;
-      }
-      else{
-        mr.material = invalidSelectionMat;
+        // When there is a valid selection, visually extend the arc towards it.
+        arcCompletion = Mathf.Lerp(arcCompletion, maxLineVisualCompletion,
+                                   Time.deltaTime * arcTransitionSpeed);
+      } else {
+        // When there is not a valid selection, visually retract the arc.
+        arcCompletion = Mathf.Lerp(arcCompletion, minLineVisualCompletion,
+                                   Time.deltaTime * arcTransitionSpeed);
       }
 
-      // Update the shader with the most recent bezier path info.
-      propertyBlock.SetVector("_StartPosition", transform.InverseTransformPoint(start));
-      propertyBlock.SetVector("_EndPosition", transform.InverseTransformPoint(end));
-      propertyBlock.SetVector("_ControlPosition", transform.InverseTransformPoint(control));
-      propertyBlock.SetFloat("_LineWidth", lineWidth);
-      propertyBlock.SetFloat("_DistanceScale", distanceLineScaler);
+      propertyBlock.SetFloat(alphaID, alpha);
 
-      mr.SetPropertyBlock(propertyBlock);
+      if (lineOriginRenderer != null) {
+        lineOriginRenderer.SetPropertyBlock(propertyBlock);
+      }
+
+      propertyBlock.SetVector(startPositionID, transform.InverseTransformPoint(start));
+      propertyBlock.SetVector(endPositionID, transform.InverseTransformPoint(end));
+      propertyBlock.SetVector(controlPositionID, transform.InverseTransformPoint(control));
+      propertyBlock.SetFloat(completionID, arcCompletion);
+
+      if (arcMeshRenderer != null) {
+        arcMeshRenderer.SetPropertyBlock(propertyBlock);
+      }
     }
 
-    private Vector3 ControlPointForLine(Vector3 start, Vector3 end, float maxDistance, Transform controller) {
-      Vector3 halfVect = end - start;
-      Vector3 controlPoint = start + (halfVect.normalized * (halfVect.magnitude / 2));
+    // Returns the intermediate control point in a quadratic Bezier curve.
+    public static Vector3 ControlPointForLine(Vector3 start,
+                                              Vector3 end,
+                                              Vector3 forward) {
 
-      float angleFromDown = Vector3.Angle(Vector3.down, controller.forward);
+      Vector3 StartToEndVector = end - start;
 
-      if (angleFromDown <= startBendingAngle) {
-        return controlPoint;
-      }
+      // As the arc forward vector approaches world down, straighten out the curve.
+      float angleToDown = Vector3.Angle(forward, Vector3.down);
+      float interpolation;
+      interpolation = Mathf.Clamp(0, 1, Mathf.Abs(angleToDown /
+                                                  CONTROLLER_DOWN_ANGLE_THRESHOLD)) *
+                                        0.5f * StartToEndVector.magnitude;
 
-      float bendAmount = (angleFromDown - startBendingAngle) * arcBendingStrength;
-
-      controlPoint += new Vector3(0, bendAmount, 0);
+      Vector3 controlPoint = start + forward * interpolation;
 
       return controlPoint;
     }
+
+    public void Reset() {
+      validHitFound = false;
+      arcCompletion = 0f;
+      targetCurrentSize = 0f;
+      targetGoalSize = 0f;
+      targetSizeVelocity = 0f;
+      lineOriginSizeVelocity = 0f;
+    }
   }
 }
-

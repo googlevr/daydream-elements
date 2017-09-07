@@ -8,10 +8,10 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: WallsStatic
   m_Shader: {fileID: 4800000, guid: 722fdd6b84219cc489603060652374ab, type: 3}
-  m_ShaderKeywords: MAX_LIGHT_COUNT_8 NORMALMAP SPECULAR SPECULAR_FIXED_LOW STATIC_LIGHTING
-    VERTEX_LIGHTING _EMISSION
+  m_ShaderKeywords: MAX_LIGHT_COUNT_8 NORMALMAP STATIC_LIGHTING VERTEX_LIGHTING _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -44,7 +44,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 3020a941e1b4b384f9ca52b7b5151ab3, type: 3}
-        m_Scale: {x: 32, y: 32}
+        m_Scale: {x: 16, y: 16}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -52,7 +52,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
         m_Texture: {fileID: 2800000, guid: 7148ebe8156477e43aa7cc93538fc040, type: 3}
-        m_Scale: {x: 32, y: 32}
+        m_Scale: {x: 16, y: 16}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}

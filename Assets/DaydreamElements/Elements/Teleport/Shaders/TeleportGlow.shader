@@ -43,13 +43,14 @@ Shader "DaydreamElements/Teleport/Teleport Glow" {
       struct appdata
       {
         float4 vertex : POSITION;
-        float4 uv : TEXCOORD0;
+        float2 uv : TEXCOORD0;
       };
 
       struct v2f
       {
         float4 vertex : SV_POSITION;
-        float4 uv : TEXCOORD0;
+        float2 uv0 : TEXCOORD0;
+        float2 uv1 : TEXCOORD1;
       };
 
       v2f vert (appdata v)
@@ -58,22 +59,27 @@ Shader "DaydreamElements/Teleport/Teleport Glow" {
         UNITY_INITIALIZE_OUTPUT(v2f, o);
 
         o.vertex = UnityObjectToClipPos(v.vertex);
-        o.uv = v.uv;
+        o.uv0 = v.uv;
+
+        // Clamp sampling in y.
+        o.uv0.y = saturate(o.uv0.y - 0.01);
+
+        // Animated UV coordinates for color.
+        // Color waves and bends the higher up the y axis.
+        o.uv0.x += sin(_Time.y * _ColorFrequency) * (o.uv0.y * _ColorAmplitude);
+
+        // Animated UV coordinates for alpha.
+        // Alpha scrolls across.
+        o.uv1 = o.uv0;
+        o.uv1.x += _Time.y * _AlphaSpeed;
 
         return o;
       }
 
       half4 frag (v2f i) : SV_Target
       {
-        // Color waves and bends the higher up the y axis.
-        float2 colorUVs = i.uv;
-        colorUVs.x += sin(_Time.y * _ColorFrequency) * (i.uv.y * _ColorAmplitude);
-        float4 baseColor = tex2D(_MainTex, colorUVs);
-
-        // Alpha scrolls across.
-        float2 alphaUVs = i.uv;
-        alphaUVs.x += _Time.y * _AlphaSpeed;
-        float4 alphaColor = tex2D(_MainTex, alphaUVs);
+        float4 baseColor = tex2D(_MainTex, i.uv0);
+        float4 alphaColor = tex2D(_MainTex, i.uv1);
 
         // Take the color and replace with scrolled alpha value.
         float4 processedColor = baseColor;

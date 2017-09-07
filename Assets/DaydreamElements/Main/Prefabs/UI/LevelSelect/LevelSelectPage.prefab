@@ -74,7 +74,7 @@ MonoBehaviour:
   buttonLayoutGroup: {fileID: 114000013978039662}
   buttonPrefab: {fileID: 1000013864429740, guid: 2cc07cb4e0f984485adf85cbd7fbcede,
     type: 2}
-  maxButtonsPerPage: 6
+  maxButtonsPerPage: 9
 --- !u!114 &114000013978039662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 272, y: 176}
+  m_CellSize: {x: 267.3, y: 223.2}
   m_Spacing: {x: 16, y: 16}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -114,7 +114,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1, y: 0}
-  m_SizeDelta: {x: 1500, y: 1000}
+  m_SizeDelta: {x: 297, y: 248}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000014250695458
 RectTransform:

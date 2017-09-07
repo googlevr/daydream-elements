@@ -355,7 +355,6 @@ half computeShadow(half4 shadowUV, sampler2D shadowSampler)
    half3 bcolor1 = i.color1.xyz * dot(c_basis1, tsNormal);
    half3 bcolor2 = i.color2.xyz * dot(c_basis2, tsNormal);
    half3 diffuse = bcolor0 + bcolor1 + bcolor2;
-
    #if defined(SPECULAR)
 
 
@@ -602,7 +601,7 @@ v2f daydreamVertex(appdata v)
 
     // add vertex baked lighting
     #if defined(VERTEX_LIGHTING)
-     o.color.xyz += (v.uv1.xyz + v.uv2.xyz + v.uv3.xyz) * _StaticLightingScale * 0.333333;
+     o.color.xyz += (v.uv1.xyz + v.uv2.xyz + v.uv3.xyz) * _StaticLightingScale;
     #endif
    #endif
   #endif

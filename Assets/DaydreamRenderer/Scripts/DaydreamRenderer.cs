@@ -779,8 +779,14 @@ public class DaydreamRenderer : MonoBehaviour
                 m_casterLayers[i] = casters[i].layer;
                 casters[i].layer  = m_shadowLayer;
 
-                Material material = casters[i].GetComponent<Renderer>().sharedMaterial;
-                material.EnableKeyword("BUILD_SHADOWMAP");
+                Material[] materials = casters[i].GetComponent<Renderer>().sharedMaterials;
+                if(materials != null && materials.Length > 0)
+                {
+                    for(int m = 0; m < materials.Length; ++m)
+                    {
+                        materials[m].EnableKeyword("BUILD_SHADOWMAP");
+                    }
+                }
             }
         }
         else
@@ -789,8 +795,14 @@ public class DaydreamRenderer : MonoBehaviour
             {
                 casters[i].layer = m_casterLayers[i];
 
-                Material material = casters[i].GetComponent<Renderer>().sharedMaterial;
-                material.DisableKeyword("BUILD_SHADOWMAP");
+                Material[] materials = casters[i].GetComponent<Renderer>().sharedMaterials;
+                if (materials != null && materials.Length > 0)
+                {
+                    for (int m = 0; m < materials.Length; ++m)
+                    {
+                        materials[m].DisableKeyword("BUILD_SHADOWMAP");
+                    }
+                }
             }
         }
     }

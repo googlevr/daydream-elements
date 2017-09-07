@@ -278,7 +278,7 @@ public class DaydreamStandardUI : ShaderGUI
         m_previewUtility.EndAndDrawPreview(r);
         
         // update Imported Object preview materials
-        if (AssetDatabase.Contains(Selection.activeObject))
+        if (Selection.activeObject && AssetDatabase.Contains(Selection.activeObject))
         {
             GameObject go = Selection.activeObject as GameObject;
             if(go != null)

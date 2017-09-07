@@ -26,3 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DaydreamElements/Elements/DaydreamRenderer/Demo/SkyMonument.unity
     guid: 5dd82da88787282469c30bd406d7ba9f
+  - enabled: 1
+    path: Assets/DaydreamElements/Elements/ConstellationMenu/Demo/ConstellationMenuDemo.unity
+    guid: e84b6e8fb5d0840479a80862effc667b
+  - enabled: 1
+    path: Assets/DaydreamElements/Elements/ObjectManipulationDemo/Demo/ObjectManipulation.unity
+    guid: acf5d85bb3f21481787ebc7a95f88c0d
+  - enabled: 1
+    path: Assets/DaydreamElements/Elements/ArmModels/Demo/ArmModelsDemo.unity
+    guid: 390c3df24cf4742bcb285408cdbfed79

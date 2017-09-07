@@ -46,7 +46,7 @@ namespace DaydreamElements.Main {
       controller = SceneHelpers.FindObjectOfType<GvrTrackedController>(true);
       Assert.IsNotNull(controller);
 
-      pointer = controller.GetComponentInChildren<CharacterPositionPointer>();
+      pointer = controller.GetComponentInChildren<CharacterPositionPointer>(true);
       Assert.IsNotNull(pointer);
 
       chaseCam = SceneHelpers.FindObjectOfType<ChaseCam>(true);

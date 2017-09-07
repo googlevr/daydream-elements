@@ -16,103 +16,154 @@ using UnityEngine;
 using System.Collections;
 
 namespace DaydreamElements.Teleport {
-  /// Teleport detector designed for arc-like raycasting from above player.
+  /// Teleport detector designed for arc-like raycasting from the controller.
   public class ArcTeleportDetector : BaseTeleportDetector {
-    [Tooltip("Height above the controller to raycast from")]
-    public float heightAboveController = 4.0f;
+    /// Maximum controller pitch.
+    [Tooltip("Maximum controller pitch.")]
+    public float maxControllerPitch = 60f;
 
-    // Maxium y offset the controller can be from final hit point.
-    [Tooltip("Maxium vertical change when teleporting.")]
-    public float maxVerticalChange = 10.0f;
+    /// The maximum vertical distance that can be traveled while teleporting.
+    [Tooltip("Maximum vertical displacement from teleporting.")]
+    public float maxVerticalGain = 10f;
 
-    [Tooltip("Minimum controller tilt angle")]
-    public float minControllerAngle = 60;
+    /// The angle to offset the pitch of the detection ray in degrees.
+    /// -15 will match the behavior of the GVR pointer.
+    [Tooltip("Angle to offset the detection ray.")]
+    public float forwardAngleOffset = -15f;
 
-    [Tooltip("Maximum controller tilt angle")]
-    public float maxControllerAngle = 90;
+    /// Positional offset for the start of the detection ray.
+    [Tooltip("Offset for the origin of the detection ray.")]
+    public Vector3 rayOriginOffset = new Vector3(0, -0.0099f, 0.1079f);
+
+    /// The radis used to calculate the amount of open space needed around the player
+    /// for the selection to be considered valid.
+    [Tooltip("Radius used for the amount of open space around the selection.")]
+    public float openSpaceRadius = 0.4f;
+
+    /// The Offset from the floor used for checking the collision of open space around the selection.
+    [Tooltip("Offset from the floor for checking collision of open space around the selection.")]
+    public float openFloorOffset = 0.25f;
+
+    /// Used when checking collisions to ensure there is enough open space around the selection.
+    [Tooltip("Used when checking collisions for the open space around the selection.")]
+    public LayerMask openSpaceLayerMask = Physics.AllLayers;
+
+    /// When true, the detector will attempt to find a valid
+    /// teleport destination.
+    [Tooltip("Whether the detector is active.")]
+    public bool active = false;
+
+    private Collider[] capsuleTestResults = new Collider[1];
 
 #if UNITY_EDITOR
-    // Debug helper to show raycasting lines in the editor for discovering height angle issues.
-    [Tooltip("Show debug lines for raycasting angles in scene editor")]
+
+    // Debug helper to show raycasting lines in the editor.
+    [Tooltip("Show debug lines for raycasting angles in scene editor.")]
     public bool debugRaycasting;
+
 #endif
 
-    // True if we've ever hit a position, across any sessions.
-    private bool lastHitPositionValid;
+    private const float MAX_PITCH_WITH_OFFSET = 80f;
+    private const float MAX_PITCH_BLEND = 10f;
 
-    // Last position we hit, across all teleport sessions (makes for good estimates later)
-    private Vector3 lastHitPosition;
-
-    // Players height from the ground, useful for estimating arc with no hits.
-    private float playerHeight = 2.0f;
-    private bool didCachePlayerHeight;
-
-    // Start teleport selection.
     public override void StartSelection(Transform controller) {
-      playerHeight = DetectPlayersHeight(controller.position);
+      active = true;
     }
-
-    /// End teleport selection.
     public override void EndSelection() {
+      active = false;
     }
 
     // Detect if there's a valid selection by raycasting from a distance above the controller.
-    public override Result DetectSelection(Transform controller) {
+    public override Result DetectSelection(Transform controller, float playerHeight) {
+
       Result result = new Result();
       result.maxDistance = maxDistance;
 
-      Vector3 currentGroundPosition = GroundPosition(controller);
-      Vector3 raycastPosition = RaycastPosition(controller, currentGroundPosition);
-      float raycastHeightFromGround = (raycastPosition - currentGroundPosition).magnitude;
-      Vector3 raycastDirection = RaycastDirection(controller, raycastHeightFromGround);
+      Ray ray;
+      GetRaycast(controller, out ray);
 
-      // Find the hypotenuse length so we know roughly the max distance to raycast.
-      float raycastDistance = Mathf.Sqrt(Mathf.Pow(raycastHeightFromGround, 2)
-        + Mathf.Pow(maxDistance, 2));
+      RaycastHit hit;
 
 #if UNITY_EDITOR
+
       // Draw a debug line showing where the raycast happens from and it's current angle downwards.
       if (debugRaycasting) {
-        Debug.DrawRay(raycastPosition, raycastDirection, Color.white);
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.white);
       }
+
 #endif
 
-      // Intentionally double the raycast, so visualizers can show the invalid selection.
-      RaycastHit hit;
-      if (Physics.Raycast(raycastPosition,
-                          raycastDirection,
-                          out hit,
-                          raycastDistance * 2,
-                          raycastMask) == false) {
-        // Return our best guess point for where the arc should be.
-        result.selection = BestGuessLandingLocation(lastHitPosition,
-            raycastPosition, raycastDirection,
-            Vector3.Angle(Vector3.down, raycastDirection),
-            controller.transform.position);
+      // Selection result defaults to the origin point of the raycast if there is not a hit.
+      Vector3 defaultSelectionResult = ray.origin;
+
+      if (!active) {
+        result.selection = defaultSelectionResult;
+        result.selectionIsValid = false;
         return result;
       }
 
-      lastHitPosition = hit.point;
-      lastHitPositionValid = true;
+      // First, raycast forward from the controller up to max raycast distance.
+      if (Physics.Raycast(ray.origin, ray.direction,
+                          out hit, maxDistance, raycastMask)) {
+        // If there is a forward hit, move on to the next check.
+        result.selection = hit.point;
+        result.selectionNormal = hit.normal;
+        result.selectionObject = hit.collider.gameObject;
+      } else {
+        // If there is no forward hit, raycast down from the end of the ray.
+        ray.origin = ray.GetPoint(maxDistance);
+        ray.direction = Vector3.down;
 
-      result.selection = hit.point;
-      result.selectionNormal = hit.normal;
-      result.selectionObject = hit.collider.gameObject;
+        if (Physics.Raycast(ray.origin, ray.direction,
+                            out hit, maxDistance, raycastMask)) {
+          result.selection = hit.point;
+          result.selectionNormal = hit.normal;
+          result.selectionObject = hit.collider.gameObject;
+        // If there is still no hit, no valid selection is returned.
+        } else {
+          result.selection = defaultSelectionResult;
+          result.selectionIsValid = false;
+          return result;
+        }
+      }
 
-      // Limit the amount of vertical change if elevation varies.
-      Vector3 selectionDelta = currentGroundPosition - result.selection;
-      if (Mathf.Abs(selectionDelta.y) >= maxVerticalChange) {
+      // Validate the angle relative to global up, so users don't teleport into walls, etc.
+      float angle = Vector3.Angle(Vector3.up, hit.normal);
+      if (angle > maxSurfaceAngle) {
+        // Do a vertical raycast from the hit point in case there is valid terrain nearby.
+        ray.origin = hit.point + new Vector3(0, maxVerticalGain, 0);
+        ray.direction = Vector3.down;
+
+        if (Physics.Raycast(ray.origin, ray.direction,
+                            out hit, maxDistance, raycastMask)) {
+          result.selection = hit.point;
+          result.selectionNormal = hit.normal;
+          result.selectionObject = hit.collider.gameObject;
+        // If no surface is found, no valid selection is returned.
+        } else {
+          result.selection = defaultSelectionResult;
+          result.selectionIsValid = false;
+          return result;
+        }
+      }
+
+      // Validate that the player has enough open space at the selection.
+      Vector3 point0 = result.selection + Vector3.up * (openSpaceRadius + openFloorOffset);
+      Vector3 point1 = point0 + Vector3.up * playerHeight;
+      if (Physics.OverlapCapsuleNonAlloc(point0,
+                                         point1,
+                                         openSpaceRadius,
+                                         capsuleTestResults,
+                                         openSpaceLayerMask) > 0) {
+        result.selection = defaultSelectionResult;
+        result.selectionIsValid = false;
         return result;
       }
 
       // Validate that we hit a layer that's valid for teleporting.
       if ((validTeleportLayers.value & (1 << hit.collider.gameObject.layer)) == 0) {
-        return result;
-      }
-
-      // Validate the angle relative to global up, so users don't teleport into walls etc.
-      float angle = Vector3.Angle(Vector3.up, hit.normal);
-      if (angle > maxSurfaceAngle) {
+        result.selection = defaultSelectionResult;
+        result.selectionIsValid = false;
         return result;
       }
 
@@ -121,88 +172,32 @@ namespace DaydreamElements.Teleport {
       return result;
     }
 
-    private float DetectPlayersHeight(Vector3 controllerPosition) {
-      RaycastHit hit;
-      if (Physics.Raycast(controllerPosition, Vector3.down, out hit)) {
-        return hit.distance;
-      }
-      else{
-        // Log error, and default to something sensible.
-        Debug.LogError("Failed to detect players height by raycasting downwards in arc");
-        return 1;
-      }
-    }
+    public void GetRaycast(Transform controller, out Ray ray) {
+      // Get the origin point of the ray.
+      Vector3 raycastOrigin = controller.position +
+                              controller.up * rayOriginOffset.y +
+                              controller.forward * rayOriginOffset.z;
 
-    public Vector3 BestGuessLandingLocation(
-        Vector3 lastValidHit,
-        Vector3 raycastPosition,
-        Vector3 raycastDirection,
-        float raycastAngle,
-        Vector3 controllerPosition) {
-      // We use the player height if there's no previous hit to use.
-      Vector3 bestHit = lastHitPosition;
-      if (lastHitPositionValid == false) {
-        bestHit = controllerPosition - new Vector3(0, playerHeight, 0);
-      }
-
-      float rayHeight = Mathf.Abs(bestHit.y - raycastPosition.y);
-      float rayLength = rayHeight / Mathf.Cos(raycastAngle * Mathf.Deg2Rad);
-      return raycastPosition + (raycastDirection.normalized * rayLength);
-    }
-
-    public Vector3 RaycastDirection(Transform controller, float raycastHeightFromGround) {
-      float controllerAngle = ControllerAngleFromGround(controller);
-
-      controllerAngle = Mathf.Clamp(controllerAngle, minControllerAngle, maxControllerAngle);
-      float arcPercentage =
-        (controllerAngle - minControllerAngle) / (maxControllerAngle - minControllerAngle);
-
-      // Clamp the raycast angle so we're only raycasting the max distance configured.
-      float minAngle = 0.0f;
-      float maxAngle = (Mathf.Atan(maxDistance  / raycastHeightFromGround) * Mathf.Rad2Deg);
-      float raycastAngle = -1 * Mathf.Lerp(minAngle, maxAngle, arcPercentage);
-
-      Vector3 raycastDirection = Quaternion.AngleAxis(raycastAngle, controller.transform.right)
-        * Vector3.down;
-
-      raycastDirection.Normalize();
-
-      return raycastDirection;
-    }
-
-    // Position relative from ground above player we'll raycast from.
-    public Vector3 RaycastPosition(Transform controller, Vector3 groundPosition) {
-      float yOffset = (controller.position - groundPosition).y + heightAboveController;
-      return groundPosition + new Vector3(0, yOffset, 0);
-    }
-
-    public Vector3 GroundPosition(Transform controller) {
-      RaycastHit hit;
-      if (Physics.Raycast(controller.position,
-                          Vector3.down,
-                          out hit,
-                          maxDistance,
-                          raycastMask) == false) {
-        // We didn't find the ground below us, log error and default to something sensible.
-        Debug.LogError("Failed to located the ground, check layermask and max distance");
-        return controller.position - new Vector3(0, heightAboveController, 0);
+      // Get the direction of the ray by applying the desired pitch
+      // offset to the forward direction of the controller.
+      Vector3 forward = controller.forward;
+      // Get the pitch of the controller.
+      float pitch = Mathf.Rad2Deg * Mathf.Asin(forward.y);
+      float absPitch = Mathf.Abs(pitch);
+      // Safeguards to prevent undesired behavior around rotation poles.
+      if (absPitch < MAX_PITCH_WITH_OFFSET) {
+        float pitchBlend = 1 - Mathf.Clamp01((absPitch - (MAX_PITCH_WITH_OFFSET - MAX_PITCH_BLEND)) / MAX_PITCH_BLEND);
+        // Apply the visual offset to the pitch of the arc. Blend the offset to
+        // zero as controller pitch approaches -90 or 90 degrees.
+        float angleOffset = pitchBlend * forwardAngleOffset;
+        float yaw = Mathf.Rad2Deg * Mathf.Atan2(forward.x, forward.z);
+        float pitchRad = Mathf.Deg2Rad * (angleOffset + pitch);
+        Vector3 pitchVec = new Vector3(0, Mathf.Sin(pitchRad), Mathf.Cos(pitchRad));
+        // Calculate the axes of the forward vector in the appropriate order.
+        forward = Quaternion.AngleAxis(yaw, Vector3.up) * pitchVec;
       }
 
-      return hit.point;
-    }
-
-    // Vector pointing in same direction as controller along the ground.
-    public Vector3 ControllerGroundDirection(Transform controller) {
-      Vector3 controllerGroundVect = controller.forward;
-      controllerGroundVect.y = 0;
-      controllerGroundVect.Normalize();
-      return controllerGroundVect;
-    }
-
-    // Angle between the controller and the ground.
-    public float ControllerAngleFromGround(Transform controller) {
-      return Vector3.Angle(Vector3.down, controller.forward);
+      ray = new Ray(raycastOrigin, forward);
     }
   }
-
 }
