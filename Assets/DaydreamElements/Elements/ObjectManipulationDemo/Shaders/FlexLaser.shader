@@ -1,4 +1,4 @@
-﻿// Copyright 2017 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
 
 Shader "GoogleVR/Unlit/Flex Laser" {
   Properties {
+    _Color ("Color", Color) = (1,1,1,1)
+    _Alpha ("Alpha From Controller", Range(0,1)) = 1
     _MinLineThickness ("Min Line Thickness", Float) = 0.0001
     _MaxLineThickness ("Max Line Thickness", Float) = 1
     _MaxCameraDistance ("Max Camera Distance", Float) = 100
@@ -42,6 +44,8 @@ Shader "GoogleVR/Unlit/Flex Laser" {
         half4 color : TEXCOORD1;
       };
 
+      half4 _Color;
+      float _Alpha;
       float4 _LineJoint[101];
       float3 _LineNormalAxis;
       float _MinLineThickness;
@@ -85,6 +89,12 @@ Shader "GoogleVR/Unlit/Flex Laser" {
 
         // Divide by the index to get the alpha value.
         o.color = half4(1,1,1,1 - smoothstep(0.1, .9, idx / 100.0 ) );
+
+        // Apply user-defined color and alpha.
+        o.color *= _Color;
+
+        // Update alpha.
+        o.color.a *= _Alpha;
 
         o.vertex = mul(UNITY_MATRIX_VP, v.vertex);
         return o;

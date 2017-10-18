@@ -20,7 +20,9 @@ namespace DaydreamElements.ObjectManipulation {
 
   /// A flexible laser visual implementation that bends in a vertex shader.
   [RequireComponent(typeof(MeshRenderer))]
-  public class FlexLaserVisual : MonoBehaviour {
+  public class FlexLaserVisual : MonoBehaviour, IGvrArmModelReceiver {
+
+    public GvrBaseArmModel ArmModel { get; set; }
 
     private MeshRenderer meshRenderer;
 
@@ -32,6 +34,7 @@ namespace DaydreamElements.ObjectManipulation {
     private bool hadSelection = false;
     private float timeSinceLastSelectionChange = 0;
 
+    private int alphaID;
     private int lineJointID;
     private int lineNormalAxisID;
 
@@ -50,6 +53,7 @@ namespace DaydreamElements.ObjectManipulation {
     void Start() {
       shaderWorldPositions = new Vector4[INFLUENCE_COUNT];
       flexMaterialProperties = new MaterialPropertyBlock();
+      alphaID = Shader.PropertyToID("_Alpha");
       lineJointID = Shader.PropertyToID("_LineJoint");
       lineNormalAxisID = Shader.PropertyToID("_LineNormalAxis");
       meshRenderer = GetComponent<MeshRenderer>();
@@ -62,7 +66,6 @@ namespace DaydreamElements.ObjectManipulation {
     public void ClearSelectedAndDisable() {
       selectedObject = null;
       gameObject.SetActive(false);
-
     }
 
     public void UpdateVisual(Transform t, Vector3 localOffset) {
@@ -124,6 +127,11 @@ namespace DaydreamElements.ObjectManipulation {
 
       shaderNormal = normal;
 
+      // Drive transparency with the preferred alpha from the arm model.
+      float alpha = ArmModel != null ? ArmModel.PreferredAlpha : 1.0f;
+
+      // Update laser alpha from arm model preferred alpha.
+      flexMaterialProperties.SetFloat(alphaID, alpha);
       // Pass per-influence properties to the flex laser shader.
       flexMaterialProperties.SetVectorArray(lineJointID, shaderWorldPositions);
       flexMaterialProperties.SetVector(lineNormalAxisID, shaderNormal);

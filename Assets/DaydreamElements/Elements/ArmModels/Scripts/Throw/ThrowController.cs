@@ -35,13 +35,13 @@ namespace DaydreamElements.ArmModels {
     public TransitionArmModel transitionArmModel;
 
     [Tooltip("Arm Model Transitioned to when holding a throwable.")]
-    public ElementsArmModel throwArmModel;
+    public GvrArmModel throwArmModel;
 
     [Tooltip("The object to throw.")]
     [SerializeField]
     private Throwable heldThrowable;
 
-    private ElementsArmModel initialArmModel;
+    private GvrArmModel initialArmModel;
     private Vector3 throwableVelocity;
     private Vector3 lastThrowablePosition;
     private bool hasBegunThrowGesture;

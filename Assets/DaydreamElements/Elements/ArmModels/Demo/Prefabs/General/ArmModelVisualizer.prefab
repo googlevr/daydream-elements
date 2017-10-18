@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33279031230693834}
   - component: {fileID: 23843382933681974}
   - component: {fileID: 95516018678645794}
-  - component: {fileID: 114625523862510840}
   m_Layer: 0
   m_Name: Arm_Forearm
   m_TagString: Untagged
@@ -41,7 +40,6 @@ GameObject:
   - component: {fileID: 33888369407756164}
   - component: {fileID: 23888116528345988}
   - component: {fileID: 95625674309987028}
-  - component: {fileID: 114063139472054534}
   m_Layer: 0
   m_Name: Arm_Bicep
   m_TagString: Untagged
@@ -90,7 +88,6 @@ GameObject:
   - component: {fileID: 33152192569954280}
   - component: {fileID: 23372607845372026}
   - component: {fileID: 95449187003278844}
-  - component: {fileID: 114485982576117530}
   m_Layer: 0
   m_Name: Arm_Wrist
   m_TagString: Untagged
@@ -109,7 +106,6 @@ GameObject:
   - component: {fileID: 33696367224751230}
   - component: {fileID: 23625066286264182}
   - component: {fileID: 95470573503505556}
-  - component: {fileID: 114656725342252986}
   m_Layer: 0
   m_Name: Arm_Elbow
   m_TagString: Untagged
@@ -143,7 +139,6 @@ GameObject:
   - component: {fileID: 33386170880467994}
   - component: {fileID: 23088601561627564}
   - component: {fileID: 95291473519767494}
-  - component: {fileID: 114936934969077440}
   m_Layer: 0
   m_Name: Arm_Shoulder
   m_TagString: Untagged
@@ -160,7 +155,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4321273395808458}
   - component: {fileID: 114922482892143706}
-  - component: {fileID: 114951995691024762}
   m_Layer: 0
   m_Name: ArmModelVisualizer
   m_TagString: Untagged
@@ -631,54 +625,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114063139472054534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1061243486407648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumAlpha: 1
---- !u!114 &114485982576117530
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1611665384833004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumAlpha: 1
---- !u!114 &114625523862510840
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054609195007508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumAlpha: 1
---- !u!114 &114656725342252986
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1641202836904314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumAlpha: 1
 --- !u!114 &114922482892143706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -695,33 +641,9 @@ MonoBehaviour:
   elbowJoint: {fileID: 4910738956046810}
   forearmLimb: {fileID: 4799186228255610}
   wristJoint: {fileID: 4857050669372106}
+  controller: {fileID: 0}
+  laser: {fileID: 0}
+  laserDefaultColor: {r: 0, g: 0, b: 0, a: 0}
+  laserHighlightColor: {r: 0, g: 0, b: 0, a: 0}
+  wristOffset: -0.065
   armModel: {fileID: 0}
---- !u!114 &114936934969077440
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1721242775795136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumAlpha: 1
---- !u!114 &114951995691024762
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1744049844339610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 311793381eb9d45149dc1a422000a9fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserVisual: {fileID: 0}
-  controllerVisual: {fileID: 0}
-  armModel: {fileID: 0}
-  isLaserVisualEnabled: 1
-  isControllerVisualEnabled: 1
-  isVisibleWhenDisconnected: 0

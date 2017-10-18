@@ -2085,7 +2085,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5dd43baba2d4dc1bab789615567e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDebugRays: 0
   raycasterEventMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -2206,7 +2205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ca48b65078a48c9a89b9572e684515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumAlpha: 1
 --- !u!114 &960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,16 +2316,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
-      propertyPath: armModel
-      value: 
-      objectReference: {fileID: 925529378}
     - target: {fileID: 114922482892143706, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
         type: 2}
       propertyPath: armModel
       value: 
-      objectReference: {fileID: 925529378}
+      objectReference: {fileID: 925529380}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6a1e0a3fd99d49f3a618e7817fa8f50, type: 2}
   m_IsPrefabParent: 0
@@ -2599,38 +2592,32 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: armModel
       value: 
-      objectReference: {fileID: 291872026}
+      objectReference: {fileID: 0}
     - target: {fileID: 114922482892143706, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
         type: 2}
       propertyPath: armModel
       value: 
       objectReference: {fileID: 291872026}
-    - target: {fileID: 114485982576117530, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: maximumAlpha
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114656725342252986, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: maximumAlpha
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114063139472054534, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: maximumAlpha
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114625523862510840, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: maximumAlpha
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114936934969077440, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: maximumAlpha
       value: 1
       objectReference: {fileID: 0}
@@ -3017,16 +3004,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: controllerVisual
       value: 
       objectReference: {fileID: 778384059}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: armModel
       value: 
-      objectReference: {fileID: 1361786645}
+      objectReference: {fileID: 0}
     - target: {fileID: 114922482892143706, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
         type: 2}
       propertyPath: armModel
@@ -3183,7 +3168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 291872024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107c25e9b93bb4f13bfa135115173f79, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dda4bb2d5509e44e978d2bf56e25d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   elbowRestPosition: {x: 0.195, y: -0.5, z: 0.005}
@@ -3191,13 +3176,12 @@ MonoBehaviour:
   controllerRestPosition: {x: 0, y: 0, z: 0.05}
   armExtensionOffset: {x: -0.13, y: 0.14, z: 0.08}
   elbowBendRatio: 0.6
-  pointerTiltAngle: 15
   fadeControllerOffset: 0
   fadeDistanceFromHeadForward: 0.25
   fadeDistanceFromHeadSide: 0.15
   tooltipMinDistanceFromFace: 0.45
   tooltipMaxAngleFromCamera: 80
-  isLockedToHead: 0
+  isLockedToNeck: 0
 --- !u!1 &335756675
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,7 +3365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa952cbcc0eb13d4ca558b6da550ff55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumAlpha: 1
   attachmentPrefabs: []
   touchPadColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
   appButtonColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
@@ -3395,6 +3378,7 @@ MonoBehaviour:
     homeButton: 0
     touching: 0
     touchPos: {x: 0, y: 0}
+  maximumAlpha: 1
 --- !u!114 &430596147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3407,6 +3391,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 1709081787}
+--- !u!4 &456390921 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 1915109966, guid: 34c21f523e72f45509a4e37ed0293c3b,
+    type: 2}
+  m_PrefabInternal: {fileID: 925529375}
 --- !u!1 &467413975
 GameObject:
   m_ObjectHideFlags: 0
@@ -3499,7 +3488,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4285423039743258, guid: e8fabe25042ca423dab335675d982c81, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e8fabe25042ca423dab335675d982c81, type: 2}
@@ -4030,13 +4019,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17119e38843f14047ab0ea30dbcbf23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultArmModel: {fileID: 925529378}
+  defaultArmModel: {fileID: 925529380}
   dummyArmModel: {fileID: 291872026}
   dummyObjects:
   - {fileID: 430596142}
   - {fileID: 1718658136}
   - {fileID: 412438904}
   dummyArmVisualizer: {fileID: 1457558997}
+  defaultLaser: {fileID: 456390921}
+  dummyLaser: {fileID: 1478791358}
   elbowRestSliders: {fileID: 1942911996}
   wristRestSliders: {fileID: 1955279244}
   controllerRestSliders: {fileID: 540658218}
@@ -4097,7 +4088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDebugRays: 0
   ignoreReversedGraphics: 1
   blockingObjects: 0
   blockingMask:
@@ -4642,6 +4632,10 @@ Prefab:
       propertyPath: armModel
       value: 
       objectReference: {fileID: 1361786645}
+    - target: {fileID: 771218441, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
   m_IsPrefabParent: 0
@@ -5080,7 +5074,7 @@ Prefab:
         type: 2}
       propertyPath: armModel
       value: 
-      objectReference: {fileID: 925529378}
+      objectReference: {fileID: 925529380}
     - target: {fileID: 573655681, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
       propertyPath: maxPointerDistance
       value: 1.5
@@ -5097,7 +5091,7 @@ Prefab:
     - target: {fileID: 114000013128025656, guid: 34c21f523e72f45509a4e37ed0293c3b,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
@@ -5107,40 +5101,18 @@ Transform:
   m_PrefabParentObject: {fileID: 1820761120, guid: 34c21f523e72f45509a4e37ed0293c3b,
     type: 2}
   m_PrefabInternal: {fileID: 925529375}
---- !u!1 &925529377 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 555767533, guid: 34c21f523e72f45509a4e37ed0293c3b,
-    type: 2}
-  m_PrefabInternal: {fileID: 925529375}
---- !u!114 &925529378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 925529377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107c25e9b93bb4f13bfa135115173f79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elbowRestPosition: {x: 0.195, y: -0.5, z: 0.005}
-  wristRestPosition: {x: 0, y: 0, z: 0.25}
-  controllerRestPosition: {x: 0, y: 0, z: 0.05}
-  armExtensionOffset: {x: -0.13, y: 0.14, z: 0.08}
-  elbowBendRatio: 0.6
-  pointerTiltAngle: 15
-  fadeControllerOffset: 0
-  fadeDistanceFromHeadForward: 0.25
-  fadeDistanceFromHeadSide: 0.15
-  tooltipMinDistanceFromFace: 0.45
-  tooltipMaxAngleFromCamera: 80
-  isLockedToHead: 0
 --- !u!114 &925529379 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 573655681, guid: 34c21f523e72f45509a4e37ed0293c3b,
     type: 2}
   m_PrefabInternal: {fileID: 925529375}
   m_Script: {fileID: 11500000, guid: 51b65678ccdd949e9a58874d2880c0ef, type: 3}
+--- !u!114 &925529380 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114000013128025656, guid: 34c21f523e72f45509a4e37ed0293c3b,
+    type: 2}
+  m_PrefabInternal: {fileID: 925529375}
+  m_Script: {fileID: 11500000, guid: 7dda4bb2d5509e44e978d2bf56e25d7c, type: 3}
 --- !u!1001 &930793446
 Prefab:
   m_ObjectHideFlags: 0
@@ -5318,7 +5290,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 997603122}
-  - component: {fileID: 997603124}
   - component: {fileID: 997603123}
   m_Layer: 0
   m_Name: DummyController
@@ -5353,26 +5324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311793381eb9d45149dc1a422000a9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserVisual: {fileID: 0}
-  controllerVisual: {fileID: 0}
   armModel: {fileID: 291872026}
-  isLaserVisualEnabled: 1
-  isControllerVisualEnabled: 1
-  isVisibleWhenDisconnected: 0
---- !u!114 &997603124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000010238702066, guid: 34c21f523e72f45509a4e37ed0293c3b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 997603121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b185dc34a16a7487e99971711f86abc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pose: 0
-  armModel: {fileID: 0}
+  isDeactivatedWhenDisconnected: 1
 --- !u!1 &1017327605
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,8 +5395,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: armModel
       value: 
       objectReference: {fileID: 186983376}
@@ -5891,6 +5843,10 @@ Prefab:
       propertyPath: armModel
       value: 
       objectReference: {fileID: 409023958}
+    - target: {fileID: 771218441, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
   m_IsPrefabParent: 0
@@ -6463,6 +6419,24 @@ Prefab:
       propertyPath: defaultReticleDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 573655681, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
+      propertyPath: raycastMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 573655681, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
+      propertyPath: overrideCameraRayIntersectionDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010349995660, guid: 34c21f523e72f45509a4e37ed0293c3b,
+        type: 2}
+      propertyPath: maxLaserDistance
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010349995660, guid: 34c21f523e72f45509a4e37ed0293c3b,
+        type: 2}
+      propertyPath: shrinkLaser
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
   m_IsPrefabParent: 0
@@ -6515,10 +6489,10 @@ Transform:
   m_PrefabInternal: {fileID: 1361786643}
 --- !u!114 &1361786645 stripped
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114777909030690448, guid: 5951c161f81d140ea89c49724d627ad9,
+  m_PrefabParentObject: {fileID: 114957139592526436, guid: 5951c161f81d140ea89c49724d627ad9,
     type: 2}
   m_PrefabInternal: {fileID: 1361786643}
-  m_Script: {fileID: 11500000, guid: 107c25e9b93bb4f13bfa135115173f79, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dda4bb2d5509e44e978d2bf56e25d7c, type: 3}
 --- !u!114 &1370573452 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114711869495247716, guid: 8c15712d165e3480f95ab50a10c25cc0,
@@ -6613,7 +6587,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1478791358}
-  - component: {fileID: 1478791359}
   m_Layer: 0
   m_Name: DummyLaser
   m_TagString: Untagged
@@ -6627,27 +6600,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1478791357}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: -0.009, z: 0.049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1718658138}
   m_Father: {fileID: 430596143}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1478791359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1478791357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b185dc34a16a7487e99971711f86abc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pose: 1
-  armModel: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!1001 &1480701586
 Prefab:
   m_ObjectHideFlags: 0
@@ -6752,6 +6712,10 @@ Prefab:
       propertyPath: armModel
       value: 
       objectReference: {fileID: 186983376}
+    - target: {fileID: 771218441, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 2}
   m_IsPrefabParent: 0
@@ -7777,30 +7741,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
-      propertyPath: controllerVisual
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114951995691024762, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
-      propertyPath: armModel
-      value: 
-      objectReference: {fileID: 409023958}
     - target: {fileID: 114922482892143706, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
         type: 2}
       propertyPath: armModel
       value: 
       objectReference: {fileID: 409023958}
-    - target: {fileID: 1744049844339610, guid: f6a1e0a3fd99d49f3a618e7817fa8f50, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114922482892143706, guid: f6a1e0a3fd99d49f3a618e7817fa8f50,
-        type: 2}
-      propertyPath: wristOffset
-      value: -0.065
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6a1e0a3fd99d49f3a618e7817fa8f50, type: 2}
   m_IsPrefabParent: 0

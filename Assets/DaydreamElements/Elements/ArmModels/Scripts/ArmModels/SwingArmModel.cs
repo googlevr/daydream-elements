@@ -19,7 +19,7 @@ using System.Collections;
 namespace DaydreamElements.ArmModels {
 
   /// Arm Model implementation for approximating a swinging motion.
-  public class SwingArmModel : ElementsArmModel {
+  public class SwingArmModel : GvrArmModel {
     [Tooltip("Portion of controller rotation applied to the shoulder joint.")]
     [Range(0.0f, 1.0f)]
     public float shoulderRotationRatio = 0.5f;
@@ -74,10 +74,11 @@ namespace DaydreamElements.ArmModels {
       Quaternion swingWristRot = Quaternion.Lerp(Quaternion.identity, xyRotation, finalWristRatio);
 
       // Calculate final rotations.
-      shoulderRotation = torsoRotation * swingShoulderRot;
+      Quaternion shoulderRotation = torsoRotation * swingShoulderRot;
       elbowRotation = shoulderRotation * swingElbowRot;
       wristRotation = elbowRotation * swingWristRot;
       controllerRotation = torsoRotation * controllerOrientation;
+      torsoRotation = shoulderRotation;
     }
   }
 }

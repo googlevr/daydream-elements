@@ -1,3 +1,5 @@
+Except as indicated at the end of this LICENSE file,
+files in this SDK are licensed as follows:
 
                                  Apache License
                            Version 2.0, January 2004
@@ -201,9 +203,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-====================================================================================
+===============================================================================
 
-The file GoogleVR/Scripts/GvrPointerInput.cs is licensed as follows:
+The following files:
+- Assets/GoogleVR/Scripts/EventSystem/InputModule/GvrPointerInputModule.cs
+- Assets/GoogleVR/Scripts/EventSystem/InputModule/GvrPointerInputModuleImpl.cs
+
+are licensed as follows:
+
 
 The MIT License (MIT)
 
@@ -228,9 +235,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-====================================================================================
+===============================================================================
 
-The file Assets/Plugins/Google.ProtocolBuffers.dll is licensed as follows:
+The following file:
+- Assets/Plugins/Google.ProtocolBuffers.dll
+
+is licensed as follows:
 
 Protocol Buffers - Google's data interchange format
 Copyright 2008-2010 Google Inc.  All rights reserved.
@@ -263,5 +273,3 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-

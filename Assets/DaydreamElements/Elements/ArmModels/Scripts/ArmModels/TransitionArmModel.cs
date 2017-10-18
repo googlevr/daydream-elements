@@ -26,10 +26,10 @@ namespace DaydreamElements.ArmModels {
   public class TransitionArmModel : GvrBaseArmModel, IArmModelVisualProvider {
     // Stores information about a transition from one arm model to the next.
     private struct ArmTransitionInfo {
-      public ElementsArmModel armModel;
+      public GvrArmModel armModel;
       public float transitionValue;
 
-      public ArmTransitionInfo(ElementsArmModel transitionArmModel) {
+      public ArmTransitionInfo(GvrArmModel transitionArmModel) {
         armModel = transitionArmModel;
         transitionValue = 0.0f;
       }
@@ -37,7 +37,7 @@ namespace DaydreamElements.ArmModels {
 
     [Tooltip("Current Arm Model")]
     [SerializeField]
-    private ElementsArmModel currentArmModel;
+    private GvrArmModel currentArmModel;
 
     /// List of transitions to other arm models. If TransitionToArmModel is called during a transition,
     /// then we need to keep information about the previous transition to make sure that the transition to
@@ -62,7 +62,7 @@ namespace DaydreamElements.ArmModels {
     /// Unitless weight for how much the angular velocity impacts the transition.
     private const float ANGULAR_VELOCITY_DIVISOR = 45.0f;
 
-    public ElementsArmModel CurrentArmModel {
+    public GvrArmModel CurrentArmModel {
       get {
         return currentArmModel;
       }
@@ -94,38 +94,6 @@ namespace DaydreamElements.ArmModels {
 
         for (int i = 0; i < transitionsList.Count; i++) {
           result = Quaternion.Slerp(result, transitionsList[i].armModel.ControllerRotationFromHead, transitionsList[i].transitionValue);
-        }
-
-        return result;
-      }
-    }
-
-    public override Vector3 PointerPositionFromController {
-      get {
-        if (currentArmModel == null) {
-          return Vector3.zero;
-        }
-
-        Vector3 result = currentArmModel.PointerPositionFromController;
-
-        for (int i = 0; i < transitionsList.Count; i++) {
-          result = Vector3.Slerp(result, transitionsList[i].armModel.PointerPositionFromController, transitionsList[i].transitionValue);
-        }
-
-        return result;
-      }
-    }
-
-    public override Quaternion PointerRotationFromController {
-      get {
-        if (currentArmModel == null) {
-          return Quaternion.identity;
-        }
-
-        Quaternion result = currentArmModel.PointerRotationFromController;
-
-        for (int i = 0; i < transitionsList.Count; i++) {
-          result = Quaternion.Slerp(result, transitionsList[i].armModel.PointerRotationFromController, transitionsList[i].transitionValue);
         }
 
         return result;
@@ -260,7 +228,7 @@ namespace DaydreamElements.ArmModels {
       }
     }
 
-    public void TransitionToArmModel(ElementsArmModel armModel) {
+    public void TransitionToArmModel(GvrArmModel armModel) {
       if (armModel == null) {
         return;
       }

@@ -368,7 +368,6 @@ namespace DaydreamElements.ArmModels {
         // Assign Triangles.
         if (i > 0) {
           for (int c = 0; c < tubeCrossSegments; c++) {
-            int start = ((i - 1) * tubeCrossSegments + c) * 6;
             int cMod = (c + 1) % tubeCrossSegments;
 
             triangles.Add((i - 1) * tubeCrossSegments + c);

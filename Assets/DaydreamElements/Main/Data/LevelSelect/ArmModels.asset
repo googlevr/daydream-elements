@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8465ac6a4bb547dd97116832e098653, type: 3}
   m_Name: ArmModels
   m_EditorClassIdentifier: 
-  sceneAsset: {fileID: 102900000, guid: 390c3df24cf4742bcb285408cdbfed79, type: 3}
+  sceneAsset: {fileID: 102900000, guid: 534bf9c38d87545af806b5997a3b119f, type: 3}
   sceneAssetName: ArmModelsDemo
   displayName: Arm Models
   backgroundSprite: {fileID: 21300000, guid: db56299b73a7a4209b7245d4bb4d9746, type: 3}

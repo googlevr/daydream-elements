@@ -159,7 +159,12 @@ MonoBehaviour:
   maxControllerPitch: 60
   maxVerticalGain: 10
   forwardAngleOffset: -15
-  rayOriginOffset: {x: 0, y: -0.0099, z: 0.1079}
+  rayOriginOffset: {x: 0, y: -0.0099, z: 0.0579}
+  openSpaceRadius: 0.4
+  openFloorOffset: 0.25
+  openSpaceLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   active: 0
   debugRaycasting: 0
 --- !u!114 &114386032682972182
@@ -184,14 +189,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03997eda299744d8b9056c44b20260aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerVisual: {fileID: 0}
   lineOriginPrefab: {fileID: 1627007419322474, guid: bf48b6f45ab3ad841a4bb87b1587f743,
     type: 2}
   targetPrefab: {fileID: 1226479492832510, guid: cb7c51fe2ecc24767941f65331c650c9,
     type: 2}
   segments: 100
   forwardAngleOffset: 15
-  lineStartOffset: {x: 0, y: -0.0099, z: 0.1079}
+  lineStartOffset: {x: 0, y: -0.0099, z: 0.0579}
   minLineLength: 0
   arcTransitionSpeed: 15
   maxLineVisualCompletion: 0.8
@@ -199,6 +203,8 @@ MonoBehaviour:
   completionThreshold: 0.6
   targetScaleTransitionDuration: 0.04
   lineOriginScaleTransitionDuration: 0.04
+  arcMeshRenderer: {fileID: 23039519084937826}
+  lineOriginRenderer: {fileID: 0}
 --- !u!114 &114542269745815496
 MonoBehaviour:
   m_ObjectHideFlags: 1

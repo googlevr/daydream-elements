@@ -19,24 +19,28 @@ using UnityEngine;
 namespace DaydreamElements.ArmModels {
 
   [RequireComponent(typeof(MeshRenderer))]
-  public class FadeControllerVisual : GvrBaseControllerVisual {
+  public class FadeControllerVisual : MonoBehaviour, IGvrArmModelReceiver {
     private MaterialPropertyBlock materialPropertyBlock;
     private MeshRenderer meshRenderer;
     private int alphaId;
 
-    public override void OnVisualUpdate(bool updateImmediately = false) {
-      meshRenderer.GetPropertyBlock(materialPropertyBlock);
-      float alpha = maximumAlpha * PreferredAlpha;
-      materialPropertyBlock.SetFloat(alphaId, alpha);
-      meshRenderer.SetPropertyBlock(materialPropertyBlock);
-      meshRenderer.enabled = alpha != 0.0f;
-    }
+    public GvrBaseArmModel ArmModel { get; set; }
 
-    protected override void Awake() {
-      base.Awake();
+    void Awake() {
       materialPropertyBlock = new MaterialPropertyBlock();
       meshRenderer = GetComponent<MeshRenderer>();
       alphaId = Shader.PropertyToID("_Alpha");
+    }
+
+    void LateUpdate() {
+      meshRenderer.GetPropertyBlock(materialPropertyBlock);
+      float alpha = 1.0f;
+      if (ArmModel != null) {
+        alpha = ArmModel.PreferredAlpha;
+      }
+      materialPropertyBlock.SetFloat(alphaId, alpha);
+      meshRenderer.SetPropertyBlock(materialPropertyBlock);
+      meshRenderer.enabled = alpha != 0.0f;
     }
   }
 }

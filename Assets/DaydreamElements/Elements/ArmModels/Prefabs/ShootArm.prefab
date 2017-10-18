@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4541104800133598}
-  - component: {fileID: 114777909030690448}
+  - component: {fileID: 114957139592526436}
   m_Layer: 0
   m_Name: ShootArm
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114777909030690448
+--- !u!114 &114957139592526436
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1221143507208364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107c25e9b93bb4f13bfa135115173f79, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dda4bb2d5509e44e978d2bf56e25d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   elbowRestPosition: {x: 0.195, y: -0.5, z: 0.005}
@@ -56,10 +56,9 @@ MonoBehaviour:
   controllerRestPosition: {x: 0, y: 0, z: 0.05}
   armExtensionOffset: {x: -0.09, y: 0.12, z: 0.08}
   elbowBendRatio: 0.6
-  pointerTiltAngle: 15
   fadeControllerOffset: 0
   fadeDistanceFromHeadForward: 0.25
   fadeDistanceFromHeadSide: 0.15
   tooltipMinDistanceFromFace: 0.45
   tooltipMaxAngleFromCamera: 80
-  isLockedToHead: 0
+  isLockedToNeck: 0

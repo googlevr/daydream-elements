@@ -20,14 +20,16 @@ using UnityEngine.UI;
 
 namespace DaydreamElements.ArmModels {
 
-  /// UI for modifying the properties of _ElementsArmModel.cs_ in real-time.
+  /// UI for modifying the properties of _GvrArmModel.cs_ in real-time.
   public class CustomizeArmModelUI : MonoBehaviour {
 
     [Header("Arm")]
-    public ElementsArmModel defaultArmModel;
-    public ElementsArmModel dummyArmModel;
+    public GvrArmModel defaultArmModel;
+    public GvrArmModel dummyArmModel;
     public GameObject[] dummyObjects;
     public VisualizeArmModel dummyArmVisualizer;
+    public Transform defaultLaser;
+    public Transform dummyLaser;
 
     [Header("UI")]
     public VectorSlidersUI elbowRestSliders;
@@ -87,28 +89,31 @@ namespace DaydreamElements.ArmModels {
     }
 
     public void Reset() {
-      SetFromArmModel(defaultArmModel);
+      SetFromArmModel(defaultArmModel, defaultLaser);
       startOverButton.interactable = false;
       dummyArmVisualizer.SetAllOutlinesEnabled(false);
       highlightsLocked = false;
     }
 
-    public void SetArmModelFromUI(ElementsArmModel arm) {
+    public void SetArmModelFromUI(GvrArmModel arm, Transform laser) {
       arm.elbowRestPosition = elbowRestSliders.Vector;
       arm.wristRestPosition = wristRestSliders.Vector;
       arm.controllerRestPosition = controllerRestSliders.Vector;
       arm.armExtensionOffset = armExtensionSliders.Vector;
       arm.elbowBendRatio = elbowBendRatioSlider.Scalar;
-      arm.pointerTiltAngle = pointerTiltAngleSlider.Scalar;
+
+      Vector3 euler = laser.localEulerAngles;
+      euler.x = pointerTiltAngleSlider.Scalar;
+      laser.localEulerAngles = euler;
     }
 
-    private void SetFromArmModel(ElementsArmModel arm) {
+    private void SetFromArmModel(GvrArmModel arm, Transform laser) {
       elbowRestSliders.Vector = arm.elbowRestPosition;
       wristRestSliders.Vector = arm.wristRestPosition;
       controllerRestSliders.Vector = arm.controllerRestPosition;
       armExtensionSliders.Vector = arm.armExtensionOffset;
       elbowBendRatioSlider.Scalar = arm.elbowBendRatio;
-      pointerTiltAngleSlider.Scalar = arm.pointerTiltAngle;
+      pointerTiltAngleSlider.Scalar = laser.localEulerAngles.x;
     }
 
     private void SetHighlightCallbacksEnabled(bool enabled) {
@@ -142,7 +147,7 @@ namespace DaydreamElements.ArmModels {
     }
 
     private void OnUIChanged() {
-      SetArmModelFromUI(dummyArmModel);
+      SetArmModelFromUI(dummyArmModel, dummyLaser);
       startOverButton.interactable = true;
       highlightsLocked = true;
     }

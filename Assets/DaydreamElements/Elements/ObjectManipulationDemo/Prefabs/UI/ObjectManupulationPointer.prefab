@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 4016741902477884}
   - component: {fileID: 114867858367368608}
   - component: {fileID: 114708807159670342}
-  - component: {fileID: 114448133227163886}
   m_Layer: 0
   m_Name: ObjectManupulationPointer
   m_TagString: Untagged
@@ -74,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4825449421564044}
   - component: {fileID: 114374836551382450}
-  - component: {fileID: 114447611284706350}
   m_Layer: 2
   m_Name: Laser
   m_TagString: Untagged
@@ -122,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1804051002397326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.05}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4016741902477884}
@@ -147,15 +145,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1529475134112040}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: -0.009, z: 0.049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4942355413211502}
   - {fileID: 4452784054306896}
   m_Father: {fileID: 4016741902477884}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!4 &4942355413211502
 Transform:
   m_ObjectHideFlags: 1
@@ -297,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa952cbcc0eb13d4ca558b6da550ff55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumAlpha: 1
   attachmentPrefabs:
   - {fileID: 1049340049793362, guid: 24dd9ca5d9047f44887e2eafd86d79fb, type: 2}
   touchPadColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
@@ -312,6 +309,7 @@ MonoBehaviour:
     homeButton: 0
     touching: 0
     touchPos: {x: 0.5, y: 0.5}
+  maximumAlpha: 1
 --- !u!114 &114374836551382450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -325,37 +323,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastMode: 0
   overridePointerCamera: {fileID: 0}
+  drawDebugRays: 0
   maxPointerDistance: 20
   defaultReticleDistance: 6
   defaultLineDistance: 3
   flexLaserVisual: {fileID: 114898228155165526}
   reticle: {fileID: 114952322469096202}
---- !u!114 &114447611284706350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1529475134112040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b185dc34a16a7487e99971711f86abc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pose: 1
-  armModel: {fileID: 0}
---- !u!114 &114448133227163886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1221200120351320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b185dc34a16a7487e99971711f86abc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pose: 0
-  armModel: {fileID: 0}
 --- !u!114 &114708807159670342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,15 +340,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dda4bb2d5509e44e978d2bf56e25d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addedElbowHeight: 0
-  addedElbowDepth: 0
-  pointerTiltAngle: 15
-  fadeDistanceFromFace: 0.32
+  elbowRestPosition: {x: 0.195, y: -0.5, z: 0.005}
+  wristRestPosition: {x: 0, y: 0, z: 0.25}
+  controllerRestPosition: {x: 0, y: 0, z: 0.05}
+  armExtensionOffset: {x: -0.13, y: 0.14, z: 0.08}
+  elbowBendRatio: 0.6
+  fadeControllerOffset: 0
+  fadeDistanceFromHeadForward: 0.25
+  fadeDistanceFromHeadSide: 0.15
   tooltipMinDistanceFromFace: 0.45
   tooltipMaxAngleFromCamera: 80
-  followGaze: 1
-  useAccelerometer: 0
-  isLockedToHead: 0
+  isLockedToNeck: 0
 --- !u!114 &114867858367368608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -387,12 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311793381eb9d45149dc1a422000a9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserVisual: {fileID: 0}
-  controllerVisual: {fileID: 114154873349798522}
   armModel: {fileID: 114708807159670342}
-  isLaserVisualEnabled: 1
-  isControllerVisualEnabled: 1
-  isVisibleWhenDisconnected: 0
+  isDeactivatedWhenDisconnected: 1
 --- !u!114 &114898228155165526
 MonoBehaviour:
   m_ObjectHideFlags: 1
