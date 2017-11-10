@@ -13,12 +13,18 @@
 // limitations under the License.
 
 using UnityEngine;
-using UnityEngine.VR;
 
-/// Used to recenter only the controller, which is required for scenes that have no clear forward direction.
+#if UNITY_2017_2_OR_NEWER
+using UnityEngine.XR;
+#else
+using XRSettings = UnityEngine.VR.VRSettings;
+#endif  // UNITY_2017_2_OR_NEWER
+
+/// Used to recenter only the controller, required for scenes that have no clear forward direction.
+/// Details: https://developers.google.com/vr/distribute/daydream/design-requirements#UX-D6
 ///
-/// Offsets the orientation of the transform when a recenter event occurs to correct for the orientation
-/// change from the recenter event.
+/// Works by offsetting the orientation of the transform when a recenter occurs to correct for the
+/// orientation change caused by the recenter event.
 ///
 /// Usage: Place on the parent of the camera that should have it's orientation corrected.
 public class GvrRecenterOnlyController : MonoBehaviour {
@@ -32,15 +38,13 @@ public class GvrRecenterOnlyController : MonoBehaviour {
 
     // Daydream is loaded only on deivce, not in editor.
 #if UNITY_ANDROID && !UNITY_EDITOR
-        if (VRSettings.loadedDeviceName != "daydream")
-        {
-            return;
-        }
+    if (XRSettings.loadedDeviceName != GvrSettings.VR_SDK_DAYDREAM) {
+      return;
+    }
 #endif
+
     if (GvrControllerInput.Recentered) {
-      transform.localRotation =
-        transform.localRotation * Quaternion.Inverse(lastAppliedYawCorrection) * yawCorrection;
-      lastAppliedYawCorrection = yawCorrection;
+      ApplyYawCorrection();
       return;
     }
 
@@ -62,21 +66,24 @@ public class GvrRecenterOnlyController : MonoBehaviour {
 
   void OnDisable() {
     yawCorrection = Quaternion.identity;
-    transform.localRotation = transform.localRotation * Quaternion.Inverse(lastAppliedYawCorrection);
+    RemoveLastYawCorrection();
+  }
+
+  private void ApplyYawCorrection() {
+    RemoveLastYawCorrection();
+    transform.localRotation = transform.localRotation * yawCorrection;
+    lastAppliedYawCorrection = yawCorrection;
+  }
+
+  private void RemoveLastYawCorrection() {
+    transform.localRotation =
+      transform.localRotation * Quaternion.Inverse(lastAppliedYawCorrection);
     lastAppliedYawCorrection = Quaternion.identity;
   }
 
   private Quaternion GetYawCorrection() {
-    Quaternion headRotation = GetHeadRotation();
+    Quaternion headRotation = GvrVRHelpers.GetHeadRotation();
     Vector3 euler = headRotation.eulerAngles;
     return lastAppliedYawCorrection * Quaternion.Euler(0.0f, euler.y, 0.0f);
-  }
-
-  private Quaternion GetHeadRotation() {
-#if UNITY_EDITOR
-    return GvrEditorEmulator.HeadRotation;
-#else
-    return InputTracking.GetLocalRotation(VRNode.Head);
-#endif // UNITY_EDITOR
   }
 }
